@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Alta.Class;
+using MTC_Server.Code;
 
 namespace MTC_Server
 {
@@ -100,12 +101,20 @@ namespace MTC_Server
             else
             {
                 App.curUserID = result;
-                MessageBox.Show("Đăng nhập thành công!");
-                MainWindow window = new MainWindow();
-                window.Show();
+                MessageBox.Show("Đăng nhập thành công!");   
+                Application.Current.MainWindow = new MainWindow();
+                Application.Current.MainWindow.Show();
+                if (App.cache.autoLogin)
+                {
+                    App.cache.hashUserName = App.getHash(result);
+                    AltaCache.Write(App.CacheName, App.cache);
+                }
                 this.Close();
             }
         }
+
+       
+
         private int LoginData(string _username, string _password)
         {
             int result = 0;
@@ -125,6 +134,10 @@ namespace MTC_Server
                     };
                     conn.Close();
                 };
+            }
+            catch(MySqlException exMysql)
+            {
+                MessageBox.Show("Không thể kết nối với csdl");
             }
             catch (Exception ex)
             {

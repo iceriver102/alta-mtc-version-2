@@ -82,6 +82,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Class\AltaCache.cs" />
     <Compile Include="Class\alta_class_ftp.cs" />
     <Compile Include="Class\Config.cs" />
     <Compile Include="Class\FileExtensions.cs" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <Resource Include="Asset\Images\logo.png" />
     <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
+    <Resource Include="Asset\Images\bg_header.png" />
     <Content Include="Plugin\MySql.Data.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.Interops.dll" />
