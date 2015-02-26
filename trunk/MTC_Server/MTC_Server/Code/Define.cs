@@ -21,5 +21,10 @@ namespace MTC_Server.Code
         public const string user_content = "user_content";
         public const string user_time = "user_time";
 
+        /// <summary>
+        /// dinh nghia trong code
+        /// </summary>
+        public const string hash = "hash";
+
     }
 }
