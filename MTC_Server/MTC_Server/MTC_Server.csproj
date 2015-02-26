@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UIView\MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIView\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -129,6 +136,7 @@
     <None Include="Asset\Fonts\fontawesome-webfont.eot" />
     <Resource Include="Asset\Fonts\fontawesome-webfont.ttf" />
     <None Include="Asset\Fonts\fontawesome-webfont.woff" />
+    <None Include="Asset\Fonts\fontawesome-webfont.woff2" />
     <Resource Include="Asset\Fonts\FontAwesome.otf" />
     <None Include="Design\projectGuides.guides" />
     <None Include="Properties\Settings.settings">
@@ -142,8 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Asset\Images\logo.png" />
-    <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
     <Resource Include="Asset\Images\bg_header.png" />
+    <Resource Include="Asset\Images\btn_menu.png" />
+    <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
     <Content Include="Plugin\MySql.Data.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.Interops.dll" />

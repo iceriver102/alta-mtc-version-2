@@ -1,12 +1,19 @@
-﻿<Window x:Class="MTC_Server.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MTC_Server"
+        xmlns:UIView="clr-namespace:MTC_Server.UIView" x:Class="MTC_Server.MainWindow"
         mc:Ignorable="d"
-        Title="MTC" Height="900" Width="1600" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized" ResizeMode="CanMinimize" Loaded="Window_Loaded">
-    <Canvas x:Name="UIRoot" Height="900" Width="1600">
-        
+        Title="MTC" Height="768" Width="1366" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+    <Canvas x:Name="UIRoot" Height="768" Width="1366">
+        <Canvas x:Name="UIMenu" Height="159" Width="1366" Canvas.Left="0" Canvas.Top="-64">
+            <Image x:Name="bg_header" Height="159" Source="Asset/Images/bg_header.png" Stretch="Fill" Width="1366"/>
+            <UIView:MenuItem Height="68" Canvas.Left="321" Canvas.Top="50" Width="68" Text="Home" Icon="&#xf015;"/>
+        </Canvas>
+        <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="10" Width="822" Cursor="Hand" MouseLeftButtonUp="Asset_Images_btn_menu_png_MouseLeftButtonUp"/>
+        <TextBlock x:Name="textBlock" Canvas.Left="666" TextWrapping="NoWrap" Text="Menu" Canvas.Top="28.733" FontSize="18.667" FontWeight="Bold" IsHitTestVisible="False"/>
+
     </Canvas>
 </Window>

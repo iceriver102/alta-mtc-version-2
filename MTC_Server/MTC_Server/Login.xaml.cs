@@ -135,7 +135,7 @@ namespace MTC_Server
                     conn.Close();
                 };
             }
-            catch(MySqlException exMysql)
+            catch(MySqlException)
             {
                 MessageBox.Show("Không thể kết nối với csdl");
             }

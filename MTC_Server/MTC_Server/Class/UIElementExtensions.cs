@@ -68,6 +68,14 @@ namespace Alta.Class
         }
         public static void Animation_Translate_Frame(this UIElement E, double fromX, double fromY, double toX, double toY, double minisecond=500, Action CompleteAction= null)
         {
+            if (double.IsNaN(fromX))
+            {
+                fromX = E.getLeft();
+            }
+            if (double.IsNaN(fromY))
+            {
+                fromY = E.getTop();
+            }
             DoubleAnimation da = new DoubleAnimation(fromX, toX, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
             DoubleAnimation db = new DoubleAnimation(fromY, toY, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
             da.Completed += (o, e) =>

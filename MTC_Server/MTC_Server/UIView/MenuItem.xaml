@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="MTC_Server.UIView.MenuItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MTC_Server.UIView"
+             mc:Ignorable="d" 
+             d:DesignHeight="68" d:DesignWidth="68">
+    <Canvas x:Name="UIRoot">
+        <TextBlock x:Name="UIIcon" Canvas.Left="11.68" TextWrapping="NoWrap" Canvas.Top="2.5" Foreground="#FFDC7712" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="48" Text="&#xf015;"></TextBlock>
+        <TextBlock x:Name="UIText" TextWrapping="WrapWithOverflow" Text="Home" Canvas.Top="46.72" Width="68" FontSize="14.667" TextAlignment="Center" Foreground="White"/>
+    </Canvas>
+</UserControl>
