@@ -68,25 +68,42 @@ namespace Alta.Class
         }
         public static void Animation_Translate_Frame(this UIElement E, double fromX, double fromY, double toX, double toY, double minisecond=500, Action CompleteAction= null)
         {
-            if (double.IsNaN(fromX))
+            if (!double.IsNaN(toX))
             {
-                fromX = E.getLeft();
-            }
-            if (double.IsNaN(fromY))
-            {
-                fromY = E.getTop();
-            }
-            DoubleAnimation da = new DoubleAnimation(fromX, toX, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
-            DoubleAnimation db = new DoubleAnimation(fromY, toY, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
-            da.Completed += (o, e) =>
-            {
-                if (CompleteAction != null)
+                if (double.IsNaN(fromX))
                 {
-                    CompleteAction();
+                    fromX = E.getLeft();
                 }
-            };
-            E.BeginAnimation(Canvas.LeftProperty, da);
-            E.BeginAnimation(Canvas.TopProperty, db);
+                DoubleAnimation da = new DoubleAnimation(fromX, toX, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
+                da.Completed += (o, e) =>
+                {
+                    if (CompleteAction != null)
+                    {
+                        CompleteAction();
+                    }
+                };
+                E.BeginAnimation(Canvas.LeftProperty, da);
+            }
+
+            if (!double.IsNaN(toY))
+            {
+                if (double.IsNaN(fromY))
+                {
+                    fromY = E.getTop();
+                }
+                DoubleAnimation db = new DoubleAnimation(fromY, toY, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 } };
+                if (double.IsNaN(toX))
+                {
+                    db.Completed += (o, e) =>
+                    {
+                        if (CompleteAction != null)
+                        {
+                            CompleteAction();
+                        }
+                    };
+                }
+                E.BeginAnimation(Canvas.TopProperty, db);
+            }
         }
         public static void Animation_Translate_Frame(this UIElement E, double toX, double toY, double minisecond = 500, bool AutoReverse=false)
         {

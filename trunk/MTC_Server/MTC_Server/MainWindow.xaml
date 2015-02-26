@@ -17,9 +17,12 @@
             <UIView:MenuItem Height="72" Canvas.Left="765" Canvas.Top="73.332" Width="70" Text="Camera" Icon="&#xf083;" ClickEvent="MenuItem_ClickEvent"/>
             <UIView:MenuItem Height="72" Canvas.Left="875" Canvas.Top="73.332" Width="70" Text="Cài Đặt" Icon="&#xf085;" ClickEvent="MenuItem_ClickEvent"/>
             <UIView:MenuItem Height="72" Canvas.Left="985" Canvas.Top="53" Width="70" Text="Thông Tin" Icon="&#xf1cd;" ClickEvent="MenuItem_ClickEvent"/>
+
         </Canvas>
         <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="8" Width="822" Cursor="Hand" MouseLeftButtonUp="Asset_Images_btn_menu_png_MouseLeftButtonUp"/>
         <TextBlock x:Name="MenuText" Canvas.Left="666" TextWrapping="NoWrap" Text="Menu" Canvas.Top="27" FontSize="18.667" FontWeight="Bold" IsHitTestVisible="False"/>
-
+        <Canvas x:Name="UIContent" Height="668" Canvas.Top="100" Width="1366" Background="#FFFF1616"/>
+        <TextBlock x:Name="UIBtnClose" Cursor="Hand" Height="26" Canvas.Left="1330" TextWrapping="NoWrap" Text="&#xf00d;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="UIBtnClose_MouseLeftButtonUp" />
+        <TextBlock x:Name="UIBtnMinimize" Cursor="Hand" Height="26" Canvas.Left="1299" TextWrapping="NoWrap" Text="&#xf066;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="UIBtnMinimize_MouseLeftButtonUp"/>
     </Canvas>
 </Window>

@@ -10,22 +10,6 @@
         </GuideModel>
       </GuideModels>
     </ProjectItemGuide>
-    <ProjectItemGuide TargetFile="MainWindow.xaml">
-      <GuideModels>
-        <GuideModel>
-          <Guides>
-            <Guide Alignment="Left" Position="690" />
-            <Guide Alignment="Top" Position="41" />
-            <Guide Alignment="Left" Position="360" />
-            <Guide Alignment="Left" Position="1020" />
-            <Guide Alignment="Left" Position="580" />
-            <Guide Alignment="Left" Position="470" />
-            <Guide Alignment="Left" Position="800" />
-            <Guide Alignment="Left" Position="910" />
-          </Guides>
-        </GuideModel>
-      </GuideModels>
-    </ProjectItemGuide>
     <ProjectItemGuide TargetFile="UIView\MenuItem.xaml">
       <GuideModels>
         <GuideModel>
@@ -33,6 +17,23 @@
             <Guide Alignment="Left" Position="34" />
             <Guide Alignment="Top" Position="34" />
             <Guide Alignment="Top" Position="75" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="MainWindow.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Left" Position="690" />
+            <Guide Alignment="Top" Position="45" />
+            <Guide Alignment="Left" Position="360" />
+            <Guide Alignment="Left" Position="1020" />
+            <Guide Alignment="Left" Position="580" />
+            <Guide Alignment="Left" Position="470" />
+            <Guide Alignment="Left" Position="800" />
+            <Guide Alignment="Left" Position="910" />
+            <Guide Alignment="Top" Position="160" />
           </Guides>
         </GuideModel>
       </GuideModels>

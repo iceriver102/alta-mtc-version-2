@@ -40,6 +40,9 @@ namespace MTC_Server
                 {
                     UIMenu.Animation_Translate_Frame(double.NaN, double.NaN, 0, 0);
                     MenuText.Foreground = Brushes.DarkOrange;
+                    UIBtnClose.Foreground = Brushes.DarkOrange;
+                    UIBtnMinimize.Foreground = Brushes.DarkOrange;
+                    UIContent.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 164);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
                         if(e is UIView.MenuItem)
@@ -52,7 +55,10 @@ namespace MTC_Server
                 else
                 {
                     MenuText.Foreground = Brushes.Black;
+                    UIBtnMinimize.Foreground = Brushes.Black;
+                    UIBtnClose.Foreground = Brushes.Black;
                     UIMenu.Animation_Translate_Frame(double.NaN,double.NaN, 0, -64);
+                    UIContent.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 100);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
                         if (e is UIView.MenuItem)
@@ -130,6 +136,16 @@ namespace MTC_Server
                     }
                 }
             }
+        }
+
+        private void UIBtnClose_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void UIBtnMinimize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
