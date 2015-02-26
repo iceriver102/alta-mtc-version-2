@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Alta.Class;
 
 namespace MTC_Server.UIView
 {
@@ -20,6 +21,8 @@ namespace MTC_Server.UIView
     /// </summary>
     public partial class MenuItem : UserControl
     {
+        private Brush orginalColor;
+        public event EventHandler ClickEvent;
         public string Icon
         {
             get
@@ -29,6 +32,30 @@ namespace MTC_Server.UIView
             set
             {
                 this.UIIcon.Text = value;
+            }
+        }
+        private bool _is_active = false;
+        public bool isActive
+        {
+            get
+            {
+                return this._is_active;
+            }
+            set
+            {
+                this._is_active = value;
+                if (this.isActive)
+                {
+                    this.UIIcon.Foreground = new SolidColorBrush( new Color() { A = 255, B = 38, G = 165, R = 224 });
+                    this.Cursor = Cursors.Arrow;
+                    this.UIText.Foreground = Brushes.White;
+                }
+                else
+                {
+                    this.UIIcon.Foreground = this.orginalColor;
+                    this.UIText.Foreground = Brushes.White;
+                    this.Cursor = Cursors.Hand;
+                }
             }
         }
         public string Text
@@ -45,6 +72,38 @@ namespace MTC_Server.UIView
         public MenuItem()
         {
             InitializeComponent();
+            this.orginalColor = this.UIIcon.Foreground;
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!this.isActive)
+            {
+                this.UIText.Foreground = this.orginalColor;
+                this.UIIcon.Foreground = Brushes.White;
+                this.UIText.FontWeight = FontWeights.Bold;
+            }
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!this.isActive)
+            {
+                this.UIText.Foreground = Brushes.White;
+                this.UIIcon.Foreground = this.orginalColor;
+                this.UIText.FontWeight = FontWeights.Normal;
+            }
+        }
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!this.isActive)
+            {
+                this.Animation_Translate_Frame(double.NaN, 6, 500, true);
+                this.isActive = true;
+                if (this.ClickEvent != null)
+                    this.ClickEvent(this, new EventArgs());
+            }
         }
     }
 }

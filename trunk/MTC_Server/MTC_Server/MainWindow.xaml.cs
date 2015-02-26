@@ -39,7 +39,8 @@ namespace MTC_Server
                 if (this._menu_active)
                 {
                     UIMenu.Animation_Translate_Frame(double.NaN, double.NaN, 0, 0);
-                    foreach(UIElement e in this.UIMenu.Children)
+                    MenuText.Foreground = Brushes.DarkOrange;
+                    foreach (UIElement e in this.UIMenu.Children)
                     {
                         if(e is UIView.MenuItem)
                         {
@@ -50,6 +51,7 @@ namespace MTC_Server
                 }
                 else
                 {
+                    MenuText.Foreground = Brushes.Black;
                     UIMenu.Animation_Translate_Frame(double.NaN,double.NaN, 0, -64);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
@@ -108,6 +110,26 @@ namespace MTC_Server
         private void Asset_Images_btn_menu_png_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.menuActivate = !this.menuActivate;
+        }
+
+        private void MenuItem_ClickEvent(object sender, EventArgs e)
+        {
+            UIView.MenuItem item = sender as UIView.MenuItem;
+            this.disableMenu(item);
+        }
+        private void disableMenu(UIView.MenuItem item)
+        {
+            foreach (UIElement E in this.UIMenu.Children)
+            {
+                if (E is UIView.MenuItem)
+                {
+                    UIView.MenuItem i = E as UIView.MenuItem;
+                    if (i.isActive && i != item)
+                    {
+                        i.isActive = false;
+                    }
+                }
+            }
         }
     }
 }
