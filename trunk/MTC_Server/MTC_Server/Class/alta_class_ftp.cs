@@ -79,7 +79,7 @@ namespace Alta.Class
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 toPath = string.Empty;
             }
@@ -101,7 +101,7 @@ namespace Alta.Class
                 response.Close();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
