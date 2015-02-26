@@ -10,10 +10,16 @@
     <Canvas x:Name="UIRoot" Height="768" Width="1366">
         <Canvas x:Name="UIMenu" Height="159" Width="1366" Canvas.Left="0" Canvas.Top="-64">
             <Image x:Name="bg_header" Height="159" Source="Asset/Images/bg_header.png" Stretch="Fill" Width="1366"/>
-            <UIView:MenuItem Height="68" Canvas.Left="321" Canvas.Top="50" Width="68" Text="Home" Icon="&#xf015;"/>
+            <UIView:MenuItem Height="72" Canvas.Left="325" Canvas.Top="53" Width="70" Text="Người Dùng" Icon="&#xf0c0;" FontSize="11" isActive="True" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="435.333" Canvas.Top="73.332" Width="70" Text="Thiết Bị" Icon="&#xf108;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="545" Canvas.Top="73.332" Width="70" Text="Video" Icon="&#xf008;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="655" Canvas.Top="73.332" Width="70" Text="Lịch Chiếu" Icon="&#xf073;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="765" Canvas.Top="73.332" Width="70" Text="Camera" Icon="&#xf083;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="875" Canvas.Top="73.332" Width="70" Text="Cài Đặt" Icon="&#xf085;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="985" Canvas.Top="53" Width="70" Text="Thông Tin" Icon="&#xf1cd;" ClickEvent="MenuItem_ClickEvent"/>
         </Canvas>
-        <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="10" Width="822" Cursor="Hand" MouseLeftButtonUp="Asset_Images_btn_menu_png_MouseLeftButtonUp"/>
-        <TextBlock x:Name="textBlock" Canvas.Left="666" TextWrapping="NoWrap" Text="Menu" Canvas.Top="28.733" FontSize="18.667" FontWeight="Bold" IsHitTestVisible="False"/>
+        <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="8" Width="822" Cursor="Hand" MouseLeftButtonUp="Asset_Images_btn_menu_png_MouseLeftButtonUp"/>
+        <TextBlock x:Name="MenuText" Canvas.Left="666" TextWrapping="NoWrap" Text="Menu" Canvas.Top="27" FontSize="18.667" FontWeight="Bold" IsHitTestVisible="False"/>
 
     </Canvas>
 </Window>

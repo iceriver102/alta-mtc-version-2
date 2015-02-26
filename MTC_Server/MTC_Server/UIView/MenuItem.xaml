@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView"
              mc:Ignorable="d" 
-             d:DesignHeight="68" d:DesignWidth="68">
+             d:DesignHeight="72" d:DesignWidth="70" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" FontSize="14" Cursor="Hand" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
     <Canvas x:Name="UIRoot">
-        <TextBlock x:Name="UIIcon" Canvas.Left="11.68" TextWrapping="NoWrap" Canvas.Top="2.5" Foreground="#FFDC7712" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="48" Text="&#xf015;"></TextBlock>
-        <TextBlock x:Name="UIText" TextWrapping="WrapWithOverflow" Text="Home" Canvas.Top="46.72" Width="68" FontSize="14.667" TextAlignment="Center" Foreground="White"/>
+        <TextBlock x:Name="UIIcon" TextWrapping="NoWrap" Canvas.Top="2" Foreground="#FFDC7712" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="48" Text="&#xf108;" Width="68"/>
+        <TextBlock x:Name="UIText" TextWrapping="WrapWithOverflow" Text="Thông Tin"  Width="70"  TextAlignment="Center" Foreground="White" Canvas.Top="50"/>
     </Canvas>
 </UserControl>

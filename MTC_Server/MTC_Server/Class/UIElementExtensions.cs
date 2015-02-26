@@ -88,5 +88,26 @@ namespace Alta.Class
             E.BeginAnimation(Canvas.LeftProperty, da);
             E.BeginAnimation(Canvas.TopProperty, db);
         }
+        public static void Animation_Translate_Frame(this UIElement E, double toX, double toY, double minisecond = 500, bool AutoReverse=false)
+        {
+            BounceEase BounceOrientation = new BounceEase();
+            BounceOrientation.Bounces = 1;
+            BounceOrientation.Bounciness = 1;
+           // BounceOrientation.EasingMode = EasingMode.EaseInOut;
+            if (!double.IsNaN(toX))
+            {
+                double fromX = E.getLeft();
+                DoubleAnimation da = new DoubleAnimation(fromX, toX+fromX, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = BounceOrientation };
+                da.AutoReverse = AutoReverse;
+                E.BeginAnimation(Canvas.LeftProperty, da);
+            }
+            if (!double.IsNaN(toY))
+            {
+                double fromY = E.getTop();
+                DoubleAnimation db = new DoubleAnimation(fromY, fromY + toY, TimeSpan.FromMilliseconds(minisecond)) { EasingFunction = BounceOrientation };
+                db.AutoReverse = AutoReverse;
+                E.BeginAnimation(Canvas.TopProperty, db);
+            }
+        }
     }
 }
