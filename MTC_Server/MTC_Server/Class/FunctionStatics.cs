@@ -28,7 +28,7 @@ namespace Alta.Class
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(String sClassName, String sAppName);
 
-        public static string MD5String(string input)
+        public static string MD5String(this string input)
         {
             using (MD5 md5Hash = MD5.Create())
             {

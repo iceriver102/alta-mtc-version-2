@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Alta.Class;
+using MTC_Server.Code.User;
 
 namespace MTC_Server
 {
@@ -26,7 +27,6 @@ namespace MTC_Server
         private const double W = 1366;
         private const double H = 768;
         private bool _menu_active = false;
-        public User u;
         public bool menuActivate
         {
             get
@@ -75,42 +75,11 @@ namespace MTC_Server
             InitializeComponent();
         }
 
-        public User Info(int id)
-        {
-            User u = null;
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
-                {
-                    conn.Open();
-                    string query = "CALL `InfoUser` (@userid);";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@userid", id);
-                        var tmp = cmd.ExecuteScalar();
-                        if (Convert.ToInt32(tmp) > 0)
-                        {
-                            using (MySqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                u = reader.toUser();
-                            }
-                        }
-                    };
-                    conn.Close();
-                };
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            return u;
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.UIRoot.RenderTransform = new ScaleTransform(this.Width / W, this.Height / H);
             this.menuActivate = false;
-            u = Info(App.curUserID);
+            App.curUser = UserData.Info(App.curUserID);
         }
 
         private void Asset_Images_btn_menu_png_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -146,6 +115,15 @@ namespace MTC_Server
         private void UIBtnMinimize_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void UILogOut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            App.cache.hashUserName = string.Empty;
+            AltaCache.Write(App.CacheName,App.cache);
+            Application.Current.MainWindow = new Login();
+            Application.Current.MainWindow.Show();
+            this.Close();
         }
     }
 }

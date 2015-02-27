@@ -8,6 +8,7 @@ using System.Windows;
 using Alta.Class;
 using MySql.Data.MySqlClient;
 using MTC_Server.Code;
+using MTC_Server.Code.User;
 
 namespace MTC_Server
 {
@@ -17,18 +18,22 @@ namespace MTC_Server
     public partial class App : Application
     {
         public static Config setting;
-        public static string FileName="setting.xml";
+        public static string FileName = "setting.xml";
         public static int curUserID = 0;
+        public static UserData curUser;
         public static AltaCache cache;
         public static string CacheName = "cache.xml";
+        public static List<UserTypeData> TypeUsers;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             setting = Config.Read(FileName);
             cache = AltaCache.Read(CacheName);
+            TypeUsers = MysqlHelper.getTypeUserAll();
+
             if (cache.autoLogin && !string.IsNullOrEmpty(cache.hashUserName))
             {
                 int tmpResult = Login(cache.hashUserName);
-                if ( tmpResult!= 0)
+                if (tmpResult != 0)
                 {
                     curUserID = tmpResult;
                     this.MainWindow = new MainWindow();
@@ -66,7 +71,7 @@ namespace MTC_Server
                     conn.Close();
                 };
             }
-            catch (MySqlException )
+            catch (MySqlException)
             {
                 MessageBox.Show("Không thể kết nối với csdl");
             }
@@ -76,6 +81,16 @@ namespace MTC_Server
             }
 
             return result;
+        }
+
+        public static UserTypeData selectType(int id)
+        {
+            foreach (UserTypeData data in TypeUsers)
+            {
+                if (data.Id == id)
+                    return data;
+            }
+            return null;
         }
 
         public int Login(string hash)
@@ -98,7 +113,7 @@ namespace MTC_Server
                     conn.Close();
                 };
             }
-            catch (MySqlException )
+            catch (MySqlException)
             {
                 MessageBox.Show("Không thể kết nối với csdl");
             }
