@@ -21,6 +21,42 @@
         </GuideModel>
       </GuideModels>
     </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\UIUser.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Bottom" Position="50" />
+            <Guide Alignment="Top" Position="180" />
+            <Guide Alignment="Top" Position="50" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\GridViewUser.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Top" Position="120" />
+            <Guide Alignment="Bottom" Position="60" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\UIUser.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Top" Position="130" />
+            <Guide Alignment="Top" Position="50" />
+            <Guide Alignment="Top" Position="240" />
+            <Guide Alignment="Top" Position="152" />
+            <Guide Alignment="Top" Position="172" />
+            <Guide Alignment="Top" Position="191" />
+            <Guide Alignment="Left" Position="13" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
     <ProjectItemGuide TargetFile="MainWindow.xaml">
       <GuideModels>
         <GuideModel>

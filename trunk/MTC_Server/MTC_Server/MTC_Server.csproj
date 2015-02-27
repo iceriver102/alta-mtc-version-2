@@ -70,8 +70,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\CsvFileWriter.cs" />
+    <Compile Include="Class\DateTimeExtensions.cs" />
+    <Compile Include="Class\EasyTimer.cs" />
+    <Compile Include="Class\FontIconDefine.cs" />
+    <Compile Include="Class\StringExtensions.cs" />
+    <Compile Include="Code\MysqlHelper.cs" />
+    <Compile Include="Code\User\UserFunction.cs" />
+    <Compile Include="Code\User\UserTypeData.cs" />
     <Compile Include="UIView\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\User\GridViewUser.xaml.cs">
+      <DependentUpon>GridViewUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\User\UIUser.xaml.cs">
+      <DependentUpon>UIUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\User\UIUserEdit.xaml.cs">
+      <DependentUpon>UIUserEdit.xaml</DependentUpon>
     </Compile>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
@@ -98,7 +115,7 @@
     <Compile Include="Class\UIElementExtensions.cs" />
     <Compile Include="Code\Define.cs" />
     <Compile Include="Code\Permision.cs" />
-    <Compile Include="Code\User.cs" />
+    <Compile Include="Code\User\User.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -111,6 +128,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIView\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\User\GridViewUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\User\UIUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\User\UIUserEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +167,15 @@
     <None Include="Asset\Fonts\fontawesome-webfont.woff" />
     <None Include="Asset\Fonts\fontawesome-webfont.woff2" />
     <Resource Include="Asset\Fonts\FontAwesome.otf" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLD.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDCOND.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDCONDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-COND.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-CONDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-REGULAR.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-SEMIBOLD.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-SEMIBOLDIT.OTF" />
     <None Include="Design\projectGuides.guides" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="MTC_Server.UIView.User.GridViewUser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MTC_Server.UIView.User"
+             mc:Ignorable="d" 
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded">
+    <Canvas x:Name="UIRoot">
+            <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="488" Canvas.Top="120">
+                <ListBox x:Name="list_Box_Item" SelectionMode="Single"  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}" >
+                    <ListBox.Resources>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                       ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
+                       MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                       ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Margin" Value="8"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Border>
+    </Canvas>
+</UserControl>

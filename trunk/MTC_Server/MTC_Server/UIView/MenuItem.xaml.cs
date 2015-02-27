@@ -49,6 +49,7 @@ namespace MTC_Server.UIView
                     this.UIIcon.Foreground = new SolidColorBrush( new Color() { A = 255, B = 38, G = 165, R = 224 });
                     this.Cursor = Cursors.Arrow;
                     this.UIText.Foreground = Brushes.White;
+                    this.UIText.FontWeight = FontWeights.Normal;
                 }
                 else
                 {
