@@ -32,16 +32,6 @@
         </GuideModel>
       </GuideModels>
     </ProjectItemGuide>
-    <ProjectItemGuide TargetFile="UIView\User\GridViewUser.xaml">
-      <GuideModels>
-        <GuideModel>
-          <Guides>
-            <Guide Alignment="Top" Position="120" />
-            <Guide Alignment="Bottom" Position="60" />
-          </Guides>
-        </GuideModel>
-      </GuideModels>
-    </ProjectItemGuide>
     <ProjectItemGuide TargetFile="UIView\User\UIUser.xaml">
       <GuideModels>
         <GuideModel>
@@ -70,6 +60,36 @@
             <Guide Alignment="Left" Position="800" />
             <Guide Alignment="Left" Position="910" />
             <Guide Alignment="Top" Position="160" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\GridViewUser.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Top" Position="120" />
+            <Guide Alignment="Bottom" Position="60" />
+            <Guide Alignment="Left" Position="508" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\UIPermision.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Left" Position="100" />
+            <Guide Alignment="Left" Position="200" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\UIUserEdit.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Left" Position="684" />
           </Guides>
         </GuideModel>
       </GuideModels>

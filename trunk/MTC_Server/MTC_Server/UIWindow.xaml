@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MTC_Server"
-        xmlns:UIView="clr-namespace:MTC_Server.UIView" xmlns:User="clr-namespace:MTC_Server.UIView.User" x:Class="MTC_Server.MainWindow"
+        xmlns:UIView="clr-namespace:MTC_Server.UIView" x:Class="MTC_Server.UIWindow"
+        xmlns:User="clr-namespace:MTC_Server.UIView.User"
         mc:Ignorable="d"
-        Title="MTC " Height="768" Width="1366" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized" ResizeMode="CanMinimize" Loaded="Window_Loaded">
-    <Canvas x:Name="UIRoot" Height="768" Width="1366">
+        Title="UIWindow" Height="768" Width="1366" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+    <Canvas x:Name="UIRoot">
         <Canvas x:Name="UIMenu" Height="159" Width="1366" Canvas.Left="0" Canvas.Top="-64">
             <Image x:Name="bg_header" Height="159" Source="Asset/Images/bg_header.png" Stretch="Fill" Width="1366"/>
             <UIView:MenuItem Height="72" Canvas.Left="325" Canvas.Top="53" Width="70" Text="Người Dùng" Icon="&#xF0C0;" FontSize="11" isActive="True" ClickEvent="MenuItem_ClickEvent"/>
@@ -18,13 +19,13 @@
             <UIView:MenuItem Height="72" Canvas.Left="875" Canvas.Top="73.332" Width="70" Text="Cài Đặt" Icon="&#xF085;" ClickEvent="MenuItem_ClickEvent"/>
             <UIView:MenuItem Height="72" Canvas.Left="985" Canvas.Top="53" Width="70" Text="Thông Tin" Icon="&#xF1CD;" ClickEvent="MenuItem_ClickEvent"/>
         </Canvas>
-        <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="8" Width="822" Cursor="Hand" MouseLeftButtonUp="Asset_Images_btn_menu_png_MouseLeftButtonUp"/>
+        <Image x:Name="Asset_Images_btn_menu_png" Height="63" Canvas.Left="279" Source="Asset/Images/btn_menu.png" Stretch="Fill" Canvas.Top="8" Width="822" Cursor="Hand" MouseLeftButtonUp="MenuClick"/>
         <TextBlock x:Name="MenuText" Canvas.Left="666" TextWrapping="NoWrap" Text="Menu" Canvas.Top="27" FontSize="18.667" FontWeight="Bold" IsHitTestVisible="False"/>
         <Canvas x:Name="UIContent" Height="668" Canvas.Top="100" Width="1366" >
             <User:GridViewUser Height="668" Canvas.Left="0" Canvas.Top="0" Width="1366"/>
         </Canvas>
-        <TextBlock x:Name="UIBtnClose" Cursor="Hand" Height="26" Canvas.Left="1330" TextWrapping="NoWrap" Text="&#xF00D;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="UIBtnClose_MouseLeftButtonUp" />
-        <TextBlock x:Name="UIBtnMinimize" Cursor="Hand" Padding="0,6,0,0" Height="26" Canvas.Left="1299" TextWrapping="NoWrap" Text="&#xf068;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="UIBtnMinimize_MouseLeftButtonUp"/>
-        <TextBlock x:Name="UILogOut" Cursor="Hand" TextWrapping="NoWrap" Text="&#xf08b;" Canvas.Left="10" Canvas.Top="10" Height="26" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"  FontSize="26.667" MouseLeftButtonUp="UILogOut_MouseLeftButtonUp"/>
+        <TextBlock x:Name="UIBtnClose" Cursor="Hand" Height="26" Canvas.Left="1330" TextWrapping="NoWrap" Text="&#xF00D;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="CloseWindow" />
+        <TextBlock x:Name="UIBtnMinimize" Cursor="Hand"  Padding="0,6,0,0" Height="26" Canvas.Left="1299" TextWrapping="NoWrap" Text="&#xf068;" TextAlignment="Center" Canvas.Top="10" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="MinimizeWindow"/>
+        <TextBlock x:Name="UILogOut" Cursor="Hand" TextWrapping="NoWrap" Text="&#xF08B;" Canvas.Left="10" Canvas.Top="10" Height="26" Width="26" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"  FontSize="26.667" MouseLeftButtonUp="LogOutEvent"/>
     </Canvas>
 </Window>

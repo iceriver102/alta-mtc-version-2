@@ -47,7 +47,7 @@ namespace MTC_Server.Code.User
             {
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }
@@ -83,7 +83,7 @@ namespace MTC_Server.Code.User
             {
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }

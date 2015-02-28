@@ -17,6 +17,12 @@ namespace Alta.Class
             Datas.Add(new FontNode("fa-unlock-alt" ,"f13e"));
             Datas.Add(new FontNode("fa-unlock" ,"f09c"));
             Datas.Add(new FontNode("fa-sign-out", "f08b"));
+            Datas.Add(new FontNode("fa-info","f129"));
+
+            //fa-life-ring [&#xf1cd;]
+            Datas.Add(new FontNode("fa-life-ring", "f1cd"));
+            //fa-save (alias) [&#xf0c7;]
+            Datas.Add(new FontNode("fa-save", "f0c7"));
         }
         public FontNode this[int index]
         {
