@@ -23,6 +23,8 @@ namespace MTC_Server.UIView.User
     /// </summary>
     public partial class UIUser : UserControl
     {
+        public event EventHandler<UserData> ViewInfouserEvent;
+
         private UserData _u;
         public UserData User
         {
@@ -87,6 +89,14 @@ namespace MTC_Server.UIView.User
                     this.UIStatus.Text = Define.Fonts["fa-lock"].asCode;
                 }
                 this._u.UpdateStatus();
+            }
+        }
+
+        private void ViewInfoUser(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ViewInfouserEvent != null)
+            {
+                this.ViewInfouserEvent(this, this.User);
             }
         }
     }

@@ -24,17 +24,17 @@
             </Grid>
         </Canvas>
         <Canvas x:Name="UIBar" Height="30" Canvas.Top="200"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
-            <Grid Height="30" Canvas.Left="0" Canvas.Top="0" Width="140">
+            <Grid Height="30" Canvas.Left="0" Canvas.Top="0" Width="160">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="UIBtnView"  TextWrapping="NoWrap" Text="&#xf007;" Width="35" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="22.667" Foreground="#FFEA5712" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="UIBtnEdit" Grid.Column="1" TextWrapping="NoWrap" Text="&#xf0ad;" Width="35" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="22.667" Foreground="#FFEA5712" Margin="0,2.333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="UIBtnDel" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf1f8;" Width="35" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="22.667" Foreground="#FFEA5712" Margin="0,2.333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="UIBtnMedia" Grid.Column="3" TextWrapping="NoWrap" Text="&#xf008;" Width="35" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="22.667" Foreground="#FFEA5712" Margin="0,2.333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="UIBtnView"  TextWrapping="NoWrap" Text="&#xf129;" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="20" Foreground="#FFEA5712" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonUp="ViewInfoUser" Cursor="Hand"/>               
+                <TextBlock x:Name="UIBtnDel" Grid.Column="1" TextWrapping="NoWrap" Text="&#xf1f8;" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="20" Foreground="#FFEA5712" Margin="0,2.333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="UIBtnMedia" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf008;" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="20" Foreground="#FFEA5712" Margin="0,2.333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
 
         </Canvas>

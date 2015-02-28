@@ -84,11 +84,17 @@
     <Compile Include="UIView\User\GridViewUser.xaml.cs">
       <DependentUpon>GridViewUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIView\User\UIPermision.xaml.cs">
+      <DependentUpon>UIPermision.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\User\UIUser.xaml.cs">
       <DependentUpon>UIUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIView\User\UIUserEdit.xaml.cs">
       <DependentUpon>UIUserEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIWindow.xaml.cs">
+      <DependentUpon>UIWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
@@ -135,11 +141,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIView\User\UIPermision.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIView\User\UIUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\User\UIUserEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

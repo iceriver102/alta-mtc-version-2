@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MTC_Server.Code.User;
+using Alta.Class;
 
 namespace MTC_Server.UIView.User
 {
@@ -40,9 +41,41 @@ namespace MTC_Server.UIView.User
                 item.User = data;
                 item.Height = 230;
                 item.Width = 180;
+                item.ViewInfouserEvent += Item_ViewInfouserEvent;
                 this.list_Box_Item.Items.Add(item);    
             }
         }
 
+        private void Item_ViewInfouserEvent(object sender, UserData e)
+        {
+            if (e != null)
+            {
+                UIUserEdit item = new UIUserEdit();
+                item.setLeft(0);
+                item.setTop(120);
+                item.Width = 1366;
+                item.Height = 500;
+                item.User = e;
+                item.CloseEvent += Item_CloseEvent;
+                this.UIRoot.Children.Add(item);
+            }
+        }
+
+        private void Item_CloseEvent(object sender, UserData e)
+        {
+            if (e != null)
+            {
+                foreach(UIUser item in this.list_Box_Item.Items)
+                {
+                    if(item.User.ID== e.ID)
+                    {
+                        item.User = e;
+                        break;
+                    }
+                    
+                }
+            }
+            this.UIRoot.Children.Remove(sender as UIUserEdit);
+        }
     }
 }
