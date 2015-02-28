@@ -23,8 +23,8 @@ namespace MTC_Server.UIView.User
     /// </summary>
     public partial class UIUser : UserControl
     {
-        public event EventHandler<UserData> ViewInfouserEvent;
-
+        public event EventHandler<UserData> ViewInfoUserEvent;
+        public event EventHandler<UserData> DeleteUserEvent;
         private UserData _u;
         public UserData User
         {
@@ -62,12 +62,12 @@ namespace MTC_Server.UIView.User
 
         private void UIRootView_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 200);
+            this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 240);
         }
 
         private void UIRootView_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 220);
+            this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 260);
         }
 
         private void UIRootView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -94,9 +94,21 @@ namespace MTC_Server.UIView.User
 
         private void ViewInfoUser(object sender, MouseButtonEventArgs e)
         {
-            if (this.ViewInfouserEvent != null)
+            if (this.ViewInfoUserEvent != null)
             {
-                this.ViewInfouserEvent(this, this.User);
+                this.ViewInfoUserEvent(this, this.User);
+            }
+        }
+        private void DeleteUser(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn xoá tài khoản này không?", "Xoá tài khoản", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                UserData.deleteUser(this.User);
+                if (this.DeleteUserEvent != null)
+                {
+                    this.DeleteUserEvent(this, this._u);
+                }
             }
         }
     }

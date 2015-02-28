@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Alta.Class;
 using MTC_Server.Code.User;
+using MTC_Server.UIView.User;
+using MTC_Server.UIView.Media;
 
 namespace MTC_Server
 {
@@ -42,6 +44,7 @@ namespace MTC_Server
                     MenuText.Foreground = Brushes.DarkOrange;
                     UIBtnClose.Foreground = Brushes.DarkOrange;
                     UIBtnMinimize.Foreground = Brushes.DarkOrange;
+                    UILogOut.Foreground = Brushes.DarkOrange;
                     UIContent.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 164);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
@@ -54,6 +57,7 @@ namespace MTC_Server
                 }
                 else
                 {
+                    UILogOut.Foreground = Brushes.Black;
                     MenuText.Foreground = Brushes.Black;
                     UIBtnMinimize.Foreground = Brushes.Black;
                     UIBtnClose.Foreground = Brushes.Black;
@@ -91,6 +95,27 @@ namespace MTC_Server
         {
             UIView.MenuItem item = sender as UIView.MenuItem;
             this.disableMenu(item);
+            switch (item.Code)
+            {
+                case "User":
+                    this.UIContent.Children.Clear();
+                    GridViewUser tmpItem = new GridViewUser();
+                    tmpItem.Width = 1366;
+                    tmpItem.Height = 668;
+                    tmpItem.setLeft(0);
+                    tmpItem.setTop(0);
+                    this.UIContent.Children.Add(tmpItem);
+                    break;
+                case "Media":
+                    this.UIContent.Children.Clear();
+                    GridMedia tmpMediaItem = new GridMedia();
+                    tmpMediaItem.Width = 1366;
+                    tmpMediaItem.Height = 668;
+                    tmpMediaItem.setLeft(0);
+                    tmpMediaItem.setTop(0);
+                    this.UIContent.Children.Add(tmpMediaItem);
+                    break;
+            }
         }
         private void disableMenu(UIView.MenuItem item)
         {

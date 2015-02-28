@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.User"
              mc:Ignorable="d" 
-             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded">
-    <Canvas x:Name="UIRoot">
-        <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="488" Canvas.Top="120">
-            <ListBox x:Name="list_Box_Item" SelectionMode="Single"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}" Width="1366" >
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded" KeyUp="UIRootView_KeyUp" Focusable="True" IsTabStop="True" Style="{DynamicResource noBorder}">
+    <Canvas x:Name="UIRoot" Focusable="False">
+        <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="578" Canvas.Top="90">
+            <ListBox x:Name="list_Box_Item" Focusable="False" SelectionMode="Single"  Margin="110,0,110,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}"  >
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="IsTabStop" Value="False"/>
                         <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     </Style>
                 </ListBox.Resources>
                 <ListBox.ItemsPanel>
@@ -26,11 +27,21 @@
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Margin" Value="8"/>
+                        <Setter Property="Margin" Value="14,8,14,8"/>
                         <Setter Property="Padding" Value="0"/>
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
         </Border>
+        <Canvas Height="578" Width="99" Canvas.Top="90">
+            <Grid Height="578" Width="50">
+                <TextBlock x:Name="UILeftBtn" TextAlignment="Center" HorizontalAlignment="Stretch"   TextWrapping="NoWrap" Text="&#xf104;" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FF767676" FontSize="100" Cursor="Hand" MouseLeftButtonUp="UILeftBtn_MouseLeftButtonUp" />
+            </Grid>
+        </Canvas>
+        <Canvas Height="578" Canvas.Left="1268" Canvas.Top="90" Width="98">
+            <Grid Height="578" Width="50" Canvas.Left="48">
+                <TextBlock x:Name="UIRightBtn" TextAlignment="Center" HorizontalAlignment="Stretch"   TextWrapping="NoWrap" Text="&#xf105;" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FFFF5D00" FontSize="100" Cursor="Hand" MouseLeftButtonUp="UIRightBtn_MouseLeftButtonUp"/>
+            </Grid>
+        </Canvas>
     </Canvas>
 </UserControl>

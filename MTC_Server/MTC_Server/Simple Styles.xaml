@@ -1134,4 +1134,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="noBorder" TargetType="{x:Type UserControl}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
 </ResourceDictionary>

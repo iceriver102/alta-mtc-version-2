@@ -64,17 +64,6 @@
         </GuideModel>
       </GuideModels>
     </ProjectItemGuide>
-    <ProjectItemGuide TargetFile="UIView\User\GridViewUser.xaml">
-      <GuideModels>
-        <GuideModel>
-          <Guides>
-            <Guide Alignment="Top" Position="120" />
-            <Guide Alignment="Bottom" Position="60" />
-            <Guide Alignment="Left" Position="508" />
-          </Guides>
-        </GuideModel>
-      </GuideModels>
-    </ProjectItemGuide>
     <ProjectItemGuide TargetFile="UIView\User\UIPermision.xaml">
       <GuideModels>
         <GuideModel>
@@ -90,6 +79,19 @@
         <GuideModel>
           <Guides>
             <Guide Alignment="Left" Position="684" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="UIView\User\GridViewUser.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Top" Position="120" />
+            <Guide Alignment="Bottom" Position="60" />
+            <Guide Alignment="Left" Position="508" />
+            <Guide Alignment="Left" Position="109" />
+            <Guide Alignment="Left" Position="1258" />
           </Guides>
         </GuideModel>
       </GuideModels>
