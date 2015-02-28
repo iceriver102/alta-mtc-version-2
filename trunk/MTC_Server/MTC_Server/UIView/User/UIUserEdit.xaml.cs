@@ -22,6 +22,7 @@ namespace MTC_Server.UIView.User
     public partial class UIUserEdit : UserControl
     {
         public event EventHandler<Code.User.UserData> CloseEvent;
+        public event EventHandler<Code.User.UserData> DeleteUserEvent;
         private Code.User.UserData u;
         public Code.User.UserData User
         {
@@ -126,6 +127,32 @@ namespace MTC_Server.UIView.User
         private void ViewPermision(object sender, MouseButtonEventArgs e)
         {
             this.UILayout.Animation_Translate_Frame(double.NaN, double.NaN,double.NaN,-100);
+        }
+
+        private void DeleteUser(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn xoá tài khoản này không?", "Xoá tài khoản", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                Code.User.UserData.deleteUser(this.User);
+                if (this.DeleteUserEvent != null)
+                {
+                    this.DeleteUserEvent(this, this.u);
+                }
+            }
+        }
+
+        private void UIRootView_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Focus();
+        }
+
+        private void UIRootView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key== Key.Escape)
+            {
+                this.CloseDialog(null, null);
+            }
         }
     }
 }

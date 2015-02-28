@@ -78,6 +78,9 @@
     <Compile Include="Code\MysqlHelper.cs" />
     <Compile Include="Code\User\UserFunction.cs" />
     <Compile Include="Code\User\UserTypeData.cs" />
+    <Compile Include="UIView\Media\GridMedia.xaml.cs">
+      <DependentUpon>GridMedia.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,10 @@
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIView\Media\GridMedia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\MenuItem.xaml">
       <SubType>Designer</SubType>

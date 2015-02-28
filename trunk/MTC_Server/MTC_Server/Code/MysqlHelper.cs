@@ -12,7 +12,7 @@ namespace MTC_Server.Code
 
     public static class MysqlHelper
     {
-        public static List<UserData> getAllUser(int from, int number)
+        public static List<UserData> getAllUser(int from, int number, out int total)
         {
             List<UserData> datas = null;
             try
@@ -20,27 +20,37 @@ namespace MTC_Server.Code
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
-                    string query = "CALL `p_get_all_user` (@_number , @_from); ";
+                    //string query = "CALL `p_get_all_user` (@_number , @_from, @total); ";
+                    string query = "`p_get_all_user`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@_number", number);
-                        cmd.Parameters.AddWithValue("@_from", from);
+                        cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction= System.Data.ParameterDirection.Input, Value= number}) ;
+                        cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction= System.Data.ParameterDirection.Input, Value= from });
+                        cmd.Parameters.Add(new MySqlParameter("@total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output,Value=0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         var tmp = cmd.ExecuteScalar();
+
                         if (Convert.ToInt32(tmp) > 0)
                         {
+                            total = Convert.ToInt32( cmd.Parameters["@total"].Value);
                             using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
                                 datas = reader.toUsers();
                             }
                         }
+                        else
+                        {
+                            total = 0;
+                        }
                     };
                     conn.Close();
                 };
             }
-            catch (Exception)
+            catch (Exception )
             {
-
+                total = 0;
             }
+            
             return datas;
         }
         public static UserData InfoUser(int id)

@@ -5,28 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.User"
              mc:Ignorable="d" 
-             d:DesignHeight="488" d:DesignWidth="1366" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro">
+             d:DesignHeight="578" d:DesignWidth="1366" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro"  Style="{DynamicResource noBorder}" Focusable="True" IsTabStop="True" Loaded="UIRootView_Loaded" KeyUp="UIRootView_KeyUp">
     <Canvas x:Name="UIRoot" Background="#99000000" >
-        <Canvas x:Name="UIContent" Canvas.Left="524" Canvas.Top="8" Background="#FFF1F1F1" Height="468" Width="320">
+        <Canvas x:Name="UIContent" Canvas.Left="524" Canvas.Top="9" Background="#FFF1F1F1" Height="468" Width="320">
             <Canvas Height="35" Canvas.Left="0" Canvas.Top="0" Width="{Binding ElementName=UIContent,Path=Width}" Background="#FFE2471A">
                 <Grid Height="35" Width="{Binding ElementName=UIContent,Path=Width}">
-                    <TextBlock x:Name="UIName" HorizontalAlignment="Left" TextWrapping="NoWrap" Padding="5,0" Text="Phan Thanh Giang" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18" Foreground="White" FontWeight="SemiBold" />
+                    <TextBlock x:Name="UIName" HorizontalAlignment="Left" TextWrapping="NoWrap" Padding="5,0" Text="" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18" Foreground="White" FontWeight="SemiBold" />
                 </Grid>
             </Canvas>
-            <Canvas x:Name="UIMainInfo" Width="{Binding ElementName=UIContent, Path=Width}" Height="395" Canvas.Top="40" ClipToBounds="True">
+            <Canvas x:Name="UIMainInfo" Width="{Binding ElementName=UIContent, Path=Width}" Height="400" Canvas.Top="35" ClipToBounds="True">
                 <Canvas x:Name="UILayout" Width="{Binding ElementName=UIContent, Path=Width}" Height="513" Canvas.Top="0" Canvas.Left="0">
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Họ và tên:" Canvas.Top="6" Height="18.96" Width="87.46"/>
-                    <TextBox x:Name="UIFullnameEdit" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="27.96" Width="285" KeyUp="SubmitForm" TabIndex="100"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Địa chỉ email:" Canvas.Top="61" Height="18.96" Width="87.46" />
-                    <TextBox x:Name="UIEmailEdit" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="82.96" Width="285" KeyUp="SubmitForm" TabIndex="101"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Số điện thoại:" Canvas.Top="117" Height="18.96" Width="87.46"/>
-                    <TextBox x:Name="UIPhoneEdit" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="138.96" Width="285" KeyUp="SubmitForm" TabIndex="102"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu cũ:" Canvas.Top="172" Height="18.96" Width="87.46"/>
-                    <PasswordBox x:Name="UIOldPaswordEdit" Height="27" Canvas.Left="25"  Canvas.Top="193.96" Width="285" KeyUp="SubmitForm" TabIndex="103"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu mới:" Canvas.Top="227" Height="18.96" Width="110.46"/>
-                    <PasswordBox x:Name="UINewPaswordEdit" Height="27" Canvas.Left="25"  Canvas.Top="247.96" Width="285" KeyUp="SubmitForm" TabIndex="104"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Loại tài khoản" Canvas.Top="337" Height="18.96" Width="110.46"/>
-                    <ComboBox x:Name="UITypeUser" Canvas.Left="30" Canvas.Top="357" Width="280" TabIndex="106">
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Họ và tên:" Canvas.Top="9" Height="19" Width="87"/>
+                    <TextBox x:Name="UIFullnameEdit" Height="27" Canvas.Left="25" Padding="0,5" TextWrapping="NoWrap" Text="" Canvas.Top="31" Width="285" KeyUp="SubmitForm" TabIndex="100" MaxLines="1"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Địa chỉ email:" Canvas.Top="64" Height="19" Width="87" />
+                    <TextBox x:Name="UIEmailEdit"  Padding="0,5" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="86" Width="285" KeyUp="SubmitForm" TabIndex="101" MaxLines="1"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Số điện thoại:" Canvas.Top="120" Height="19" Width="87"/>
+                    <TextBox x:Name="UIPhoneEdit"  Padding="0,5" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="142" Width="285" KeyUp="SubmitForm" TabIndex="102" MaxLines="1"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu cũ:" Canvas.Top="175" Height="19" Width="87"/>
+                    <PasswordBox x:Name="UIOldPaswordEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="197" Width="285" KeyUp="SubmitForm" TabIndex="103" MaxLength="100"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu mới:" Canvas.Top="230" Height="19" Width="110"/>
+                    <PasswordBox x:Name="UINewPaswordEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="251" Width="285" KeyUp="SubmitForm" TabIndex="104" MaxLength="100"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Loại tài khoản:" Canvas.Top="340" Height="19" Width="110"/>
+                    <ComboBox x:Name="UITypeUser" Canvas.Left="25" Canvas.Top="360" Width="285" TabIndex="106">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="Gray" BorderThickness="0" Padding="3">
@@ -35,19 +35,17 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Xác nhận mật khẩu:" Canvas.Top="282.04" Height="18.96" Width="110.46"/>
-                    <PasswordBox x:Name="UIPaswordConfirmEdit" Height="27" Canvas.Left="25"  Canvas.Top="303" Width="285" KeyUp="SubmitForm" TabIndex="105"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Phân quyền:" Canvas.Top="386.4" Height="18.96" Width="110.46"/>
-                    <local:UIPermision x:Name="viewPermision" Height="100" Canvas.Top="396.96" Width="300" Canvas.Left="10"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Xác nhận mật khẩu:" Canvas.Top="285" Height="19" Width="110"/>
+                    <PasswordBox x:Name="UIPaswordConfirmEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="306" Width="285" KeyUp="SubmitForm" TabIndex="105" MaxLength="100"/>
+                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Phân quyền:" Canvas.Top="389" Height="19" Width="110"/>
+                    <local:UIPermision x:Name="viewPermision" Height="100" Canvas.Top="400" Width="300" Canvas.Left="10"/>
                 </Canvas>
             </Canvas>
-            <Canvas Height="43" Canvas.Top="425" Width="{Binding ElementName=UIContent,Path=Width}" Background="#FFE2471A">
-
-                <TextBlock x:Name="UIBtnSave" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="284" TextWrapping="NoWrap" Text="&#xf0c7;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" MouseLeftButtonUp="SaveUser" Tag="107" KeyUp="SubmitForm" Canvas.Top="6"/>
-                <TextBlock x:Name="UIBtnPermision" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="246" TextWrapping="NoWrap" Text="&#xf0e8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="108" MouseLeftButtonUp="ViewPermision" Canvas.Top="4"/>
-                <TextBlock x:Name="UIBtnRefill" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="206" TextWrapping="NoWrap" Text="&#xf13d;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" MouseLeftButtonUp="RefillEvent" Tag="109" Canvas.Top="5"/>
-                <TextBlock x:Name="UIBtnDelete" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="169" TextWrapping="NoWrap" Text="&#xf1f8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="110" Canvas.Top="4" />
-
+            <Canvas Height="42" Canvas.Top="426" Width="{Binding ElementName=UIContent,Path=Width}" Background="#FFE2471A">
+                <TextBlock x:Name="UIBtnSave" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="284" TextWrapping="NoWrap" Text="&#xf0c7;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" MouseLeftButtonUp="SaveUser" Tag="107" KeyUp="SubmitForm" Canvas.Top="8"/>
+                <TextBlock x:Name="UIBtnPermision" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="245" TextWrapping="NoWrap" Text="&#xf0e8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="108" MouseLeftButtonUp="ViewPermision" Canvas.Top="6"/>
+                <TextBlock x:Name="UIBtnRefill" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="206" TextWrapping="NoWrap" Text="&#xf13d;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" MouseLeftButtonUp="RefillEvent" Tag="109" Canvas.Top="7"/>
+                <TextBlock x:Name="UIBtnDelete" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="168" TextWrapping="NoWrap" Text="&#xf1f8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="110" Canvas.Top="6" MouseLeftButtonUp="DeleteUser"/>
             </Canvas>
 
         </Canvas>

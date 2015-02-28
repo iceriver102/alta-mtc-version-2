@@ -23,6 +23,7 @@ namespace MTC_Server.UIView
     {
         private Brush orginalColor;
         public event EventHandler ClickEvent;
+        public string Code { get; set; }
         public string Icon
         {
             get
