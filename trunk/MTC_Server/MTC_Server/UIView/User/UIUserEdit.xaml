@@ -46,6 +46,7 @@
                 <TextBlock x:Name="UIBtnPermision" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="245" TextWrapping="NoWrap" Text="&#xf0e8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="108" MouseLeftButtonUp="ViewPermision" Canvas.Top="6"/>
                 <TextBlock x:Name="UIBtnRefill" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="206" TextWrapping="NoWrap" Text="&#xf13d;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" MouseLeftButtonUp="RefillEvent" Tag="109" Canvas.Top="7"/>
                 <TextBlock x:Name="UIBtnDelete" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="168" TextWrapping="NoWrap" Text="&#xf1f8;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="110" Canvas.Top="6" MouseLeftButtonUp="DeleteUser"/>
+                <TextBlock x:Name="UIBtnReset" Cursor="Hand" Padding="0 3" TextAlignment="Center" Height="30" Canvas.Left="133" TextWrapping="NoWrap" Text="&#xf021;" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Tag="110" Canvas.Top="6" MouseLeftButtonUp="ResetPassword"/>
             </Canvas>
 
         </Canvas>

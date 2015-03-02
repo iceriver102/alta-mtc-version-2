@@ -50,6 +50,7 @@ namespace MTC_Server.UIView.User
                     item.Width = 200;
                     item.ViewInfoUserEvent += Item_ViewInfouserEvent;
                     item.DeleteUserEvent += Item_DeleteUserEvent;
+                    item.ViewPermison += Item_ViewPermison;
                     this.list_Box_Item.Items.Add(item);
                 }
             }
@@ -66,6 +67,23 @@ namespace MTC_Server.UIView.User
             }else
             {
                 this.UILeftBtn.Foreground = Brushes.Gray; 
+            }
+        }
+
+        private void Item_ViewPermison(object sender, UserData e)
+        {
+            if (e != null)
+            {
+                UIUserEdit item = new UIUserEdit();
+                item.setLeft(0);
+                item.setTop(90);
+                item.Width = 1366;
+                item.Height = 578;
+                item.User = e;
+                item.isPermison = true;
+                item.CloseEvent += Item_CloseEvent;
+                item.DeleteUserEvent += Item_DeleteUserEvent1;
+                this.UIRoot.Children.Add(item);
             }
         }
 

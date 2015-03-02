@@ -15,7 +15,7 @@
             <TextBlock x:Name="UIDate" Height="20" Canvas.Left="29" Text="01/01/1990" Canvas.Top="82" Width="161" FontSize="13.333" Foreground="Black"/>
             <TextBlock Height="14" Canvas.Left="6" Text="&#xf0ac;" TextAlignment="Center" Canvas.Top="5" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
             <TextBlock Height="14" Canvas.Left="6" Text="&#xf073;" TextAlignment="Center" Canvas.Top="83" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
-            <TextBlock Height="15" Canvas.Left="6" Text="&#xf10b;" TextAlignment="Center" Canvas.Top="54" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16" Foreground="#FFFF6800"/>
+            <TextBlock Height="15" Canvas.Left="6" Text="&#xf095;" TextAlignment="Center" Canvas.Top="54" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16" Foreground="#FFFF6800"/>
             <TextBlock Height="14" Canvas.Left="6" Text="&#xf1fa;" TextAlignment="Center" Canvas.Top="29" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
         </Canvas>
         <Canvas Height="30" Canvas.Left="0" Canvas.Top="0"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
@@ -23,7 +23,7 @@
                 <TextBlock x:Name="UIFullName" Padding="10 0"  TextWrapping="WrapWithOverflow" Text="Phan Thanh Giang" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="#FFFF3A00" VerticalAlignment="Center" FontSize="14.333" FontWeight="SemiBold" />
             </Grid>
         </Canvas>
-        <Canvas x:Name="UIBar" Height="30" Canvas.Top="260"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
+        <Canvas x:Name="UIBar" Height="30" Canvas.Top="240"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
             <Grid Height="30" Canvas.Left="0" Canvas.Top="0" Width="160">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="32"/>
@@ -34,11 +34,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="UIBtnView" Grid.Column="0"  TextWrapping="NoWrap" Text="&#xf05a;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="20" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseLeftButtonUp="ViewInfoUser" Cursor="Hand"  />
                 <TextBlock x:Name="UIBtnDel" Grid.Column="1" TextWrapping="NoWrap" Text="&#xf1f8;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="19" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseLeftButtonUp="DeleteUser" Cursor="Hand"/>
-                <TextBlock x:Name="UIBtnMedia" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf008;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="18" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <TextBlock x:Name="UIBtnMedia" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf008;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="18" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Cursor="Hand"/>
+                <TextBlock x:Name="UIBtnPermision" Grid.Column="3" TextWrapping="NoWrap" Text="&#xf0e8;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="18" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="PermisionUser"/>
             </Grid>
         </Canvas>
         <TextBlock x:Name="UIStatus" Height="20" Canvas.Left="174" TextWrapping="NoWrap" Cursor="Hand" Text="&#xf023;" Canvas.Top="93" Width="20" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="18.667" TextAlignment="Center" Foreground="#FFDE4A1F" MouseLeftButtonUp="UIStatus_MouseLeftButtonUp"/>
-
-
     </Canvas>
 </UserControl>
