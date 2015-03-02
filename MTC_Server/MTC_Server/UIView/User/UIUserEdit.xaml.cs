@@ -23,6 +23,22 @@ namespace MTC_Server.UIView.User
     {
         public event EventHandler<Code.User.UserData> CloseEvent;
         public event EventHandler<Code.User.UserData> DeleteUserEvent;
+        private bool _isPermison = false;
+        public bool isPermison
+        {
+            get
+            {
+                return this._isPermison;
+            }
+            set
+            {
+                this._isPermison = value;
+                if(value)
+                    this.UILayout.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, -100);
+                else
+                    this.UILayout.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 0);
+            }
+        }
         private Code.User.UserData u;
         public Code.User.UserData User
         {
@@ -126,7 +142,7 @@ namespace MTC_Server.UIView.User
 
         private void ViewPermision(object sender, MouseButtonEventArgs e)
         {
-            this.UILayout.Animation_Translate_Frame(double.NaN, double.NaN,double.NaN,-100);
+            this.isPermison = !this.isPermison;
         }
 
         private void DeleteUser(object sender, MouseButtonEventArgs e)
@@ -152,6 +168,18 @@ namespace MTC_Server.UIView.User
             if(e.Key== Key.Escape)
             {
                 this.CloseDialog(null, null);
+            }
+        }
+
+        private void ResetPassword(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn tạo mật khẩu tự động cho tài khoản này không?", "Tạo mật khẩu", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                string Pass = StringExtensions.RandomString(6);
+                this.u.Pass = Pass;
+                this.u.Save();
+                MessageBox.Show(string.Format("Mật khẩu: {0}",Pass),"Tạo mật khẩu tự động");
             }
         }
     }

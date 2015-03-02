@@ -33,9 +33,25 @@ namespace Alta.Class
             return Regex.Replace(
                 value,
                 @"\\u(?<Value>[a-zA-Z0-9]{4})",
-                m => {
+                m =>
+                {
                     return ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString();
                 });
         }
+
+        public static string RandomString(int size)
+        {
+            Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
+            StringBuilder builder = new StringBuilder();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+
+            return builder.ToString();
+        }
+
     }
 }

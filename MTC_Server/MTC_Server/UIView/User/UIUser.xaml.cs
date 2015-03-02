@@ -25,6 +25,7 @@ namespace MTC_Server.UIView.User
     {
         public event EventHandler<UserData> ViewInfoUserEvent;
         public event EventHandler<UserData> DeleteUserEvent;
+        public event EventHandler<UserData> ViewPermison;
         private UserData _u;
         public UserData User
         {
@@ -94,21 +95,32 @@ namespace MTC_Server.UIView.User
 
         private void ViewInfoUser(object sender, MouseButtonEventArgs e)
         {
-            if (this.ViewInfoUserEvent != null)
+            if (this.ViewInfoUserEvent != null && App.curUser.Permision.mana_user)
             {
                 this.ViewInfoUserEvent(this, this.User);
             }
         }
         private void DeleteUser(object sender, MouseButtonEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn xoá tài khoản này không?", "Xoá tài khoản", System.Windows.MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            if (App.curUser.Permision.mana_user)
             {
-                UserData.deleteUser(this.User);
-                if (this.DeleteUserEvent != null)
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn xoá tài khoản này không?", "Xoá tài khoản", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    this.DeleteUserEvent(this, this._u);
+                    UserData.deleteUser(this.User);
+                    if (this.DeleteUserEvent != null)
+                    {
+                        this.DeleteUserEvent(this, this._u);
+                    }
                 }
+            }
+        }
+
+        private void PermisionUser(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ViewPermison != null && App.curUser.Permision.mana_user)
+            {
+                this.ViewPermison(this, this.User);
             }
         }
     }
