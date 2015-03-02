@@ -75,11 +75,17 @@
     <Compile Include="Class\EasyTimer.cs" />
     <Compile Include="Class\FontIconDefine.cs" />
     <Compile Include="Class\StringExtensions.cs" />
+    <Compile Include="Code\Media\MediaData.cs" />
+    <Compile Include="Code\Media\MediaFunction.cs" />
+    <Compile Include="Code\Media\TypeMedia.cs" />
     <Compile Include="Code\MysqlHelper.cs" />
     <Compile Include="Code\User\UserFunction.cs" />
     <Compile Include="Code\User\UserTypeData.cs" />
     <Compile Include="UIView\Media\GridMedia.xaml.cs">
       <DependentUpon>GridMedia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Media\UIMedia.xaml.cs">
+      <DependentUpon>UIMedia.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIView\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
@@ -137,6 +143,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIView\Media\GridMedia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Media\UIMedia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

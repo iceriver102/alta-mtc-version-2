@@ -5,12 +5,140 @@ using System.Text;
 using System.Threading.Tasks;
 using MTC_Server.Code;
 using MTC_Server.Code.User;
+using MTC_Server.Code.Media;
 using MySql.Data.MySqlClient;
 
 namespace Alta.Class
 {
     public static class MysqlExtensions
     {
+        public static List<MediaData> toMedias(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<MediaData> datas = new List<MediaData>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        MediaData m = new MediaData();
+                        m.ID = reader.GetInt32(Define.media_id);
+                        m.Name = reader.GetString(Define.media_name);
+                        m.Url = reader.GetString(Define.media_url);
+                        m.Type = reader.GetInt32(Define.media_type);
+                        try
+                        {
+                            m.FileSize = reader.GetString(Define.media_size);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            m.Duration = reader.GetDateTime(Define.media_duration);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        m.Time = reader.GetDateTime(Define.media_time);
+                        m.Status = reader.GetBoolean(Define.media_status);
+                        datas.Add(m);
+                    }
+
+                }
+                return datas;
+            }
+            return null;
+        }
+        public static MediaData toMedia(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                MediaData m = new MediaData();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        m.ID = reader.GetInt32(Define.media_id);
+                        m.Name = reader.GetString(Define.media_name);
+                        m.Url = reader.GetString(Define.media_url);
+                        m.Type = reader.GetInt32(Define.media_type);
+                        m.FileSize = reader.GetString(Define.media_size);
+                        try
+                        {
+                            m.FileSize = reader.GetString(Define.media_size);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            m.Duration = reader.GetDateTime(Define.media_duration);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        m.Status = reader.GetBoolean(Define.media_status);
+                    }
+                }
+                return m;
+            }
+            return null;
+        }
+        public static List<TypeMedia> toTypeMedias(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<TypeMedia> types = new List<TypeMedia>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        TypeMedia type = new TypeMedia();
+                        type.Id = reader.GetInt32(Define.type_id);
+                        type.Name = reader.GetString(Define.type_name);
+                        try
+                        {
+                            type.Icon = reader.GetString(Define.type_icon);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        types.Add(type);
+                    }
+                }
+                return types;
+            }
+            return null;
+
+        }
+        public static TypeMedia toTypeMedia(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                TypeMedia type = new TypeMedia();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+
+                        type.Id = reader.GetInt32(Define.type_id);
+                        type.Name = reader.GetString(Define.type_name);
+                        try
+                        {
+                            type.Icon = reader.GetString(Define.type_icon);
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                    }
+
+                }
+                return type;
+            }
+            return null;
+        }
         public static UserData toUser(this MySqlDataReader reader)
         {
             UserData u = null;
@@ -33,8 +161,6 @@ namespace Alta.Class
                     }
                     catch (Exception)
                     {
-
-                        
                     }
                     try
                     {
@@ -42,7 +168,6 @@ namespace Alta.Class
                     }
                     catch (Exception)
                     {
-
                     }
 
                     try
@@ -51,7 +176,6 @@ namespace Alta.Class
                     }
                     catch (Exception)
                     {
-
                     }
                 }
             }
@@ -80,8 +204,6 @@ namespace Alta.Class
                         }
                         catch (Exception)
                         {
-
-                           
                         }
                         try
                         {
@@ -89,8 +211,6 @@ namespace Alta.Class
                         }
                         catch (Exception)
                         {
-
-
                         }
                         try
                         {
@@ -98,8 +218,6 @@ namespace Alta.Class
                         }
                         catch (Exception)
                         {
-
-
                         }
                         u.User_Name = reader.GetString(Define.user_name);
                         results.Add(u);

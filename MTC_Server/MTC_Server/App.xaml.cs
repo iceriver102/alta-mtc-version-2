@@ -9,6 +9,7 @@ using Alta.Class;
 using MySql.Data.MySqlClient;
 using MTC_Server.Code;
 using MTC_Server.Code.User;
+using MTC_Server.Code.Media;
 
 namespace MTC_Server
 {
@@ -24,11 +25,13 @@ namespace MTC_Server
         public static AltaCache cache;
         public static string CacheName = "cache.xml";
         public static List<UserTypeData> TypeUsers;
+        public static List<TypeMedia> TypeMedias;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             setting = Config.Read(FileName);
             cache = AltaCache.Read(CacheName);
             TypeUsers = MysqlHelper.getTypeUserAll();
+            TypeMedias = TypeMedia.getList();
 
             if (cache.autoLogin && !string.IsNullOrEmpty(cache.hashUserName))
             {
@@ -85,10 +88,13 @@ namespace MTC_Server
 
         public static UserTypeData selectType(int id)
         {
-            foreach (UserTypeData data in TypeUsers)
+            if (TypeUsers != null)
             {
-                if (data.Id == id)
-                    return data;
+                foreach (UserTypeData data in TypeUsers)
+                {
+                    if (data.Id == id)
+                        return data;
+                }
             }
             return null;
         }

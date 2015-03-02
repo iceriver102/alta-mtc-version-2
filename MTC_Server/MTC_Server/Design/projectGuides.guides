@@ -89,8 +89,7 @@
           <Guides>
             <Guide Alignment="Top" Position="120" />
             <Guide Alignment="Bottom" Position="60" />
-            <Guide Alignment="Left" Position="508" />
-            <Guide Alignment="Left" Position="109" />
+            <Guide Alignment="Left" Position="682" />
             <Guide Alignment="Left" Position="1258" />
           </Guides>
         </GuideModel>

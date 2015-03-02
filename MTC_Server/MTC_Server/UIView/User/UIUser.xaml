@@ -23,7 +23,7 @@
                 <TextBlock x:Name="UIFullName" Padding="10 0"  TextWrapping="WrapWithOverflow" Text="Phan Thanh Giang" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="#FFFF3A00" VerticalAlignment="Center" FontSize="14.333" FontWeight="SemiBold" />
             </Grid>
         </Canvas>
-        <Canvas x:Name="UIBar" Height="30" Canvas.Top="240"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
+        <Canvas x:Name="UIBar" Height="30" Canvas.Top="260"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
             <Grid Height="30" Canvas.Left="0" Canvas.Top="0" Width="160">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="32"/>
