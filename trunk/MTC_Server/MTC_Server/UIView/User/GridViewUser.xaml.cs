@@ -26,6 +26,7 @@ namespace MTC_Server.UIView.User
         public int totalUser;
         public int to = 10;
         public int from=0;
+        public string key;
         public GridViewUser()
         {
             InitializeComponent();
@@ -161,7 +162,11 @@ namespace MTC_Server.UIView.User
                 if (this.from < 0)
                     this.from = 0;
                 this.to -= 10;
-                this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+                else
+                    this.Datas = UserData.SearchUser(this.key, this.from, this.to, out this.totalUser);
+
                 LoadGUI();
             }
         }
@@ -172,7 +177,11 @@ namespace MTC_Server.UIView.User
             {
                 this.from = this.to;
                 this.to += 10;
-                this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+                else
+                    this.Datas = UserData.SearchUser(this.key, this.from, this.to, out this.totalUser);
+
                 LoadGUI();
             }
         }
@@ -189,6 +198,64 @@ namespace MTC_Server.UIView.User
                 UIRightBtn_MouseLeftButtonUp(null, null);
                 this.Focus();
             }
+            e.Handled = true;
+        }
+
+        private void UISearchEdit_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.UIOverText.Animation_Opacity_View_Frame(false);
+        }
+
+        private void UISearchEdit_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                string key = this.UISearchEdit.Text.Trim();
+                if (key.Length > 3) {
+                    this.key = string.Format("%{0}%",key);
+                    to = 10;
+                    from = 0;
+                    this.Datas = UserData.SearchUser(this.key, from, to, out this.totalUser);
+                    this.LoadGUI();
+                }
+            }else if(e.Key== Key.Escape)
+            {
+                this.UISearchEdit.Text = "";
+                if (!string.IsNullOrEmpty(this.key))
+                {
+                    this.to = 10;
+                    this.from = 0;
+                    this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+                    this.LoadGUI();
+                }
+                this.Focus();
+            }
+        }
+
+        private void UISearchEdit_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.UIOverText.Animation_Opacity_View_Frame(true);
+        }
+
+        private void UIReload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.UISearchEdit.Text = "";
+            this.Focus();
+            this.to = 10;
+            this.from = 0;
+            this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
+            this.LoadGUI();
+        }
+
+        private void UIBtnAddUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            UIUserEdit item = new UIUserEdit();
+            item.setLeft(0);
+            item.setTop(90);
+            item.Width = 1366;
+            item.Height = 578;
+            item.CloseEvent += Item_CloseEvent;
+            this.UIRoot.Children.Add(item);
         }
     }
 }

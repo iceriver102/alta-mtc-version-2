@@ -12,7 +12,7 @@ namespace Alta.Class
     {
         private static bool invalid = false;
 
-        public static bool isValidPhone(string strIn)
+        public static bool isValidPhone(this string strIn)
         {
             //\(?\d{3}\)?-? *\d{3}-? *-?\d{4}
             if (string.IsNullOrEmpty(strIn))
@@ -23,7 +23,7 @@ namespace Alta.Class
 
         }
 
-        public static bool isValidNumber(string strIn)
+        public static bool isValidNumber(this string strIn)
         {
             //Regex regex = new Regex(@"^\d$");
             if (string.IsNullOrEmpty(strIn))
@@ -33,7 +33,7 @@ namespace Alta.Class
                       RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
         }
 
-        public static bool IsValidEmail(string strIn)
+        public static bool IsValidEmail(this string strIn)
         {
             invalid = false;
             if (String.IsNullOrEmpty(strIn))
@@ -66,7 +66,13 @@ namespace Alta.Class
                 return false;
             }
         }
-
+        public static bool  isUserName(this string data)
+        {
+            //^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$;
+            return Regex.IsMatch(data,
+                      @"^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$",
+                      RegexOptions.None, TimeSpan.FromMilliseconds(250));
+        }
         private static string DomainMapper(Match match)
         {
             // IdnMapping class with default property values.

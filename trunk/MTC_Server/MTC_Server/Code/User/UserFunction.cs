@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alta.Class;
 
 namespace MTC_Server.Code.User
 {
@@ -13,11 +14,11 @@ namespace MTC_Server.Code.User
         {
             return MysqlHelper.InfoUser(id);
         }
-        public List<UserData> getListUser(int from,int to,out int total)
+        public List<UserData> getListUser(int from, int to, out int total)
         {
             if (this.Permision.mana_user)
             {
-                return MysqlHelper.getAllUser(from, to-from,out total);
+                return MysqlHelper.getAllUser(from, to - from, out total);
             }
             List<UserData> data = new List<UserData>();
             data.Add(this);
@@ -50,6 +51,76 @@ namespace MTC_Server.Code.User
             {
 
             }
+        }
+        public static List<UserData> SearchUser(string key, int from, int to, out int total)
+        {
+            //CALL `p_search_user` (@p0, @p1, @p2, @p3);
+            List<UserData> datas = null;
+            total = 0;
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_search_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = key });
+                        cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
+                        cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
+                        cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        var tmp = cmd.ExecuteScalar();
+                        if (Convert.ToInt32(tmp) > 0)
+                        {
+                            total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                datas = reader.toUsers();
+                            }
+                        }
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+            }
+            return datas;
+        }
+        public static int insertUser(UserData u)
+        {
+            int result = 0;
+            try
+            {
+
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_insert_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_fullname", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = u.Full_Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.User_Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_pass", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.Pass });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = u.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_phone", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Phone });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_email", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Email });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        result = Convert.ToInt32(cmd.Parameters["@_result"].Value);
+
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception )
+            {
+               
+            }
+            return result;
         }
         public void savePermission()
         {

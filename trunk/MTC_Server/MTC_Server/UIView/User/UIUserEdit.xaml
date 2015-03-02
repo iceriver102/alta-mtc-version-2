@@ -21,12 +21,13 @@
                     <TextBox x:Name="UIEmailEdit"  Padding="0,5" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="86" Width="285" KeyUp="SubmitForm" TabIndex="101" MaxLines="1"/>
                     <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Số điện thoại:" Canvas.Top="120" Height="19" Width="87"/>
                     <TextBox x:Name="UIPhoneEdit"  Padding="0,5" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="142" Width="285" KeyUp="SubmitForm" TabIndex="102" MaxLines="1"/>
-                    <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu cũ:" Canvas.Top="175" Height="19" Width="87"/>
+                    <TextBlock x:Name="UILBChange"  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu cũ:" Canvas.Top="175" Height="19" Width="87"/>
                     <PasswordBox x:Name="UIOldPaswordEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="197" Width="285" KeyUp="SubmitForm" TabIndex="103" MaxLength="100"/>
+                    <TextBox x:Name="UIUserNameEdit"  Padding="0,5" Height="27" Canvas.Left="25" TextWrapping="NoWrap" Text="" Canvas.Top="194" Width="285" KeyUp="SubmitForm" TabIndex="103" MaxLines="1"/>
                     <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Mật khẩu mới:" Canvas.Top="230" Height="19" Width="110"/>
                     <PasswordBox x:Name="UINewPaswordEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="251" Width="285" KeyUp="SubmitForm" TabIndex="104" MaxLength="100"/>
                     <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Loại tài khoản:" Canvas.Top="340" Height="19" Width="110"/>
-                    <ComboBox x:Name="UITypeUser" Canvas.Left="25" Canvas.Top="360" Width="285" TabIndex="106">
+                    <ComboBox x:Name="UITypeUser" Canvas.Left="25" Canvas.Top="360" Width="285" TabIndex="106" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="Gray" BorderThickness="0" Padding="3">
@@ -39,6 +40,7 @@
                     <PasswordBox x:Name="UIPaswordConfirmEdit"  Padding="0,5" Height="27" Canvas.Left="25"  Canvas.Top="306" Width="285" KeyUp="SubmitForm" TabIndex="105" MaxLength="100"/>
                     <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Phân quyền:" Canvas.Top="389" Height="19" Width="110"/>
                     <local:UIPermision x:Name="viewPermision" Height="100" Canvas.Top="400" Width="300" Canvas.Left="10"/>
+                    
                 </Canvas>
             </Canvas>
             <Canvas Height="42" Canvas.Top="426" Width="{Binding ElementName=UIContent,Path=Width}" Background="#FFE2471A">
