@@ -87,6 +87,9 @@
     <Compile Include="UIView\Media\UIMedia.xaml.cs">
       <DependentUpon>UIMedia.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIView\Media\UIMediaEdit.xaml.cs">
+      <DependentUpon>UIMediaEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\Media\UIMedia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Media\UIMediaEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

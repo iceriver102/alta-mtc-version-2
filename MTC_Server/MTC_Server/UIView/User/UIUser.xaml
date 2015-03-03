@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MTC_Server.UIView"
              mc:Ignorable="d" 
              d:DesignHeight="270" d:DesignWidth="200" x:Name="UIRootView" MouseEnter="UIRootView_MouseEnter" MouseLeave="UIRootView_MouseLeave" MouseLeftButtonUp="UIRootView_MouseLeftButtonUp" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" >
-    <Canvas x:Name="UIRoot" Background="#CCDADADA" ClipToBounds="True">
+    <Canvas x:Name="UIRoot" Background="White" ClipToBounds="True">
         <TextBlock x:Name="UIIcon" Height="90" Padding="3" TextWrapping="NoWrap" TextAlignment="Center" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="76" Canvas.Top="30"><Run Text="&#xF007;"/></TextBlock>
         <Canvas Height="110" Canvas.Top="117"  Width="{Binding ElementName=UIRootView, Path=Width}">
             <TextBlock x:Name="UIType" Height="20" Canvas.Left="29"  Text="Administrator" Canvas.Top="5" Width="161" FontSize="12.333" Foreground="Black"/>

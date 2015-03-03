@@ -19,7 +19,7 @@
             <TextBlock  Height="21" Canvas.Left="8" TextWrapping="NoWrap" Text="&#xf1e6;" Width="23" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16" Foreground="#FFFB7A0F" Canvas.Top="51"/>
             <TextBlock  Height="21" Canvas.Left="8" TextWrapping="NoWrap" Text="&#xf007;" Width="23" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16" Foreground="#FFFB7A0F" Canvas.Top="74"/>
         </Canvas>
-        <TextBlock x:Name="UIBtnStatus" Height="23" Canvas.Left="143" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="102" Width="17" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Foreground="#FFF76500"/>
+        <TextBlock x:Name="UIBtnStatus" Height="23" Canvas.Left="146" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="102" Width="17" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Foreground="#FFF76500"/>
 
     </Canvas>
 </UserControl>
