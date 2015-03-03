@@ -201,5 +201,13 @@ namespace MTC_Server.UIView.Media
                 
             }
         }
+
+        private void UIBtnClose_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.CloseEvent != null)
+            {
+                this.CloseEvent(this, null);
+            }
+        }
     }
 }
