@@ -79,13 +79,10 @@ namespace MTC_Server.UIView.Media
                 }
                 else if(this.Media!=null)
                 {
-                    FileInfo file = new FileInfo(this.UILocalFile.Text);
-                    Code.Media.MediaData tmpMedia = new Code.Media.MediaData();
                     this.Media.Name = this.UINameEdit.Text.Trim();
-                    this.Media.FileSize = string.Format("{0}kb", file.Length / 1000);
-                    this.Media.Duration = file.toTimeMedia();
                     this.Media.Type = 1;
                     this.Media.Url = this.UIUrlEdit.Text;
+                    this.Media.Comment = this.UICommentEdit.Text;
                     this.Media.Save();
                     if (this.CloseEvent != null)
                     {
@@ -96,18 +93,32 @@ namespace MTC_Server.UIView.Media
             }
             else
             {
-                tmpMedia.Name = this.UINameEdit.Text.Trim();
-                tmpMedia.Comment = this.UICommentEdit.Text;
-                int result= Code.Media.MediaData.Insert(tmpMedia);
-                if (result <= 0)
+                if (this.UIFtp.Local == this.UILocalFile.Text)
                 {
-                    MessageBox.Show("Không thể kết nối với CSDL!");
-                    return;
+                    tmpMedia.Name = this.UINameEdit.Text.Trim();
+                    tmpMedia.Comment = this.UICommentEdit.Text;
+                    int result = Code.Media.MediaData.Insert(tmpMedia);
+                    if (result <= 0)
+                    {
+                        MessageBox.Show("Không thể kết nối với CSDL!");
+                        return;
+                    }
+                    tmpMedia.ID = result;
+                    if (this.CloseEvent != null)
+                    {
+                        this.CloseEvent(this, tmpMedia);
+                    }
                 }
-                tmpMedia.ID = result;
-                if (this.CloseEvent != null)
+                else
                 {
-                    this.CloseEvent(this, tmpMedia);
+                    FileInfo file = new FileInfo(this.UILocalFile.Text);
+                    if (!file.Exists)
+                    {
+                        MessageBox.Show("Không tìm thấy file!");
+                        return;
+                    }
+                    this.UIFtp.Local = this.UILocalFile.Text;
+                    this.UIFtp.RunUpLoad();
                 }
             }
         }

@@ -78,9 +78,28 @@ namespace MTC_Server.UIView.Media
                 item.Media = m;
                 item.Height = 240;
                 item.Width = 170;
+                item.ViewInfoMediaEvent += Item_ViewInfoMediaEvent;
                 this.list_Box_Item.Items.Add(item);
             }
         }
+
+        private void Item_ViewInfoMediaEvent(object sender, Code.Media.MediaData e)
+        {
+            if (e != null)
+            {
+                UIMediaEdit item = new UIMediaEdit();
+                item.CloseEvent += Item_CloseEvent;
+                item.setLeft(0);
+                item.setTop(90);
+                item.Width = 1366;
+                item.Height = 578;
+                item.Media = e;
+                this.UIRoot.Children.Add(item);
+
+            }
+        }
+
+       
 
         private void UIReload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

@@ -22,6 +22,9 @@ namespace MTC_Server.UIView.Media
     /// </summary>
     public partial class UIMedia : UserControl
     {
+        public event EventHandler<Code.Media.MediaData> ViewInfoMediaEvent;
+        public event EventHandler<Code.Media.MediaData> DeleteMediaEvent;
+        public event EventHandler<Code.Media.MediaData> PlayMediaevent;
         private MediaData m;
         public MediaData Media
         {
@@ -81,6 +84,30 @@ namespace MTC_Server.UIView.Media
                 {
                     this.UIBtnStatus.Text = Define.Fonts["fa-unlock"].Code;
                 }
+            }
+        }
+
+        private void UIBtnInfo_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ViewInfoMediaEvent != null)
+            {
+                this.ViewInfoMediaEvent(this, this.Media);
+            }
+        }
+
+        private void UIBtnDelete_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.DeleteMediaEvent != null)
+            {
+                this.DeleteMediaEvent(this, this.Media);
+            }
+        }
+
+        private void UIBtnPlay_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.PlayMediaevent != null)
+            {
+                this.PlayMediaevent(this, this.Media);
             }
         }
     }
