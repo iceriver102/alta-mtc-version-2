@@ -45,11 +45,11 @@ namespace MTC_Server.UIView.User
                 this.UIDate.Text = this._u.Time.format();
                 if (this._u.Status)
                 {
-                    this.UIStatus.Text = Define.Fonts["fa-unlock"].asCode;
+                    this.UIStatus.Text = Define.Fonts["fa-unlock"].Code;
                 }
                 else
                 {
-                    this.UIStatus.Text = Define.Fonts["fa-lock"].asCode;
+                    this.UIStatus.Text = Define.Fonts["fa-lock"].Code;
                 }
             }
         }
@@ -83,11 +83,11 @@ namespace MTC_Server.UIView.User
                 this._u.Status = !this._u.Status;
                 if (this._u.Status)
                 {
-                    this.UIStatus.Text = Define.Fonts["fa-unlock"].asCode;
+                    this.UIStatus.Text = Define.Fonts["fa-unlock"].Code;
                 }
                 else
                 {
-                    this.UIStatus.Text = Define.Fonts["fa-lock"].asCode;
+                    this.UIStatus.Text = Define.Fonts["fa-lock"].Code;
                 }
                 this._u.UpdateStatus();
             }

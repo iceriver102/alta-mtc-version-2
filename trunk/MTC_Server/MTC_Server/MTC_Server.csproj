@@ -81,7 +81,7 @@
     <Compile Include="Class\CsvFileWriter.cs" />
     <Compile Include="Class\DateTimeExtensions.cs" />
     <Compile Include="Class\EasyTimer.cs" />
-    <Compile Include="Class\FontIconDefine.cs" />
+    <Compile Include="Class\ExCss.cs" />
     <Compile Include="Class\StringExtensions.cs" />
     <Compile Include="Class\TimeExtensions.cs" />
     <Compile Include="Code\Media\MediaData.cs" />
@@ -245,6 +245,9 @@
     <Resource Include="Asset\Images\logo.png" />
     <Resource Include="Asset\Images\bg_header.png" />
     <Resource Include="Asset\Images\btn_menu.png" />
+    <Content Include="Asset\Fonts\font-awesome.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
     <Content Include="Plugin\Microsoft.WindowsAPICodePack.dll" />
     <Content Include="Plugin\Microsoft.WindowsAPICodePack.Shell.dll" />

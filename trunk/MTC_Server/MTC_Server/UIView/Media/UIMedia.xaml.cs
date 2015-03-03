@@ -36,11 +36,11 @@ namespace MTC_Server.UIView.Media
                     this.UIIcon.Text = this.m.TypeMedia.Icon.DecodeEncodedNonAsciiCharacters();
                 if (!this.Media.Status)
                 {
-                    this.UIBtnStatus.Text = Define.Fonts["fa-lock"].asCode;
+                    this.UIBtnStatus.Text = Define.Fonts["fa-lock"].Code;
                 }
                 else
                 {
-                    this.UIBtnStatus.Text = Define.Fonts["fa-unlock"].asCode;
+                    this.UIBtnStatus.Text = Define.Fonts["fa-unlock"].Code;
                 }
                 this.UITitle.Text = this.m.Name;
                 this.UITime.Text = this.m.Duration.ToString();
@@ -75,11 +75,11 @@ namespace MTC_Server.UIView.Media
                 this.Media.saveStatus();
                 if (!this.Media.Status)
                 {
-                    this.UIBtnStatus.Text = Define.Fonts["fa-lock"].asCode;
+                    this.UIBtnStatus.Text = Define.Fonts["fa-lock"].Code;
                 }
                 else
                 {
-                    this.UIBtnStatus.Text = Define.Fonts["fa-unlock"].asCode;
+                    this.UIBtnStatus.Text = Define.Fonts["fa-unlock"].Code;
                 }
             }
         }

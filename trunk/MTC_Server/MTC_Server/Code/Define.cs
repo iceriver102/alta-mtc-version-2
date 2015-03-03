@@ -12,7 +12,7 @@ namespace MTC_Server.Code
         /// <summary>
         /// Font Define
         /// </summary>
-        public static FontIconDefine Fonts = new FontIconDefine();
+        public static FontIcons Fonts;
         /// <summary>
         /// dinh nghia table user
         /// </summary>

@@ -28,6 +28,7 @@ namespace MTC_Server
         public static MediaTypeArray TypeMedias;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            Define.Fonts = ExCss.ReadFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,@"Asset\Fonts\font-awesome.min.css"));
             setting = Config.Read(FileName);
             cache = AltaCache.Read(CacheName);
             TypeUsers = MysqlHelper.getTypeUserAll();
