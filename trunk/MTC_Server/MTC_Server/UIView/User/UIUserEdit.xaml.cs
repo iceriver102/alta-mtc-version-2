@@ -213,6 +213,7 @@ namespace MTC_Server.UIView.User
                 this.UIOldPaswordEdit.IsEnabled = false;
                 this.UIOldPaswordEdit.Visibility = Visibility.Hidden;
                 this.UILBChange.Text = "Tên đăng nhập:";
+                this.UIName.Text = "Thêm người dùng mới.";
             }
         }
 

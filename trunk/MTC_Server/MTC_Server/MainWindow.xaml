@@ -7,7 +7,7 @@
         xmlns:UIView="clr-namespace:MTC_Server.UIView" xmlns:User="clr-namespace:MTC_Server.UIView.User" x:Class="MTC_Server.MainWindow"
         mc:Ignorable="d"
         Title="MTC " Height="768" Width="1366" WindowStyle="None" AllowsTransparency="True" WindowState="Maximized" ResizeMode="CanMinimize" Loaded="Window_Loaded">
-    <Canvas x:Name="UIRoot" Height="768" Width="1366">
+    <Canvas x:Name="UIRoot" Height="768" Width="1366" Background="#FFEDEDED">
         <Canvas x:Name="UIMenu" Height="159" Width="1366" Canvas.Left="0" Canvas.Top="-64">
             <Image x:Name="bg_header" Height="159" Source="Asset/Images/bg_header.png" Stretch="Fill" Width="1366"/>
             <UIView:MenuItem Height="72" Canvas.Left="325" Canvas.Top="53" Width="70" Text="Người Dùng" Icon="&#xF0C0;" FontSize="11" isActive="True" ClickEvent="MenuItem_ClickEvent" Code="User"/>
