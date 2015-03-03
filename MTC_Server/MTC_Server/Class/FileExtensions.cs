@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Alta.Class
 {
@@ -27,6 +28,20 @@ namespace Alta.Class
                     stream.Close();
             }
             return false;
+        }
+        public static string toTimeMedia(this FileInfo file)
+        {
+            ShellFile so = ShellFile.FromFilePath(file.FullName);
+            double nanoseconds;
+            double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out nanoseconds);
+            TimeSpan tmp = new TimeSpan();
+            if (nanoseconds > 0)
+            {
+                double seconds = nanoseconds / 10000000;
+                tmp = seconds.secondToTimeSpan();
+
+            }
+            return tmp.Format();
         }
         /*
         public static string ConvertImageToBase64(this FileInfo inf)

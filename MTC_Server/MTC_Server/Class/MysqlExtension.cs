@@ -35,13 +35,14 @@ namespace Alta.Class
                         }
                         try
                         {
-                            m.Duration = reader.GetDateTime(Define.media_duration);
+                            m.Duration = reader.GetString(Define.media_duration);
                         }
                         catch (Exception)
                         {
                         }
                         m.Time = reader.GetDateTime(Define.media_time);
                         m.Status = reader.GetBoolean(Define.media_status);
+                        m.User_ID = reader.GetInt32(Define.media_user);
                         datas.Add(m);
                     }
 
@@ -73,12 +74,14 @@ namespace Alta.Class
                         }
                         try
                         {
-                            m.Duration = reader.GetDateTime(Define.media_duration);
+                            m.Duration = reader.GetString(Define.media_duration);
                         }
                         catch (Exception)
                         {
                         }
                         m.Status = reader.GetBoolean(Define.media_status);
+                        m.User_ID = reader.GetInt32(Define.media_user);
+                        m.Time = reader.GetDateTime(Define.media_time);
                     }
                 }
                 return m;
@@ -97,6 +100,7 @@ namespace Alta.Class
                         TypeMedia type = new TypeMedia();
                         type.Id = reader.GetInt32(Define.type_id);
                         type.Name = reader.GetString(Define.type_name);
+                        type.Code = reader.GetString(Define.type_code);
                         try
                         {
                             type.Icon = reader.GetString(Define.type_icon);
@@ -124,6 +128,7 @@ namespace Alta.Class
 
                         type.Id = reader.GetInt32(Define.type_id);
                         type.Name = reader.GetString(Define.type_name);
+                        type.Code = reader.GetString(Define.type_code);
                         try
                         {
                             type.Icon = reader.GetString(Define.type_icon);

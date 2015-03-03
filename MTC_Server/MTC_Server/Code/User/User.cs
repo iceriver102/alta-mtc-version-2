@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MTC_Server.Code.Media;
 
 namespace MTC_Server.Code.User
 {
@@ -49,5 +50,12 @@ namespace MTC_Server.Code.User
             private set;
         }
 
+        public List<MediaData> LoadMedias(int from, int to, out int total)
+        {
+            if (this.Permision.view_all_media)
+                return MediaData.GetListMedia(from, to, out total);
+            else
+                return MediaData.GetListMedia(this.ID, from, out total);
+        }
     }
 }

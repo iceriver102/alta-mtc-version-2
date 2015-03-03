@@ -10,6 +10,12 @@ namespace Alta.Class
 {
     public static class StringExtensions
     {
+        public static string toFileName(this string Url)
+        {
+            char[] splitchar= {' ','\\','/' };
+           string[] tmp = Url.Split(splitchar);
+            return tmp[tmp.Length - 1];
+        }
         public static string EncodeNonAsciiCharacters(this string value)
         {
             StringBuilder sb = new StringBuilder();

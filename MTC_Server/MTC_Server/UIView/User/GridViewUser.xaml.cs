@@ -141,14 +141,20 @@ namespace MTC_Server.UIView.User
         {
             if (e != null)
             {
-                foreach(UIUser item in this.list_Box_Item.Items)
+                bool isEditUser= false;
+                foreach (UIUser item in this.list_Box_Item.Items)
                 {
-                    if(item.User.ID== e.ID)
+                    if (item.User.ID == e.ID)
                     {
                         item.User = e;
+                        isEditUser = true;
                         break;
                     }
-                    
+                }
+                if (!isEditUser)
+                {
+                    this.Datas = App.curUser.getListUser(this.from,this.to, out this.totalUser);
+                    LoadGUI();
                 }
             }
             this.UIRoot.Children.Remove(sender as UIUserEdit);

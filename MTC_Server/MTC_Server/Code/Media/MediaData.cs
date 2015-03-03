@@ -11,8 +11,9 @@ namespace MTC_Server.Code.Media
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public DateTime Duration { get; set; }
+        public string Duration { get; set; }
         public string Url { get; set; }
+        public string Comment { get; set; }
         private int type;
         public int Type
         {

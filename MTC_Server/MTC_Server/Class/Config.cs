@@ -21,6 +21,7 @@ namespace Alta.Class
         public string ftp_user = "demo";
         public string ftp_password = "";
         public int ftp_port = 21;
+        public string ftp_folder = "Medias";
   
         public string connectString
         {

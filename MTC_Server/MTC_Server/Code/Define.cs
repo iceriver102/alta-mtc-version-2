@@ -43,6 +43,7 @@ namespace MTC_Server.Code
         public const string type_comment = "type_comment";
         public const string type_status = "type_status";
         public const string type_time = "type_time";
+        public const string type_code = "type_code";
 
         /// <summary>
         /// dinh nghie bang media
