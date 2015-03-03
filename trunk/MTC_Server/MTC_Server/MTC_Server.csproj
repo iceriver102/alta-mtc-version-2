@@ -35,6 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Plugin\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Plugin\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Plugin\MySql.Data.dll</HintPath>
@@ -75,12 +83,17 @@
     <Compile Include="Class\EasyTimer.cs" />
     <Compile Include="Class\FontIconDefine.cs" />
     <Compile Include="Class\StringExtensions.cs" />
+    <Compile Include="Class\TimeExtensions.cs" />
     <Compile Include="Code\Media\MediaData.cs" />
     <Compile Include="Code\Media\MediaFunction.cs" />
+    <Compile Include="Code\Media\MediaTypeArray.cs" />
     <Compile Include="Code\Media\TypeMedia.cs" />
     <Compile Include="Code\MysqlHelper.cs" />
     <Compile Include="Code\User\UserFunction.cs" />
     <Compile Include="Code\User\UserTypeData.cs" />
+    <Compile Include="Plugin\ftp_download.xaml.cs">
+      <DependentUpon>ftp_download.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\Media\GridMedia.xaml.cs">
       <DependentUpon>GridMedia.xaml</DependentUpon>
     </Compile>
@@ -141,6 +154,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Plugin\ftp_download.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -229,6 +246,8 @@
     <Resource Include="Asset\Images\bg_header.png" />
     <Resource Include="Asset\Images\btn_menu.png" />
     <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Plugin\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="Plugin\Microsoft.WindowsAPICodePack.Shell.dll" />
     <Content Include="Plugin\MySql.Data.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.dll" />
     <Content Include="Plugin\Vlc.DotNet.Core.Interops.dll" />

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Alta.Class;
 
 namespace MTC_Server.UIView.Media
 {
@@ -20,9 +23,183 @@ namespace MTC_Server.UIView.Media
     /// </summary>
     public partial class UIMediaEdit : UserControl
     {
+        private Code.Media.MediaData tmpMedia;
+        private Code.Media.MediaData m;
+        public Code.Media.MediaData Media
+        {
+            get { return this.m; } set { this.m = value; }
+        }
+        public int Mode { get; set; }
+        public event EventHandler<Code.Media.MediaData> CloseEvent;
         public UIMediaEdit()
         {
             InitializeComponent();
+        }
+
+        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a Video";
+            op.Filter = "Video File(*.mov,*.wmv,*.avi,*.mp4,*.mpg,*.flv,*.h264,*.wp3)|*.mov;*.wmv;*.avi;*.mp4;*.mpg;*.flv;*.h264;*.wp3|" +
+                "All type(*.*)|*.*";
+            if (op.ShowDialog() == true)
+            {
+                this.UILocalFile.Text = op.FileName;
+            }
+        }
+
+        private void UIBtnSave_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (tmpMedia == null)
+            {
+                if (string.IsNullOrEmpty(this.UINameEdit.Text))
+                {
+                    MessageBox.Show("Tên video không được để trống!");
+                    return;
+                }
+
+                if (this.Media == null && string.IsNullOrEmpty(this.UILocalFile.Text))
+                {
+                    MessageBox.Show("Hãy chọn file bạn muốn tải lên!");
+                    return;
+                }
+                else if(!string.IsNullOrEmpty(this.UILocalFile.Text))
+                {
+                    FileInfo file = new FileInfo(this.UILocalFile.Text);
+                    if (!file.Exists)
+                    {
+                        MessageBox.Show("Không tìm thấy file!");
+                        return;
+                    }
+                    this.UIFtp.Local = this.UILocalFile.Text;
+                    this.UIFtp.FtpUser = App.setting.ftp_user;
+                    this.UIFtp.FtpPassword = App.setting.ftp_password;
+                    this.UIFtp.Url = string.Format("{0}/{1}/video_{2}.{3}", App.setting.ftp_server, App.setting.ftp_folder, DateTime.Now.Ticks, file.Extension);
+                    this.UIFtp.RunUpLoad();
+                }
+                else if(this.Media!=null)
+                {
+                    FileInfo file = new FileInfo(this.UILocalFile.Text);
+                    Code.Media.MediaData tmpMedia = new Code.Media.MediaData();
+                    this.Media.Name = this.UINameEdit.Text.Trim();
+                    this.Media.FileSize = string.Format("{0}kb", file.Length / 1000);
+                    this.Media.Duration = file.toTimeMedia();
+                    this.Media.Type = 1;
+                    this.Media.Url = this.UIUrlEdit.Text;
+                    this.Media.Save();
+                    if (this.CloseEvent != null)
+                    {
+                        this.CloseEvent(this, this.Media);
+                    }
+                }
+                
+            }
+            else
+            {
+                tmpMedia.Name = this.UINameEdit.Text.Trim();
+                tmpMedia.Comment = this.UICommentEdit.Text;
+                int result= Code.Media.MediaData.Insert(tmpMedia);
+                if (result <= 0)
+                {
+                    MessageBox.Show("Không thể kết nối với CSDL!");
+                    return;
+                }
+                tmpMedia.ID = result;
+                if (this.CloseEvent != null)
+                {
+                    this.CloseEvent(this, tmpMedia);
+                }
+            }
+        }
+
+        private void UIFtp_CompleteEvent(object sender, string e)
+        {
+            FileInfo file = new FileInfo(this.UILocalFile.Text);
+            if (this.Media != null)
+            {
+                this.Media = new Code.Media.MediaData();
+                this.Media.FileSize = string.Format("{0}kb", file.Length / 1000);
+                this.Media.Duration = file.toTimeMedia();
+                this.Media.Type = 1;
+                this.Media.Url = e;
+                this.Media.Name = this.UINameEdit.Text.Trim();
+                this.Media.Comment = this.UICommentEdit.Text.Trim();                
+                this.Media.Save();
+                if (this.CloseEvent != null)
+                {
+                    this.CloseEvent(this, this.Media);
+                }
+            }
+            else
+            {
+                tmpMedia = new Code.Media.MediaData();
+                tmpMedia.Name = this.UINameEdit.Text.Trim();
+                tmpMedia.FileSize = string.Format("{0}kb", file.Length / 1000);
+                tmpMedia.Duration = file.toTimeMedia();
+                tmpMedia.Type = 1;
+                tmpMedia.Url = e;
+                tmpMedia.User_ID = App.curUser.ID;
+                tmpMedia.Comment = this.UICommentEdit.Text;
+                int result = Code.Media.MediaData.Insert(tmpMedia);
+                if (result <= 0)
+                {
+                    MessageBox.Show("Không thể kết nối với CSDL!");
+                    return;
+                }
+                tmpMedia.ID = result;
+                if (this.CloseEvent != null)
+                {
+                    this.CloseEvent(this, tmpMedia);
+                }
+            }
+
+        }
+        
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadGUI(this.Media);
+        }
+        public void LoadGUI(Code.Media.MediaData m)
+        {
+            if (m != null)
+            {
+                this.UITitle.Text = m.Name;
+                this.UINameEdit.Text = m.Name;
+                this.UIUrlEdit.Text = m.Url;
+                this.UICommentEdit.Text = m.Comment;
+                if (m.TypeMedia.Code.ToUpper() == "FILE")
+                {
+                    this.UIFtp.Visibility = Visibility.Visible;
+                    this.UIChooseFile.IsEnabled = true;
+                    this.UIUrlEdit.IsEnabled = false;
+                }
+                else
+                {
+                    this.UIFtp.Visibility = Visibility.Hidden;
+                    this.UIChooseFile.IsEnabled = false;
+                    this.UIUrlEdit.IsEnabled = true;
+                }
+            }
+            else
+            {
+                if (this.Mode == 0)
+                {
+                    this.UITitle.Text = "Thêm media mới";
+                    this.UIFtp.Visibility = Visibility.Visible;
+                    this.UIChooseFile.IsEnabled = true;
+                    this.UIUrlEdit.IsEnabled = false;
+                }
+                else
+                {
+                    this.UITitle.Text = "Thêm camera mới";
+                    this.UIFtp.Visibility = Visibility.Hidden;
+                    this.UIChooseFile.IsEnabled = false;
+                    this.UIUrlEdit.IsEnabled = true;
+                }
+                    
+                
+            }
         }
     }
 }

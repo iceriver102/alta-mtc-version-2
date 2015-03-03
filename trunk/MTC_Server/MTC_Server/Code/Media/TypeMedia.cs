@@ -13,7 +13,7 @@ namespace MTC_Server.Code.Media
         public int Id { get; set; }
         public string Name { get; set; }
         public string Icon { get; set; }
-
+        public string Code { get; set; }
         internal static List<TypeMedia> getList()
         {
             //p_type_media_all

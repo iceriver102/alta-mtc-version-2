@@ -25,13 +25,14 @@ namespace MTC_Server
         public static AltaCache cache;
         public static string CacheName = "cache.xml";
         public static List<UserTypeData> TypeUsers;
-        public static List<TypeMedia> TypeMedias;
+        public static MediaTypeArray TypeMedias;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             setting = Config.Read(FileName);
             cache = AltaCache.Read(CacheName);
             TypeUsers = MysqlHelper.getTypeUserAll();
-            TypeMedias = TypeMedia.getList();
+            TypeMedias = new MediaTypeArray();
+            TypeMedias.setData(TypeMedia.getList());
 
             if (cache.autoLogin && !string.IsNullOrEmpty(cache.hashUserName))
             {
