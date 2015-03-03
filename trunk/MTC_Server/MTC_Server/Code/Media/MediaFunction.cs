@@ -22,8 +22,7 @@ namespace MTC_Server.Code.Media
                     string query = "`p_info_media`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_media_id", MySqlDbType.Int32, 100) { Direction = System.Data.ParameterDirection.Input, Value = id });
-                      
+                        cmd.Parameters.Add(new MySqlParameter("@_media_id", MySqlDbType.Int32, 100) { Direction = System.Data.ParameterDirection.Input, Value = id });                     
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         var tmp = cmd.ExecuteScalar();
                         if (Convert.ToInt32(tmp) > 0)
@@ -106,7 +105,36 @@ namespace MTC_Server.Code.Media
 
         public void Save()
         {
+            //p_save_info_media
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_save_info_media`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_media_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_name", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_url", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Url });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_comment", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = this.Comment });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_size", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.FileSize });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_duration", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Duration });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.User_ID });
+                        
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                      
 
+                    };
+                    conn.Close();
+                };
+
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public static void Delete(MediaData m)

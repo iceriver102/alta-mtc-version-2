@@ -43,6 +43,13 @@ namespace Alta.Class
                         m.Time = reader.GetDateTime(Define.media_time);
                         m.Status = reader.GetBoolean(Define.media_status);
                         m.User_ID = reader.GetInt32(Define.media_user);
+                        try
+                        {
+                            m.Comment = reader.GetString(Define.media_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
                         datas.Add(m);
                     }
 
@@ -75,6 +82,13 @@ namespace Alta.Class
                         try
                         {
                             m.Duration = reader.GetString(Define.media_duration);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            m.Comment = reader.GetString(Define.media_comment);
                         }
                         catch (Exception)
                         {

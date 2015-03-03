@@ -30,9 +30,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="UIBtnInfo" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf05a;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" />
-                    <TextBlock x:Name="UIBtnDelete" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf1f8;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Margin="0,0.666" Grid.Column="1" />
-                    <TextBlock x:Name="UIBtnPlay" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf04b;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Margin="0,3.166" Grid.Column="2" />
+                    <TextBlock x:Name="UIBtnInfo" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf05a;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" MouseLeftButtonUp="UIBtnInfo_MouseLeftButtonUp"/>
+                    <TextBlock x:Name="UIBtnDelete" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf1f8;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Margin="0,0.666" Grid.Column="1" MouseLeftButtonUp="UIBtnDelete_MouseLeftButtonUp" />
+                    <TextBlock x:Name="UIBtnPlay" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="NoWrap" Text="&#xf04b;" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333" Margin="0,3.166" Grid.Column="2" MouseLeftButtonUp="UIBtnPlay_MouseLeftButtonUp" />
                 </Grid>
             </Canvas>
 
