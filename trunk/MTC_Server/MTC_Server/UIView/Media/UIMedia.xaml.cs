@@ -24,7 +24,7 @@ namespace MTC_Server.UIView.Media
     {
         public event EventHandler<Code.Media.MediaData> ViewInfoMediaEvent;
         public event EventHandler<Code.Media.MediaData> DeleteMediaEvent;
-        public event EventHandler<Code.Media.MediaData> PlayMediaevent;
+        public event EventHandler<Code.Media.MediaData> PlayMediaEvent;
         private MediaData m;
         public MediaData Media
         {
@@ -97,6 +97,11 @@ namespace MTC_Server.UIView.Media
 
         private void UIBtnDelete_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (this.Media.LocalFile.Exists)
+            {
+                this.Media.LocalFile.Delete();
+            }
+
             if (this.DeleteMediaEvent != null)
             {
                 this.DeleteMediaEvent(this, this.Media);
@@ -105,9 +110,9 @@ namespace MTC_Server.UIView.Media
 
         private void UIBtnPlay_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (this.PlayMediaevent != null)
+            if (this.PlayMediaEvent != null)
             {
-                this.PlayMediaevent(this, this.Media);
+                this.PlayMediaEvent(this, this.Media);
             }
         }
     }

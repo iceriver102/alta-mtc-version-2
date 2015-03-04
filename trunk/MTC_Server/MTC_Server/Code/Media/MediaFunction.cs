@@ -139,7 +139,26 @@ namespace MTC_Server.Code.Media
 
         public static void Delete(MediaData m)
         {
+            //p_delete_media
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_delete_media`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_media_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = m.ID });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                    };
+                    conn.Close();
+                };
 
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public static List<MediaData> GetListMedia(int user_id,int from, int to, out int total)
@@ -166,7 +185,6 @@ namespace MTC_Server.Code.Media
                         {
                             datas = reader.toMedias();
                         }
-
                     };
                     conn.Close();
                 };

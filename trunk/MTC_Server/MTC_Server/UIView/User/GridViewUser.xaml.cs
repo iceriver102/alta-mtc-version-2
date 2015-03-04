@@ -214,7 +214,7 @@ namespace MTC_Server.UIView.User
 
         private void UISearchEdit_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if(e.Key == Key.Enter && App.curUser.Permision.mana_user)
             {
                 string key = this.UISearchEdit.Text.Trim();
                 if (key.Length > 3) {

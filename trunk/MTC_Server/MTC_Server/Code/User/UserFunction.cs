@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alta.Class;
+using MTC_Server.Code.Media;
 
 namespace MTC_Server.Code.User
 {
@@ -216,6 +217,50 @@ namespace MTC_Server.Code.User
             }
             if (permision)
                 this.savePermission();
+        }
+        public List<MediaData> LoadMedias(int from, int to, out int total)
+        {
+            if (this.Permision.view_all_media)
+                return MediaData.GetListMedia(from, to, out total);
+            else
+                return MediaData.GetListMedia(this.ID, from, out total);
+        }
+
+        internal List<MediaData> FindMedias(string key, int from, int to, out int total)
+        {
+            //p_find_media
+            List<MediaData> datas = null;
+            total = 0;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_find_media`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar,255) { Direction = System.Data.ParameterDirection.Input, Value = key });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_type_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = 1 });
+                        cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
+                        cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
+                        cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            datas = reader.toMedias();
+                        }
+                    };
+                    conn.Close();
+                };
+
+            }
+            catch (Exception)
+            {
+            }
+            return datas;
         }
 
     }

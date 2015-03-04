@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2015 at 06:18 PM
+-- Generation Time: Mar 04, 2015 at 12:39 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -32,10 +32,29 @@ BEGIN
 	SELECT * FROM mtc_user_tbl WHERE user_id=_user_id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_delete_media`(IN `_media_id` int)
+BEGIN
+	#Routine body goes here...
+	DELETE FROM mtc_media_tbl WHERE mtc_media_tbl.media_id=_media_id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_delete_user`(IN `_user_id` int)
 BEGIN
 	#Routine body goes here...
 DELETE FROM `mtc_user_tbl` WHERE `user_id`=_user_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_find_media`(IN `_key` varchar(255),IN `_user_id` int,IN _type_id int,IN `_from` int,IN `_number` int,OUT `_total` int)
+BEGIN
+	#Routine body goes here...
+	SET _total=0; 
+	IF _user_id=-1 THEN		
+		SELECT COUNT(*) INTO _total FROM mtc_media_tbl WHERE (mtc_media_tbl.media_name LIKE _key OR mtc_media_tbl.media_comment LIKE _key) AND mtc_media_tbl.media_type=_type_id;
+		SELECT *  FROM mtc_media_tbl WHERE (mtc_media_tbl.media_name LIKE _key OR mtc_media_tbl.media_comment LIKE _key ) AND mtc_media_tbl.media_type=_type_id LIMIT _from,_number;
+	ELSE
+		SELECT COUNT(*) INTO _total FROM mtc_media_tbl WHERE (mtc_media_tbl.media_name LIKE _key OR mtc_media_tbl.media_comment LIKE _key )AND mtc_media_tbl.media_user=_user_id AND mtc_media_tbl.media_type=_type_id;
+		SELECT *  FROM mtc_media_tbl WHERE (mtc_media_tbl.media_name LIKE _key OR mtc_media_tbl.media_comment LIKE _key) AND mtc_media_tbl.media_user=_user_id AND mtc_media_tbl.media_type=_type_id LIMIT _from,_number;
+	END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_all_media`(IN `_user_id` int,IN `_media_type` int,IN `_from` int,IN `_number` int,OUT `_total` int)
@@ -192,15 +211,14 @@ CREATE TABLE IF NOT EXISTS `mtc_media_tbl` (
   PRIMARY KEY (`media_id`),
   KEY `media_type_fk` (`media_type`),
   KEY `media_user_fk` (`media_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `mtc_media_tbl`
 --
 
 INSERT INTO `mtc_media_tbl` (`media_id`, `media_name`, `media_url`, `media_status`, `media_type`, `media_comment`, `media_size`, `media_duration`, `media_user`, `media_time`) VALUES
-(2, 'Demo', 'ftp://127.0.0.1/Medias/video_635610049928184789..wmv', 0, 1, 'Demo', '26246kb', '00:05:00', 1, '2015-03-03 13:13:31'),
-(3, 'demo 2', 'ftp://127.0.0.1/Medias/video_635610088857321408..wmv', 0, 1, 'demo', '26246kb', '00:00:30', 1, '2015-03-03 13:13:33');
+(11, 'demo', 'ftp://127.0.0.1/Medias/video_635610905652176209..mp4', 0, 1, '', '33940kb', '00:00:55', 1, '2015-03-04 11:29:25');
 
 -- --------------------------------------------------------
 
@@ -270,14 +288,14 @@ CREATE TABLE IF NOT EXISTS `mtc_user_tbl` (
   `user_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   KEY `user_type_fk` (`user_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `mtc_user_tbl`
 --
 
 INSERT INTO `mtc_user_tbl` (`user_id`, `user_name`, `user_full_name`, `user_pass`, `user_type`, `user_status`, `user_permision`, `user_content`, `user_phone`, `user_email`, `user_time`) VALUES
-(1, 'admin', 'Admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>true</mana_user><view_all_media>true</view_all_media><mana_schedule>true</mana_schedule><confirm_media>true</confirm_media></Permision>', 'demo', '09796232175', 'admin@gmail.com', '2015-03-01 02:49:23');
+(1, 'admin', 'Admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>true</mana_user><view_all_media>true</view_all_media><mana_schedule>true</mana_schedule><confirm_media>true</confirm_media></Permision>', 'demo', '09796232175', 'admin@gmail.com', '2015-03-04 04:41:26');
 
 --
 -- Triggers `mtc_user_tbl`

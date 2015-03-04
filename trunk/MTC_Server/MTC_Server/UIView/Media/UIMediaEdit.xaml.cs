@@ -74,7 +74,14 @@ namespace MTC_Server.UIView.Media
                     this.UIFtp.Local = this.UILocalFile.Text;
                     this.UIFtp.FtpUser = App.setting.ftp_user;
                     this.UIFtp.FtpPassword = App.setting.ftp_password;
-                    this.UIFtp.Url = string.Format("{0}/{1}/video_{2}.{3}", App.setting.ftp_server, App.setting.ftp_folder, DateTime.Now.Ticks, file.Extension);
+                    if (this.Media == null)
+                        this.UIFtp.Url = string.Format("{0}/{1}/video_{2}.{3}", App.setting.ftp_server, App.setting.ftp_folder, DateTime.Now.Ticks, file.Extension);
+                    else
+                    {
+                        if (this.Media.LocalFile.Exists)
+                            this.Media.LocalFile.Delete();
+                        this.UIFtp.Url = this.Media.Url;
+                    }
                     this.UIFtp.RunUpLoad();
                 }
                 else if(this.Media!=null)
@@ -128,7 +135,6 @@ namespace MTC_Server.UIView.Media
             FileInfo file = new FileInfo(this.UILocalFile.Text);
             if (this.Media != null)
             {
-                this.Media = new Code.Media.MediaData();
                 this.Media.FileSize = string.Format("{0}kb", file.Length / 1000);
                 this.Media.Duration = file.toTimeMedia();
                 this.Media.Type = 1;
@@ -179,6 +185,7 @@ namespace MTC_Server.UIView.Media
                 this.UINameEdit.Text = m.Name;
                 this.UIUrlEdit.Text = m.Url;
                 this.UICommentEdit.Text = m.Comment;
+                this.UILocalFile.Text = "";
                 if (m.TypeMedia.Code.ToUpper() == "FILE")
                 {
                     this.UIFtp.Visibility = Visibility.Visible;
@@ -208,8 +215,6 @@ namespace MTC_Server.UIView.Media
                     this.UIChooseFile.IsEnabled = false;
                     this.UIUrlEdit.IsEnabled = true;
                 }
-                    
-                
             }
         }
 
@@ -219,6 +224,10 @@ namespace MTC_Server.UIView.Media
             {
                 this.CloseEvent(this, null);
             }
+        }
+        private void UIBtnReset_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.LoadGUI(this.Media);
         }
     }
 }
