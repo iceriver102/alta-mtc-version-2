@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="MTC_Server.UIView.Device.UIDevice"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MTC_Server.UIView.Device"
+             mc:Ignorable="d" 
+             d:DesignHeight="240" d:DesignWidth="170" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded">
+    <Canvas x:Name="UIRoot" Background="White">
+        <TextBlock x:Name="UITitle" Canvas.Left="0" TextWrapping="NoWrap" Text="Thiet bi" Canvas.Top="0" Height="25" Padding="5 3 0 0" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="White" Background="#FFFF3A00" FontSize="16"/>
+        <Canvas x:Name="UIBar" Height="30" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Left="0" Canvas.Top="210" Background="#FFFF3A00"></Canvas>
+        <TextBlock x:Name="UIIcon" Canvas.Left="0" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf1cb;" Canvas.Top="25" Height="101" Padding="5 5 0 0" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontSize="86.667" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"/>
+        <TextBlock x:Name="UIStatus" Canvas.Left="134" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="94" Height="32" Padding="0 4 0 0"  Width="32" Foreground="#FFFF3A00" FontSize="24" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" />
+
+    </Canvas>
+</UserControl>

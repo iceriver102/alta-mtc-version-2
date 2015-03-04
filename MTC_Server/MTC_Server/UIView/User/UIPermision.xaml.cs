@@ -45,6 +45,7 @@ namespace MTC_Server.UIView.User
             this.UIManaUser.IsChecked = p.mana_user;
             this.UISchedule.IsChecked = p.mana_schedule;
             this.UIViewAllMedia.IsChecked = p.view_all_media;
+            this.UIDEvice.IsChecked = p.mana_device;
         }
 
         private void UIManaUser_Checked(object sender, RoutedEventArgs e)
@@ -85,6 +86,16 @@ namespace MTC_Server.UIView.User
         private void UISchedule_Unchecked(object sender, RoutedEventArgs e)
         {
             this.Permision.mana_schedule = false;
+        }
+
+        private void UIDEvice_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.Permision.mana_device = false;
+        }
+
+        private void UIDEvice_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Permision.mana_device = true;
         }
     }
 }

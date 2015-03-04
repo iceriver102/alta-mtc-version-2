@@ -35,6 +35,7 @@ namespace MTC_Server.Code
         /// <summary>
         /// dinh nghia trong table mtc_type_user_tbl
         /// dinh nghie bang type media
+		/// dinh nghie bang type device
         /// </summary>
         public const string type_id = "type_id";
         public const string type_name = "type_name";
@@ -46,7 +47,7 @@ namespace MTC_Server.Code
         public const string type_code = "type_code";
 
         /// <summary>
-        /// dinh nghie bang media
+        /// dinh nghia bang media
         /// </summary>
         public const string media_id = "media_id";
         public const string media_name = "media_name";
@@ -58,6 +59,18 @@ namespace MTC_Server.Code
         public const string media_user = "media_user";
         public const string media_time = "media_time";
         public const string media_status = "media_status";
+
+		/// <summary>
+        /// dinh nghia bang device
+        /// </summary>
+        public const string device_id = "device_id";
+        public const string device_name = "device_name";
+		public const string device_type="device_type";
+		public const string device_status="device_status";
+		public const string device_comment="device_comment";
+		public const string device_time="device_time";
+		
+		
 
 
 

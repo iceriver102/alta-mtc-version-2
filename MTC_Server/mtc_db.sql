@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2015 at 12:39 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.16
+-- Generation Time: Mar 04, 2015 at 09:37 PM
+-- Server version: 5.5.36
+-- PHP Version: 5.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `mtc_db`
 --
-CREATE DATABASE IF NOT EXISTS `mtc_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `mtc_db`;
 
 DELIMITER $$
 --
@@ -30,6 +28,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InfoUser`(IN `_user_id` int)
 BEGIN
 	#Routine body goes here...
 	SELECT * FROM mtc_user_tbl WHERE user_id=_user_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_delete_device`(IN `_d_id` int)
+BEGIN
+	#Routine body goes here...
+	DELETE FROM mtc_device_tbl WHERE mtc_device_tbl.device_id=_d_id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_delete_media`(IN `_media_id` int)
@@ -42,6 +46,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `p_delete_user`(IN `_user_id` int)
 BEGIN
 	#Routine body goes here...
 DELETE FROM `mtc_user_tbl` WHERE `user_id`=_user_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_find_device`(IN `_key` varchar(100),IN `_from` int,IN `_number` int,OUT `_total` int)
+BEGIN
+	#Routine body goes here...
+	SELECT COUNT(*) INTO _total FROM mtc_device_tbl WHERE (mtc_device_tbl.device_comment LIKE _key OR mtc_device_tbl.device_name LIKE _key);
+	SELECT * FROM mtc_device_tbl WHERE (mtc_device_tbl.device_comment LIKE _key OR mtc_device_tbl.device_name LIKE _key) LIMIT _from,_number;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_find_media`(IN `_key` varchar(255),IN `_user_id` int,IN _type_id int,IN `_from` int,IN `_number` int,OUT `_total` int)
@@ -57,6 +68,14 @@ BEGIN
 	END IF;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_all_device`(IN `_from` int,IN `_number` int,OUT `_total` int)
+BEGIN
+	#Routine body goes here...
+	SET _total=0;
+	SELECT COUNT(*) INTO _total FROM mtc_device_tbl;
+	SELECT * FROM mtc_device_tbl LIMIT _from,_number;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_all_media`(IN `_user_id` int,IN `_media_type` int,IN `_from` int,IN `_number` int,OUT `_total` int)
 BEGIN
 	#Routine body goes here...
@@ -67,6 +86,12 @@ ELSE
 	SELECT COUNT(*) INTO _total FROM mtc_media_tbl WHERE  media_type=_media_type; 
 	SELECT * FROM mtc_media_tbl WHERE  media_type=_media_type LIMIT _from,_number;
 END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_all_type_device`()
+BEGIN
+	#Routine body goes here...
+	SELECT * FROM mtc_device_type;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_all_type_user`()
@@ -86,10 +111,24 @@ end if;
 SELECT COUNT(*) INTO total FROM mtc_user_tbl;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_info_device`(IN `_d_id` int)
+BEGIN
+	#Routine body goes here...
+	SELECT * FROM mtc_device_tbl WHERE mtc_device_tbl.device_id=_d_id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_info_media`(IN `_media_id` int)
 BEGIN
 	#Routine body goes here...
 	SELECT * FROM mtc_media_tbl WHERE media_id =_media_id; 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_insert_device`(In `_d_name` varchar(255),IN `_d_type` int,IN `_d_comment` text,out _d_id int)
+BEGIN
+	#Routine body goes here...
+	SET _d_id=-1;
+	INSERT INTO `mtc_device_tbl`(`device_name`, `device_type`,  `device_comment`) VALUES (_d_name,_d_type,_d_comment);
+	SET _d_id= LAST_INSERT_ID(); 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_insert_media`(IN `_media_name` varchar(255),IN `_media_url` varchar(255),IN `_media_type` int,IN `_media_comment` text,IN `_media_size` varchar(100),IN `_media_duration` varchar(100),IN `_media_user` int,OUT `_media_id` int)
@@ -116,6 +155,12 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_save_info_device`(in _d_id int,In `_d_name` varchar(255),IN `_d_type` int,IN `_d_comment` text)
+BEGIN
+	#Routine body goes here...
+	UPDATE `mtc_device_tbl` SET `device_name`=_d_name,`device_type`=_d_type, `device_comment`=_d_comment WHERE mtc_device_tbl.device_id=_d_id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_save_info_media`(in `_media_id` int,IN `_media_name` varchar(255),IN `_media_url` varchar(255),IN `_media_type` int,IN `_media_comment` text,IN `_media_size` varchar(100),IN `_media_duration` varchar(100),IN `_media_user` int)
 BEGIN
 	#Routine body goes here...
@@ -132,6 +177,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `p_save_permision_user`(IN `_user_id
 BEGIN
 	#Routine body goes here...
 UPDATE mtc_user_tbl SET user_permision=_permission WHERE user_id= _user_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `p_save_status_device`(IN `_d_id` int,IN `_d_status` tinyint(4))
+BEGIN
+	#Routine body goes here...
+	UPDATE mtc_device_tbl SET mtc_device_tbl.device_status=_d_status WHERE mtc_device_tbl.device_id=_d_id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_save_status_media`(IN `_media_id` int,IN `_status` tinyint(2))
@@ -194,6 +245,46 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mtc_device_tbl`
+--
+
+CREATE TABLE IF NOT EXISTS `mtc_device_tbl` (
+  `device_id` int(11) NOT NULL,
+  `device_name` varchar(255) NOT NULL,
+  `device_type` int(11) NOT NULL,
+  `device_status` tinyint(4) DEFAULT '1',
+  `device_comment` text,
+  `device_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`device_id`),
+  KEY `type_device_fk` (`device_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mtc_device_type`
+--
+
+CREATE TABLE IF NOT EXISTS `mtc_device_type` (
+  `type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(100) NOT NULL,
+  `type_icon` varchar(100) DEFAULT NULL,
+  `type_comment` text,
+  `type_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `mtc_device_type`
+--
+
+INSERT INTO `mtc_device_type` (`type_id`, `type_name`, `type_icon`, `type_comment`, `type_time`) VALUES
+(1, 'LCD', NULL, 'LCDmàn hình LCD', '2015-03-04 15:54:01'),
+(2, 'LED', NULL, 'màn hình LED', '2015-03-04 15:54:01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mtc_media_tbl`
 --
 
@@ -211,14 +302,16 @@ CREATE TABLE IF NOT EXISTS `mtc_media_tbl` (
   PRIMARY KEY (`media_id`),
   KEY `media_type_fk` (`media_type`),
   KEY `media_user_fk` (`media_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `mtc_media_tbl`
 --
 
 INSERT INTO `mtc_media_tbl` (`media_id`, `media_name`, `media_url`, `media_status`, `media_type`, `media_comment`, `media_size`, `media_duration`, `media_user`, `media_time`) VALUES
-(11, 'demo', 'ftp://127.0.0.1/Medias/video_635610905652176209..mp4', 0, 1, '', '33940kb', '00:00:55', 1, '2015-03-04 11:29:25');
+(11, 'demo', 'ftp://127.0.0.1/Medias/video_635610905652176209..mp4', 0, 1, '', '33940kb', '00:00:55', 1, '2015-03-04 11:29:25'),
+(15, 'demo 1', 'ftp://127.0.0.1/Medias/video_635611081559862079..wmv', 0, 1, '', '92958kb', '00:02:20', 1, '2015-03-04 16:22:36'),
+(16, 'Camera', 'rtsp://192.168.10.10', 0, 2, '', '0kb', '00:00:00', 1, '2015-03-04 16:55:04');
 
 -- --------------------------------------------------------
 
@@ -231,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `mtc_media_type_tbl` (
   `type_name` varchar(100) NOT NULL,
   `type_code` varchar(5) NOT NULL,
   `type_icon` varchar(100) DEFAULT NULL,
-  `type_coment` text,
+  `type_comment` text,
   `type_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
@@ -240,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `mtc_media_type_tbl` (
 -- Dumping data for table `mtc_media_type_tbl`
 --
 
-INSERT INTO `mtc_media_type_tbl` (`type_id`, `type_name`, `type_code`, `type_icon`, `type_coment`, `type_time`) VALUES
+INSERT INTO `mtc_media_type_tbl` (`type_id`, `type_name`, `type_code`, `type_icon`, `type_comment`, `type_time`) VALUES
 (1, 'Video', 'FILE', NULL, NULL, NULL),
 (2, 'Camera', 'URL', NULL, NULL, NULL);
 
@@ -288,14 +381,16 @@ CREATE TABLE IF NOT EXISTS `mtc_user_tbl` (
   `user_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   KEY `user_type_fk` (`user_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `mtc_user_tbl`
 --
 
 INSERT INTO `mtc_user_tbl` (`user_id`, `user_name`, `user_full_name`, `user_pass`, `user_type`, `user_status`, `user_permision`, `user_content`, `user_phone`, `user_email`, `user_time`) VALUES
-(1, 'admin', 'Admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>true</mana_user><view_all_media>true</view_all_media><mana_schedule>true</mana_schedule><confirm_media>true</confirm_media></Permision>', 'demo', '09796232175', 'admin@gmail.com', '2015-03-04 04:41:26');
+(1, 'admin', 'Admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>true</mana_user><view_all_media>true</view_all_media><mana_schedule>true</mana_schedule><confirm_media>true</confirm_media></Permision>', 'demo', '09796232175', 'admin@gmail.com', '2015-03-04 04:41:26'),
+(2, 'user', 'User', 'e10adc3949ba59abbe56e057f20f883e', 2, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>false</mana_user><view_all_media>false</view_all_media><mana_schedule>false</mana_schedule><confirm_media>false</confirm_media></Permision>', '', '0979632175', 'user@gmail.com', '2015-03-04 14:28:36'),
+(3, 'giang.phan', 'Phan Thanh Giang', 'e10adc3949ba59abbe56e057f20f883e', 2, 1, '<?xml version="1.0" encoding="utf-16"?><Permision xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><mana_user>false</mana_user><view_all_media>false</view_all_media><mana_schedule>false</mana_schedule><confirm_media>false</confirm_media></Permision>', '', '0979632175', 'thanhgiang.009@gmail.com', '2015-03-04 14:30:36');
 
 --
 -- Triggers `mtc_user_tbl`
@@ -317,6 +412,12 @@ DELIMITER ;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `mtc_device_tbl`
+--
+ALTER TABLE `mtc_device_tbl`
+  ADD CONSTRAINT `type_device_fk` FOREIGN KEY (`device_type`) REFERENCES `mtc_device_type` (`type_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mtc_media_tbl`

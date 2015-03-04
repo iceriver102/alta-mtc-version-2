@@ -14,7 +14,7 @@
             <UIView:MenuItem Height="72" Canvas.Left="436" Canvas.Top="73.332" Width="70" Text="Thiết Bị" Icon="&#xF108;" ClickEvent="MenuItem_ClickEvent" Code="Device"/>
             <UIView:MenuItem Height="72" Canvas.Left="545" Canvas.Top="73.332" Width="70" Text="Video" Icon="&#xF008;" ClickEvent="MenuItem_ClickEvent" Code="Media"/>
             <UIView:MenuItem Height="72" Canvas.Left="655" Canvas.Top="73.332" Width="70" Text="Lịch Chiếu" Icon="&#xF073;" ClickEvent="MenuItem_ClickEvent"/>
-            <UIView:MenuItem Height="72" Canvas.Left="765" Canvas.Top="73.332" Width="70" Text="Camera" Icon="&#xF083;" ClickEvent="MenuItem_ClickEvent"/>
+            <UIView:MenuItem Height="72" Canvas.Left="765" Canvas.Top="73.332" Width="70" Text="Camera" Icon="&#xF083;" ClickEvent="MenuItem_ClickEvent" Code="Camera"/>
             <UIView:MenuItem Height="72" Canvas.Left="875" Canvas.Top="73.332" Width="70" Text="Cài Đặt" Icon="&#xF085;" ClickEvent="MenuItem_ClickEvent"/>
             <UIView:MenuItem Height="72" Canvas.Left="985" Canvas.Top="53" Width="70" Text="Thông Tin" Icon="&#xF1CD;" ClickEvent="MenuItem_ClickEvent"/>
         </Canvas>

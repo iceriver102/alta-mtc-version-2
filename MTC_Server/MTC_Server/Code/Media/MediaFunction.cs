@@ -161,7 +161,7 @@ namespace MTC_Server.Code.Media
             }
         }
 
-        public static List<MediaData> GetListMedia(int user_id,int from, int to, out int total)
+        public static List<MediaData> GetListMedia(int user_id,int from, int to, out int total, int type=1)
         {
             List<MediaData> datas = null;
             total = 0;
@@ -174,7 +174,7 @@ namespace MTC_Server.Code.Media
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });
-                        cmd.Parameters.Add(new MySqlParameter("@_media_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = 1 });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = type });
                         cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
                         cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
                         cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
@@ -195,7 +195,7 @@ namespace MTC_Server.Code.Media
             }
             return datas;
         }
-        public static List<MediaData> GetListMedia( int from, int to, out int total)
+        public static List<MediaData> GetListMedia( int from, int to, out int total, int type=1)
         {
             List<MediaData> datas = null;
             total = 0;
@@ -208,7 +208,7 @@ namespace MTC_Server.Code.Media
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = -1 });
-                        cmd.Parameters.Add(new MySqlParameter("@_media_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = 1 });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = type });
                         cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
                         cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to-from });
                         cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });

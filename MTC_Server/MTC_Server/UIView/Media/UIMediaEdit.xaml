@@ -12,9 +12,9 @@
             <TextBlock x:Name="UITitle" Height="50" TextWrapping="NoWrap" Width="393" Text="Thêm Video Mới" Padding="5 15 0 0" Foreground="White" Background="#FFFF4F0D" FontWeight="SemiBold" FontSize="20"/>
             <TextBlock x:Name="UIBtnClose" Cursor="Hand" TextAlignment="Center" Height="30" Canvas.Left="359.507" TextWrapping="NoWrap" Text="&#xf00d;" Canvas.Top="10" Width="30" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" MouseLeftButtonUp="UIBtnClose_MouseLeftButtonUp"/>
             <Canvas Height="402" Canvas.Top="50" Width="393">
-                <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Tên media:" Canvas.Top="11.095" Width="204.845" FontSize="16"/>
+                <TextBlock x:Name="UINameLb" Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Tên media:" Canvas.Top="11.095" Width="204.845" FontSize="16"/>
                 <TextBox x:Name="UINameEdit" Height="30" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="36.399" Width="347.789" Padding="5,5,5,1"/>
-                <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Url:" Canvas.Top="78" Width="205" FontSize="16"/>
+                <TextBlock x:Name="UIUrlLb"  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Url:" Canvas.Top="78" Width="205" FontSize="16"/>
                 <TextBox x:Name="UIUrlEdit" Height="30" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="103" Width="348" Padding="5,5,5,1" IsEnabled="False"/>
                 <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="File local:" Canvas.Top="144.128" Width="204.845" FontSize="16"/>
                 <Plugin:ftp_download x:Name="UIFtp" Height="31" Canvas.Left="35" Canvas.Top="168" Width="348" CompleteEvent="UIFtp_CompleteEvent" Background="White" Foreground="#99FF4F0D"/>

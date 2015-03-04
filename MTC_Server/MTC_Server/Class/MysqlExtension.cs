@@ -7,11 +7,97 @@ using MTC_Server.Code;
 using MTC_Server.Code.User;
 using MTC_Server.Code.Media;
 using MySql.Data.MySqlClient;
+using MTC_Server.Code.Device;
 
 namespace Alta.Class
 {
     public static class MysqlExtensions
     {
+        public static DeviceData toDevice(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                DeviceData d = null;
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        d = new DeviceData();
+                        d.ID = reader.GetInt32(Define.device_id);
+                        d.Name = reader.GetString(Define.device_name);
+                        d.Status = reader.GetBoolean(Define.device_status);
+                        d.Time = reader.GetDateTime(Define.device_time);
+                        d.Type = reader.GetInt32(Define.device_type);
+                        try
+                        {
+                            d.Comment = reader.GetString(Define.device_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                }
+                return d;
+            }
+            return null;
+        }
+        public static List<DeviceData> toDevices(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<DeviceData> datas = new List<DeviceData>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        DeviceData d = new DeviceData();
+                        d.ID = reader.GetInt32(Define.device_id);
+                        d.Name = reader.GetString(Define.device_name);
+                        d.Status = reader.GetBoolean(Define.device_status);
+                        d.Time = reader.GetDateTime(Define.device_time);
+                        d.Type = reader.GetInt32(Define.device_type);
+                        try
+                        {
+                            d.Comment = reader.GetString(Define.device_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        datas.Add(d);
+
+                    }
+                }
+                return datas;
+            }
+            return null;
+        }
+        public static List<TypeDevice> toTypeDevices(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<TypeDevice> datas = new List<TypeDevice>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        TypeDevice t = new TypeDevice();
+                        t.ID = reader.GetInt32(Define.type_id);
+                        t.Name = reader.GetString(Define.type_name);
+                        t.Time = reader.GetDateTime(Define.type_time);
+                        try
+                        {
+                            t.Comment = reader.GetString(Define.type_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        datas.Add(t);
+                    }
+                }
+                return datas;
+            }
+            return null;
+        }
         public static List<MediaData> toMedias(this MySqlDataReader reader)
         {
             if (reader.HasRows)

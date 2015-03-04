@@ -15,6 +15,16 @@ namespace MTC_Server.Code.Media
             return Datas;
         }
 
+        public MediaTypeArray()
+        {
+            this.Datas = new List<TypeMedia>();
+        }
+
+        public MediaTypeArray(List<TypeMedia> datas)
+        {
+            this.Datas = datas;
+        }
+
         public void setData(List<TypeMedia> datas)
         {
             this.Datas = datas;

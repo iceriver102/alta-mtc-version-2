@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Alta.Class;
+using MTC_Server.Code.Media;
 
 namespace MTC_Server.UIView.Media
 {
@@ -26,6 +27,18 @@ namespace MTC_Server.UIView.Media
         private int to = 10;
         private int from = 0;
         private int totalMedia = 0;
+        private int _type = 1;
+        public int TypeMedia
+        {
+            get
+            {
+                return this._type;
+            }
+            set
+            {
+                this._type = value;
+            }
+        }
         public GridMedia()
         {
             InitializeComponent();
@@ -34,6 +47,7 @@ namespace MTC_Server.UIView.Media
         private void UIBtnAddUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             UIMediaEdit item = new UIMediaEdit();
+            item.Type = this.TypeMedia;
             item.setLeft(0);
             item.setTop(90);
             item.Width = 1366;
@@ -47,18 +61,34 @@ namespace MTC_Server.UIView.Media
             if (e != null)
             {
                 bool isEdit = false;
-                foreach(UIMedia m  in this.list_Box_Item.Items)
+                if (e.TypeMedia.Code.ToUpper() == "FILE")
                 {
-                    if(m.Media.ID == e.ID)
+                    
+                    foreach (UIMedia m in this.list_Box_Item.Items)
                     {
-                        m.Media = e;
-                        isEdit = true;
-                        break;
+                        if (m.Media.ID == e.ID)
+                        {
+                            m.Media = e;
+                            isEdit = true;
+                            break;
+                        }
+                    }                    
+                }
+                else
+                {
+                    foreach (UIcamera m in this.list_Box_Item.Items)
+                    {
+                        if (m.Media.ID == e.ID)
+                        {
+                            m.Media = e;
+                            isEdit = true;
+                            break;
+                        }
                     }
                 }
                 if (!isEdit)
                 {
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia);
+                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
                     this.LoadGUI();
                 }
             }
@@ -67,7 +97,7 @@ namespace MTC_Server.UIView.Media
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Datas=  App.curUser.LoadMedias(from,to,out totalMedia);
+            this.Datas=  App.curUser.LoadMedias(from,to,out totalMedia,this.TypeMedia);
             this.LoadGUI();
         }
         public void LoadGUI()
@@ -77,14 +107,58 @@ namespace MTC_Server.UIView.Media
             {
                 foreach (Code.Media.MediaData m in this.Datas)
                 {
-                    UIMedia item = new UIMedia();
-                    item.Media = m;
-                    item.Height = 240;
-                    item.Width = 170;
-                    item.ViewInfoMediaEvent += Item_ViewInfoMediaEvent;
-                    item.DeleteMediaEvent += Item_DeleteMediaEvent;
-                    item.PlayMediaEvent += Item_PlayMediaEvent;
-                    this.list_Box_Item.Items.Add(item);
+                    if (m.TypeMedia.Code.ToUpper() == "FILE")
+                    {
+                        UIMedia item = new UIMedia();
+                        item.Media = m;
+                        item.Height = 240;
+                        item.Width = 170;
+                        item.ViewInfoMediaEvent += Item_ViewInfoMediaEvent;
+                        item.DeleteMediaEvent += Item_DeleteMediaEvent;
+                        item.PlayMediaEvent += Item_PlayMediaEvent;
+                        this.list_Box_Item.Items.Add(item);
+                    }
+                    else
+                    {
+                        UIcamera item = new UIcamera();
+                        item.Media = m;
+                        item.Height = 240;
+                        item.Width = 170;
+                        item.ViewInfoMediaEvent += Item_ViewInfoMediaEvent;
+                        item.DeleteMediaEvent += Item_DeleteCameraEvent;
+                        item.PlayMediaEvent += Item_PlayMediaEvent;
+                        this.list_Box_Item.Items.Add(item);
+                    }
+                   
+                }
+            }
+        }
+
+        private void Item_DeleteCameraEvent(object sender, MediaData e)
+        {
+            if (e != null)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có muốn xoá camera này không?", "Xoá camera", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    foreach (UIcamera m in this.list_Box_Item.Items)
+                    {
+                        if (m.Media.ID == e.ID)
+                        {
+                            if (this.list_Box_Item.Items.Count > 1)
+                            {
+                                if (this.list_Box_Item.SelectedIndex != 0)
+                                    this.list_Box_Item.SelectedIndex = 0;
+                                else
+                                    this.list_Box_Item.SelectedIndex = 1;
+                            }
+                            m.Animation_Opacity_View_Frame(false, () => {
+                                this.list_Box_Item.Items.Remove(m);
+                                this.Datas.Remove(e);
+                            }, 600);
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -114,7 +188,7 @@ namespace MTC_Server.UIView.Media
         {
             if (e != null)
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Bạn có muốn xoá file video này không?", "Xoá video", System.Windows.MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có muốn xoá file video này không?", "Xoá video", System.Windows.MessageBoxButton.YesNo);
                 if(messageBoxResult== MessageBoxResult.Yes)
                 {
                     foreach (UIMedia m in this.list_Box_Item.Items)
@@ -123,7 +197,6 @@ namespace MTC_Server.UIView.Media
                         {
                             alta_class_ftp.deleteFile(e.Url, App.setting.ftp_user, App.setting.ftp_password);
                             Code.Media.MediaData.Delete(e);
-                            this.Datas.Remove(e);
                             if (this.list_Box_Item.Items.Count > 1)
                             {
                                 if (this.list_Box_Item.SelectedIndex != 0)
@@ -131,9 +204,9 @@ namespace MTC_Server.UIView.Media
                                 else
                                     this.list_Box_Item.SelectedIndex = 1;
                             }
-                            m.Animation_Opacity_View_Frame(false, () => {
-                                this.Datas.Remove(e);
+                            m.Animation_Opacity_View_Frame(false, () => {                                
                                 this.list_Box_Item.Items.Remove(m);
+                                this.Datas.Remove(e);
                             },600);                           
                             return;
                         }
@@ -149,6 +222,7 @@ namespace MTC_Server.UIView.Media
             if (e != null)
             {
                 UIMediaEdit item = new UIMediaEdit();
+                item.Type = e.Type;
                 item.CloseEvent += Item_CloseEvent;
                 item.setLeft(0);
                 item.setTop(90);
@@ -165,7 +239,7 @@ namespace MTC_Server.UIView.Media
             this.Focus();
             this.from = 0;
             this.to = 10;
-            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia);
+            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia,this.TypeMedia);
             this.LoadGUI();
         }
 
@@ -190,7 +264,7 @@ namespace MTC_Server.UIView.Media
                 {
                     this.to = 10;
                     this.from = 0;
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia);
+                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia,this.TypeMedia);
                     this.LoadGUI();
                 }
                 this.Focus();

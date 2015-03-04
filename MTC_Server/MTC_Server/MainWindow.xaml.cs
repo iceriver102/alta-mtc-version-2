@@ -18,6 +18,7 @@ using Alta.Class;
 using MTC_Server.Code.User;
 using MTC_Server.UIView.User;
 using MTC_Server.UIView.Media;
+using MTC_Server.UIView.Device;
 
 namespace MTC_Server
 {
@@ -114,6 +115,25 @@ namespace MTC_Server
                     tmpMediaItem.setLeft(0);
                     tmpMediaItem.setTop(0);
                     this.UIContent.Children.Add(tmpMediaItem);
+                    break;
+                case "Camera":
+                    this.UIContent.Children.Clear();
+                    GridMedia tmpCameraItem = new GridMedia();
+                    tmpCameraItem.Width = 1366;
+                    tmpCameraItem.Height = 668;
+                    tmpCameraItem.setLeft(0);
+                    tmpCameraItem.setTop(0);
+                    tmpCameraItem.TypeMedia = 2;
+                    this.UIContent.Children.Add(tmpCameraItem);
+                    break;
+                case "Device":
+                    this.UIContent.Children.Clear();
+                    GridViewDevice tmpDeviceItem = new GridViewDevice();
+                    tmpDeviceItem.Width = 1366;
+                    tmpDeviceItem.Height = 668;
+                    tmpDeviceItem.setLeft(0);
+                    tmpDeviceItem.setTop(0);
+                    this.UIContent.Children.Add(tmpDeviceItem);
                     break;
             }
         }

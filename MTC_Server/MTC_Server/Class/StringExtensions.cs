@@ -16,6 +16,10 @@ namespace Alta.Class
            string[] tmp = Url.Split(splitchar);
             return tmp[tmp.Length - 1];
         }
+        public static string toIP (this string Url)
+        {
+            return new Uri(Url).Host;
+        }
         public static string EncodeNonAsciiCharacters(this string value)
         {
             StringBuilder sb = new StringBuilder();

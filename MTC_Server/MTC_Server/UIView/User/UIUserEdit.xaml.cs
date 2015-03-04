@@ -139,6 +139,8 @@ namespace MTC_Server.UIView.User
                 this.u.Type =type;
                 this.u.Permision = this.viewPermision.Permision;
                 this.u.Save();
+                if (this.CloseEvent != null)
+                    this.CloseEvent(this, this.u);
             }
             else
             {
@@ -170,10 +172,11 @@ namespace MTC_Server.UIView.User
                     MessageBox.Show("Không thể tạo người dùng vui lòng kiểm tra lại!");
                     return;
                 }
-                this.u.ID = result;
+                u.ID = result;
+                if (this.CloseEvent != null)
+                    this.CloseEvent(this, u);
             }
-            if (this.CloseEvent != null)
-                this.CloseEvent(this, this.u);
+            
         }
 
         private void SubmitForm(object sender, KeyEventArgs e)
