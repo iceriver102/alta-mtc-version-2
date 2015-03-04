@@ -17,14 +17,16 @@
                 <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Url:" Canvas.Top="78" Width="205" FontSize="16"/>
                 <TextBox x:Name="UIUrlEdit" Height="30" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="103" Width="348" Padding="5,5,5,1" IsEnabled="False"/>
                 <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="File local:" Canvas.Top="144.128" Width="204.845" FontSize="16"/>
-                <TextBox x:Name="UILocalFile" Height="30" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="169.432" Width="347.789" Padding="5,5,30,1" IsEnabled="False"/>
+                <Plugin:ftp_download x:Name="UIFtp" Height="31" Canvas.Left="35" Canvas.Top="168" Width="348" CompleteEvent="UIFtp_CompleteEvent" Background="White" Foreground="#99FF4F0D"/>
+                <TextBox x:Name="UILocalFile" Height="30" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="169.432" Width="347.789" Padding="5,5,30,1"  Background="{x:Null}"/>                
                 <TextBlock x:Name="UIChooseFile" Height="31" Canvas.Left="35" TextWrapping="NoWrap" Canvas.Top="168" Width="347" Foreground="#FFE85917" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xF178;" TextAlignment="Right" FontSize="25" Padding="0 4 2 0" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Cursor="Hand" IsEnabled="False"/>
                 <TextBlock  Height="24" Canvas.Left="10" TextWrapping="NoWrap" Text="Mô tả:" Canvas.Top="213" Width="205" FontSize="16"/>
                 <TextBox x:Name="UICommentEdit" Height="113" Canvas.Left="35" TextWrapping="Wrap" Canvas.Top="238" Width="348" Padding="5,5,5,1" AcceptsReturn="True"/>
-                <Plugin:ftp_download x:Name="UIFtp" Height="17" Canvas.Left="10" Canvas.Top="360" Width="373" CompleteEvent="UIFtp_CompleteEvent"/>
+                
             </Canvas>
             <Canvas Height="40" Canvas.Left="0" Canvas.Top="430" Width="{Binding Width, ElementName=UIContent}" Background="#FFFF4F0D" >
                 <TextBlock x:Name="UIBtnSave" Padding="0 8 0 0" Height="40" Canvas.Left="352.5" TextWrapping="NoWrap" Text="&#xF0C7;" Width="32" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Foreground="White" Cursor="Hand" MouseLeftButtonUp="UIBtnSave_MouseLeftButtonUp"/>
+                <TextBlock x:Name="UIBtnReset" Padding="0 8 0 0" Height="40" Canvas.Left="314" TextWrapping="NoWrap" Text="&#xf13d;" Width="32" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Foreground="White" Cursor="Hand" MouseLeftButtonUp="UIBtnReset_MouseLeftButtonUp"/>
             </Canvas>
 
         </Canvas>

@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.Plugin"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="400" x:Name="UIRootView">
+             d:DesignHeight="50" d:DesignWidth="400" x:Name="UIRootView" Foreground="Transparent" Background="Transparent">
     <Canvas x:Name="UIRoot">
-        <ProgressBar x:Name="UIProgess" Height="{Binding ElementName=UIRootView,Path=Height}" Canvas.Left="0" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Top="0"/>
+        <ProgressBar x:Name="UIProgess" Background="{Binding ElementName=UIRootView,Path=Background}" Foreground="{Binding ElementName=UIRootView,Path=Foreground}" Height="{Binding ElementName=UIRootView,Path=Height}" Canvas.Left="0" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Top="0" BorderBrush="{x:Null}" Style="{DynamicResource ProgressBarStyle}"/>
 
     </Canvas>
 </UserControl>

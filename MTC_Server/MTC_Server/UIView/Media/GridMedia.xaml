@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.Media"
              mc:Ignorable="d" 
-             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded">
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded" Focusable="True" Style="{DynamicResource noBorder}">
     <Canvas x:Name="UIRoot">
         <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="578" Canvas.Top="90">
             <ListBox x:Name="list_Box_Item" SelectionMode="Single"  Margin="110,0,110,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}"  >
@@ -36,5 +36,8 @@
             <TextBlock x:Name="UIReload" Height="32" Canvas.Left="10" TextWrapping="NoWrap" Canvas.Top="2" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" Text="&#xf021;" Foreground="White" TextAlignment="Center" Padding="0 3" Cursor="Hand" MouseLeftButtonUp="UIReload_MouseLeftButtonUp" />
             <TextBlock x:Name="UIBtnAddUser" Height="32" Canvas.Left="51" TextWrapping="NoWrap" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" Text="&#xf0fe;" Foreground="White" TextAlignment="Center" Padding="0 3" Canvas.Top="1" Cursor="Hand" MouseLeftButtonUp="UIBtnAddUser_MouseLeftButtonUp"/>
         </Canvas>
+         <TextBox x:Name="UISearchEdit" Height="30" Padding="5,2,25,2" Canvas.Left="502" Text="" TextWrapping="NoWrap" Canvas.Top="12" Width="360" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18.667" MaxLines="1" GotFocus="UISearchEdit_GotFocus" LostFocus="UISearchEdit_LostFocus" KeyUp="UISearchEdit_KeyUp"/>
+        <TextBlock x:Name="UIOverText" Height="30" Padding="8,4" Canvas.Left="502" Text="Tìm kiếm..." TextWrapping="NoWrap" Canvas.Top="12" Width="360" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18.667" Foreground="#FFE23F02" Background="#7F252525" IsHitTestVisible="False" />
+        <TextBlock Height="24" Canvas.Left="839" TextAlignment="Center" Padding="0 2" TextWrapping="NoWrap" Text="&#xf002;" Canvas.Top="14" Width="21" Foreground="#FFFF5A0D" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="20"/>
     </Canvas>
 </UserControl>

@@ -90,20 +90,20 @@ namespace Alta.Class
             return toPath;
         }
 
-        public static void deleteFile(string fileName,string url, string user,string pass)
+        public static bool deleteFile(string url, string user,string pass)
         {
             try
             {
-                var reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url + fileName));
+                var reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url));
                 reqFTP.Method = WebRequestMethods.Ftp.DeleteFile;
                 reqFTP.Credentials = new NetworkCredential(user, pass);
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
-
+                return true;
             }
             catch (Exception)
             {
-
+                return false;
             }
         }
         public static string CreateFolder(string name, string url,string user,string pass)
@@ -122,12 +122,12 @@ namespace Alta.Class
                 return null;
             }
         }
-        public static bool DeleteFolder(string name, string url, string user, string pass)
+        public static bool DeleteFolder(string url, string user, string pass)
         {
             // name = @"/Image_1";
             try
             {
-                var reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url + name));
+                var reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url));
                 reqFTP.Method = WebRequestMethods.Ftp.ListDirectory;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(user, pass);
@@ -136,10 +136,10 @@ namespace Alta.Class
                 StreamReader reader = new StreamReader(responseStream);
                 while (!reader.EndOfStream)
                 {
-                    string tmp = @"/DataFtp/" + reader.ReadLine();
+                    string tmp = url + reader.ReadLine();
                     try
                     {
-                        deleteFile(tmp,url,user,pass);
+                        deleteFile(tmp,user,pass);
                     }
                     catch (Exception)
                     {
@@ -148,7 +148,7 @@ namespace Alta.Class
 
                 response.Close();
                 reqFTP.Abort();
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url + name));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url));
                 reqFTP.Method = WebRequestMethods.Ftp.RemoveDirectory;
                 reqFTP.Credentials = new NetworkCredential(user, pass);
                 response = (FtpWebResponse)reqFTP.GetResponse();

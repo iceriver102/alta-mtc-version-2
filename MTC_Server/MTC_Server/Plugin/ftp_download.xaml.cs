@@ -24,6 +24,7 @@ namespace MTC_Server.Plugin
     public partial class ftp_download : UserControl
     {
         public event EventHandler<string> CompleteEvent;
+        private long FileZize=-1;
         public string FtpUser
         {
             get;set;
@@ -180,12 +181,21 @@ namespace MTC_Server.Plugin
             try
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
+                if (this.FileZize < 0)
+                {
+                    var request = (FtpWebRequest)FtpWebRequest.Create(new Uri(this.Url));
+                    request.Method = WebRequestMethods.Ftp.GetFileSize;
+                    request.Credentials = new NetworkCredential(this.FtpUser, this.FtpPassword);
+                    request.UseBinary = true;
+                    using (WebResponse resp = request.GetResponse())
+                        this.FileZize = resp.ContentLength;
+                }
                 var ftpWebRequest = (FtpWebRequest)FtpWebRequest.Create(new Uri(this.Url));
                 ftpWebRequest.Credentials = new NetworkCredential(this.FtpUser, this.FtpPassword);
                 ftpWebRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-                FileInfo fileInfo = new FileInfo(this.Local);
                 ftpWebRequest.UseBinary = true;
 
+                FileInfo fileInfo = new FileInfo(this.Local);
                 using (Stream outputStream = ftpWebRequest.GetResponse().GetResponseStream())
                 {
 
@@ -198,7 +208,7 @@ namespace MTC_Server.Plugin
                         {
                             inputStream.Write(buffer, 0, readBytesCount);
                             totalReadBytesCount += readBytesCount;
-                            var progress = totalReadBytesCount * 100.0 / outputStream.Length;
+                            var progress = totalReadBytesCount * 100.0 /this.FileZize;
                             worker.ReportProgress((int)progress);
                         }
                     }

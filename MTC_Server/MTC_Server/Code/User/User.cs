@@ -49,13 +49,6 @@ namespace MTC_Server.Code.User
             get;
             private set;
         }
-
-        public List<MediaData> LoadMedias(int from, int to, out int total)
-        {
-            if (this.Permision.view_all_media)
-                return MediaData.GetListMedia(from, to, out total);
-            else
-                return MediaData.GetListMedia(this.ID, from, out total);
-        }
+       
     }
 }
