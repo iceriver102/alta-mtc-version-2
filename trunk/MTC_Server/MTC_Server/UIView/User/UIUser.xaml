@@ -9,10 +9,10 @@
     <Canvas x:Name="UIRoot" Background="White" ClipToBounds="True">
         <TextBlock x:Name="UIIcon" Height="90" Padding="3" TextWrapping="NoWrap" TextAlignment="Center" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="76" Canvas.Top="30"><Run Text="&#xF007;"/></TextBlock>
         <Canvas Height="110" Canvas.Top="117"  Width="{Binding ElementName=UIRootView, Path=Width}">
-            <TextBlock x:Name="UIType" Height="20" Canvas.Left="29"  Text="Administrator" Canvas.Top="5" Width="161" FontSize="12.333" Foreground="Black"/>
-            <TextBlock x:Name="UIEmail" Height="20" Canvas.Left="29"  Text="thanhgiang.009@gmail.com" Canvas.Top="30" Width="161" Foreground="Black" FontSize="12.333"/>
-            <TextBlock x:Name="UIPhone" Height="20" Canvas.Left="29" Text="0979632175" Canvas.Top="55" Width="161" FontSize="13.333" Foreground="Black"/>
-            <TextBlock x:Name="UIDate" Height="20" Canvas.Left="29" Text="01/01/1990" Canvas.Top="82" Width="161" FontSize="13.333" Foreground="Black"/>
+            <TextBlock x:Name="UIType" Height="20" Canvas.Left="29"  Text="" Canvas.Top="5" Width="161" FontSize="12.333" Foreground="Black"/>
+            <TextBlock x:Name="UIEmail" Height="20" Canvas.Left="29"  Text="" Canvas.Top="30" Width="161" Foreground="Black" FontSize="12.333"/>
+            <TextBlock x:Name="UIPhone" Height="20" Canvas.Left="29" Text="" Canvas.Top="55" Width="161" FontSize="13.333" Foreground="Black"/>
+            <TextBlock x:Name="UIDate" Height="20" Canvas.Left="29" Text="" Canvas.Top="82" Width="161" FontSize="13.333" Foreground="Black"/>
             <TextBlock Height="14" Canvas.Left="6" Text="&#xf0ac;" TextAlignment="Center" Canvas.Top="5" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
             <TextBlock Height="14" Canvas.Left="6" Text="&#xf073;" TextAlignment="Center" Canvas.Top="83" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
             <TextBlock Height="15" Canvas.Left="6" Text="&#xf095;" TextAlignment="Center" Canvas.Top="54" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16" Foreground="#FFFF6800"/>
@@ -20,7 +20,7 @@
         </Canvas>
         <Canvas Height="30" Canvas.Left="0" Canvas.Top="0"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
             <Grid Height="30" Width="{Binding ElementName=UIRootView, Path=Width}">
-                <TextBlock x:Name="UIFullName" Padding="10 0"  TextWrapping="WrapWithOverflow" Text="Phan Thanh Giang" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="#FFFF3A00" VerticalAlignment="Center" FontSize="14.333" FontWeight="SemiBold" />
+                <TextBlock x:Name="UIFullName" Padding="10 0" TextWrapping="NoWrap" Text="" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="#FFFF3A00" VerticalAlignment="Center" FontSize="13.333" FontWeight="SemiBold" />
             </Grid>
         </Canvas>
         <Canvas x:Name="UIBar" Height="30" Canvas.Top="260"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">

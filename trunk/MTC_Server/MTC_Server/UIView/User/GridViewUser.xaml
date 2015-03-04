@@ -44,7 +44,7 @@
             </Grid>
         </Canvas>
         <TextBox x:Name="UISearchEdit" Height="30" Padding="5,2,25,2" Canvas.Left="502" Text="" TextWrapping="NoWrap" Canvas.Top="12" Width="360" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18.667" MaxLines="1" GotFocus="UISearchEdit_GotFocus" LostFocus="UISearchEdit_LostFocus" KeyUp="UISearchEdit_KeyUp"/>
-        <TextBlock x:Name="UIOverText" Height="30" Padding="8,4" Canvas.Left="502" Text="Tìm kiếm..." TextWrapping="NoWrap" Canvas.Top="12" Width="360" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18.667" Foreground="#FFE23F02" Background="#7F252525" IsHitTestVisible="False" />
+        <TextBlock x:Name="UIOverText" Height="30" Padding="8,4" Canvas.Left="502" Text="Tìm kiếm..." TextWrapping="NoWrap" Canvas.Top="12" Width="360" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="18.667" Foreground="#FFE23F02" Background="#FFD4CFCF" IsHitTestVisible="False" />
         <TextBlock Height="24" Canvas.Left="839" TextAlignment="Center" Padding="0 2" TextWrapping="NoWrap" Text="&#xf002;" Canvas.Top="14" Width="21" Foreground="#FFFF5A0D" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="20"/>
 
         <Canvas x:Name="UIBar" Height="35" Canvas.Left="0" Canvas.Top="55" Width="{Binding ElementName=UIRootView,Path=Width}" Background="#FFFD0C00">

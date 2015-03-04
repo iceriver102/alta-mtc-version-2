@@ -11,6 +11,7 @@
         <CheckBox x:Name="UIViewAllMedia" Content="Xem tất cả video" Canvas.Left="101.639" Canvas.Top="10" Checked="UIViewAllMedia_Checked" Unchecked="UIViewAllMedia_Unchecked"/>
         <CheckBox x:Name="UIConfirmMedia" Content="Xác nhận video" Canvas.Left="207.311" Canvas.Top="10" Checked="UIConfirmMedia_Checked" Unchecked="UIConfirmMedia_Unchecked"/>
         <CheckBox x:Name="UISchedule" Content="Xếp lịch chiếu" Canvas.Left="9" Canvas.Top="30" Checked="UISchedule_Checked" Unchecked="UISchedule_Unchecked"/>
+        <CheckBox x:Name="UIDEvice" Content="Quản lý thiết bị" Canvas.Left="102" Canvas.Top="30" Checked="UIDEvice_Checked" Unchecked="UIDEvice_Unchecked"/>
 
     </Canvas>
 </UserControl>

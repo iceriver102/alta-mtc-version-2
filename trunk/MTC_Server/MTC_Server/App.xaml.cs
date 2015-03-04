@@ -11,6 +11,7 @@ using MTC_Server.Code;
 using MTC_Server.Code.User;
 using MTC_Server.Code.Media;
 using Vlc.DotNet.Core;
+using MTC_Server.Code.Device;
 
 namespace MTC_Server
 {
@@ -27,6 +28,7 @@ namespace MTC_Server
         public static string CacheName = "cache.xml";
         public static List<UserTypeData> TypeUsers;
         public static MediaTypeArray TypeMedias;
+        public static DeviceTypeArray TypeDevices;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Define.Fonts = ExCss.ReadFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,@"Asset\Fonts\font-awesome.min.css"));
@@ -41,8 +43,8 @@ namespace MTC_Server
             }
             cache = AltaCache.Read(CacheName);
             TypeUsers = MysqlHelper.getTypeUserAll();
-            TypeMedias = new MediaTypeArray();
-            TypeMedias.setData(TypeMedia.getList());
+            TypeMedias = new MediaTypeArray(TypeMedia.getList());
+            TypeDevices = new DeviceTypeArray(TypeDevice.getList());
             initVLC();
             if (cache.autoLogin && !string.IsNullOrEmpty(cache.hashUserName))
             {

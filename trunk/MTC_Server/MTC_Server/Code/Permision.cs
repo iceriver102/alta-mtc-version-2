@@ -13,7 +13,7 @@ namespace MTC_Server.Code
         public bool view_all_media = false;
         public bool mana_schedule = false;
         public bool confirm_media = false;
-
+        public bool mana_device = false;
         public static Permision Read(string xml)
         {
             if (string.IsNullOrEmpty(xml))
