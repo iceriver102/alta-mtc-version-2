@@ -55,6 +55,7 @@ namespace MTC_Server.Code.Device
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_d_name", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = d.Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_ip", MySqlDbType.VarChar, 30) { Direction = System.Data.ParameterDirection.Input, Value = d.IP });
                         cmd.Parameters.Add(new MySqlParameter("@_d_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value =d.Type });
                         cmd.Parameters.Add(new MySqlParameter("@_d_comment", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = d.Comment });
                         cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
@@ -71,6 +72,57 @@ namespace MTC_Server.Code.Device
             {
             }
             return result;
+        }
+
+        internal void save()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_save_info_device`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_name", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_ip", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.IP });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_type", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_comment", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Comment });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        internal void setStatus()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_save_status_device`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_status", MySqlDbType.Int16) { Direction = System.Data.ParameterDirection.Input, Value =this.Status });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                    };
+                    conn.Close();
+                };
+
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

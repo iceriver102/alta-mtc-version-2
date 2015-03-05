@@ -11,6 +11,10 @@ namespace Alta.Class
 {
     public static class UIElementExtensions
     {
+        public static void reset(this TextBox txt)
+        {
+            txt.Text = string.Empty;
+        }
         public static void setLeft(this UIElement e, double left)
         {
             Canvas.SetLeft(e, left);

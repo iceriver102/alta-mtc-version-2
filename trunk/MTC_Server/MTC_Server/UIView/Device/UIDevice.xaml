@@ -7,10 +7,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="240" d:DesignWidth="170" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded">
     <Canvas x:Name="UIRoot" Background="White">
-        <TextBlock x:Name="UITitle" Canvas.Left="0" TextWrapping="NoWrap" Text="Thiet bi" Canvas.Top="0" Height="25" Padding="5 3 0 0" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="White" Background="#FFFF3A00" FontSize="16"/>
-        <Canvas x:Name="UIBar" Height="30" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Left="0" Canvas.Top="210" Background="#FFFF3A00"></Canvas>
-        <TextBlock x:Name="UIIcon" Canvas.Left="0" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf1cb;" Canvas.Top="25" Height="101" Padding="5 5 0 0" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontSize="86.667" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"/>
-        <TextBlock x:Name="UIStatus" Canvas.Left="134" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="94" Height="32" Padding="0 4 0 0"  Width="32" Foreground="#FFFF3A00" FontSize="24" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" />
+        <TextBlock x:Name="UITitle" Canvas.Left="0" TextWrapping="NoWrap" Text="" Canvas.Top="0" Height="25" Padding="5 3 0 0" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="White" Background="#FFFF3A00" FontSize="16"/>
+        <Canvas x:Name="UIBar" Height="30" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Left="0" Canvas.Top="210" Background="#FFFF3A00">
+            <Canvas x:Name="UIBarContent" Height="{Binding ElementName=UIBar,Path=Height}" Canvas.Left="0" Canvas.Top="0" Width="120">
+                <Grid Height="{Binding ElementName=UIBarContent,Path=Height}" Width="{Binding ElementName=UIBarContent,Path=Width}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="UIBtnInfo" TextWrapping="NoWrap" Text="&#xf05a;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Cursor="Hand" MouseLeftButtonUp="UIBtnInfo_MouseLeftButtonUp"/>
+                    <TextBlock x:Name="UIBtnDelete" TextWrapping="NoWrap" Text="&#xf1f8;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="1" MouseLeftButtonUp="UIBtnDelete_MouseLeftButtonUp"/>
+                    <TextBlock x:Name="UIBtnPlay" TextWrapping="NoWrap" Text="&#xf04b;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="2"/>
+                </Grid>
+            </Canvas>
+        </Canvas>
+        <TextBlock x:Name="UIIcon" Canvas.Left="0" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf1cb;" Canvas.Top="24.667" Height="97.337" Padding="5 5 0 0" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontSize="80" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"/>
+        <TextBlock x:Name="UIStatus" Canvas.Left="134" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="93.667" Height="32" Padding="0 4 0 0"  Width="32" Foreground="#FFFF3A00" FontSize="24" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Cursor="Hand" MouseLeftButtonUp="UIStatus_MouseLeftButtonUp"/>
+        <Canvas Height="87.996" Canvas.Top="122.004"  Width="{Binding ElementName=UIRootView,Path=Width}" >
+            <TextBlock Height="15" Padding="0 1 0 0" Canvas.Left="7" TextWrapping="NoWrap" Text="&#xf1e6;" Canvas.Top="1" Width="16" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFE84204" TextAlignment="Center"/>
+            <TextBlock Height="15" Padding="0 1 0 0" Canvas.Left="7" TextWrapping="NoWrap" Text="&#xf20e;" Canvas.Top="22" Width="16" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFE84204" TextAlignment="Center"/>
+            <TextBlock Height="15" Padding="0 1 0 0" Canvas.Left="7" TextWrapping="NoWrap" Text="&#xf073;" Canvas.Top="43" Width="16" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFE84204" TextAlignment="Center"/>
+            <TextBlock Height="15" Padding="0 1 0 0" Canvas.Left="7" TextWrapping="NoWrap" Text="&#xf007;" Canvas.Top="64" Width="16" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFE84204" TextAlignment="Center"/>
+            <TextBlock x:Name="UIType" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Canvas.Top="21.393" Width="129" Padding="0 2 0 0" Text="Loại thiết bị" Foreground="Black"/>
+            <TextBlock x:Name="UITime" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Text="dd/mm/yyyyy" Canvas.Top="41.893" Width="129" Padding="0 2 0 0" Foreground="Black"/>
+            <TextBlock x:Name="UIUser" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Text="" Canvas.Top="62.393" Width="129" Padding="0 2 0 0" Foreground="Black"/>
+            <TextBlock x:Name="UIIP" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Width="129" Padding="0 2 0 0" Text="000.000.000.000" Foreground="Black"/>
+        </Canvas>
+        <TextBlock x:Name="UINetwork" Height="25" Canvas.Left="145.5" TextWrapping="Wrap" Text="&#xf0ac;" Width="25" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="17.333" Padding="0,3,0,0" Foreground="White"/>
 
     </Canvas>
 </UserControl>

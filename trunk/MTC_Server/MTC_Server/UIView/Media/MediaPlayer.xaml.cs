@@ -133,10 +133,8 @@ namespace MTC_Server.UIView.Media
         {
             if (myPositionChanging)
             {
-                // User is currently changing the position using the slider, so do not update. 
                 return;
             }
-            // demoTxt.Text = e.Data.ToString("#.00");
             barTimeSeek.Value = (int)(e.Data * 100);
         }
         private void Volume_Change_Event(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -188,7 +186,6 @@ namespace MTC_Server.UIView.Media
                 {
                     myVlcControl.Position = (float)pos / 100;
                 }
-                // var duration = myVlcControl.Media.Duration;
                 alta_txt_curTime.Text = time.Format();
             }
         }
@@ -215,7 +212,7 @@ namespace MTC_Server.UIView.Media
         {
             if (Media != null)
             {
-                if (!Media.LocalFile.Exists)
+                if (Media.LocalFile != null && !Media.LocalFile.Exists)
                 {
                     UIFtp.Local = Media.LocalFile.FullName;
                     UIFtp.Url = Media.Url;
@@ -251,11 +248,21 @@ namespace MTC_Server.UIView.Media
         }
         private void PlayMedia(Code.Media.MediaData m)
         {
-            PathMedia  media = new PathMedia(m.LocalFile.FullName);
-            media.ParsedChanged += MediaOnParsedChanged;
-            myVlcControl.Media = media;
+            if (m.LocalFile != null)
+            {
+                PathMedia media = new PathMedia(m.LocalFile.FullName);
+                media.ParsedChanged += MediaOnParsedChanged;
+                myVlcControl.Media = media;
+            }
+            else
+            {
+                LocationMedia media = m.LocationMedia;
+                media.ParsedChanged += MediaOnParsedChanged;
+                myVlcControl.Media = media;
+            }
             myVlcControl.Play();
         }
+       
 
         private void MediaOnParsedChanged(MediaBase sender, VlcEventArgs<int> e)
         {

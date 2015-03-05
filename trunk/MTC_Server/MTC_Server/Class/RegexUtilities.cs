@@ -89,5 +89,10 @@ namespace Alta.Class
             }
             return match.Groups[1].Value + domainName;
         }
+       
+        public static bool isIP(this string ip)
+        {
+            return Regex.IsMatch(ip, @"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$");
+        }
     }
 }

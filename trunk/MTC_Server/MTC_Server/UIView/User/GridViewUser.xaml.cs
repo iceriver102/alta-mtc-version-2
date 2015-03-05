@@ -25,8 +25,18 @@ namespace MTC_Server.UIView.User
         List<UserData> Datas;
         public int totalUser;
         public int to = 10;
-        public int from=0;
-        public string key;
+        public int from = 0;
+        public string key
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.UISearchEdit.Text))
+                {
+                    return string.Empty;
+                }
+                return string.Format("%{0}%", this.UISearchEdit.Text.Trim());
+            }
+        }
         public GridViewUser()
         {
             InitializeComponent();
@@ -34,7 +44,7 @@ namespace MTC_Server.UIView.User
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            Datas = App.curUser.getListUser(from,to,out totalUser);
+            Datas = App.curUser.getListUser(from, to, out totalUser);
             this.Focus();
             LoadGUI();
         }
@@ -58,16 +68,18 @@ namespace MTC_Server.UIView.User
             if (to < totalUser)
             {
                 this.UIRightBtn.Foreground = Brushes.DarkOrange;
-            }else
+            }
+            else
             {
                 this.UIRightBtn.Foreground = Brushes.Gray;
             }
             if (this.from > 0)
             {
-                this.UILeftBtn.Foreground = Brushes.DarkOrange; 
-            }else
+                this.UILeftBtn.Foreground = Brushes.DarkOrange;
+            }
+            else
             {
-                this.UILeftBtn.Foreground = Brushes.Gray; 
+                this.UILeftBtn.Foreground = Brushes.Gray;
             }
         }
 
@@ -92,15 +104,18 @@ namespace MTC_Server.UIView.User
         {
             if (e != null)
             {
-                foreach(UIUser u in this.list_Box_Item.Items)
+                UIUser uiU = this.list_Box_Item.SelectedItem as UIUser;
+                this.list_Box_Item.SelectedIndex = -1;
+                uiU.Animation_Opacity_View_Frame(false, () =>
                 {
-                    if(u.User.ID == e.ID)
+                    this.list_Box_Item.Items.Remove(uiU);
+                    this.Datas.Remove(uiU.User);
+                    if (this.to < this.totalUser)
                     {
-                        this.list_Box_Item.Items.Remove(u);
-                        this.Datas.Remove(u.User);
-                        return;
+                        this.Datas = App.curUser.getListUser(from, to, out totalUser);
+                        LoadGUI();
                     }
-                }
+                });
             }
         }
 
@@ -124,15 +139,19 @@ namespace MTC_Server.UIView.User
         {
             if (e != null)
             {
-                foreach (UIUser u in this.list_Box_Item.Items)
+                UIUser uiU = this.list_Box_Item.SelectedItem as UIUser;
+                this.list_Box_Item.SelectedIndex = -1;
+                uiU.Animation_Opacity_View_Frame(false, () =>
                 {
-                    if (u.User.ID == e.ID)
+                    this.list_Box_Item.Items.Remove(uiU);
+                    this.Datas.Remove(uiU.User);
+                    if (this.to < this.totalUser)
                     {
-                        this.list_Box_Item.Items.Remove(u);
-                        this.Datas.Remove(u.User);
-                        break;
+                        this.Datas = App.curUser.getListUser(from, to, out totalUser);
+                        LoadGUI();
                     }
-                }
+                });
+
             }
             this.UIRoot.Children.Remove(sender as UIUserEdit);
         }
@@ -141,7 +160,7 @@ namespace MTC_Server.UIView.User
         {
             if (e != null)
             {
-                bool isEditUser= false;
+                bool isEditUser = false;
                 foreach (UIUser item in this.list_Box_Item.Items)
                 {
                     if (item.User.ID == e.ID)
@@ -153,7 +172,7 @@ namespace MTC_Server.UIView.User
                 }
                 if (!isEditUser)
                 {
-                    this.Datas = App.curUser.getListUser(this.from,this.to, out this.totalUser);
+                    this.Datas = App.curUser.getListUser(this.from, this.to, out this.totalUser);
                     LoadGUI();
                 }
             }
@@ -179,7 +198,7 @@ namespace MTC_Server.UIView.User
 
         private void UIRightBtn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(this.to< this.totalUser)
+            if (this.to < this.totalUser)
             {
                 this.from = this.to;
                 this.to += 10;
@@ -194,12 +213,12 @@ namespace MTC_Server.UIView.User
 
         private void UIRootView_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Key== Key.Left)
+            if (e.Key == Key.Left)
             {
                 UILeftBtn_MouseLeftButtonUp(null, null);
                 this.Focus();
             }
-            else if(e.Key== Key.Right)
+            else if (e.Key == Key.Right)
             {
                 UIRightBtn_MouseLeftButtonUp(null, null);
                 this.Focus();
@@ -214,17 +233,18 @@ namespace MTC_Server.UIView.User
 
         private void UISearchEdit_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter && App.curUser.Permision.mana_user)
+            if (e.Key == Key.Enter && App.curUser.Permision.mana_user)
             {
                 string key = this.UISearchEdit.Text.Trim();
-                if (key.Length > 3) {
-                    this.key = string.Format("%{0}%",key);
+                if (key.Length > 3)
+                {
                     to = 10;
                     from = 0;
                     this.Datas = UserData.SearchUser(this.key, from, to, out this.totalUser);
                     this.LoadGUI();
                 }
-            }else if(e.Key== Key.Escape)
+            }
+            else if (e.Key == Key.Escape)
             {
                 this.UISearchEdit.Text = "";
                 if (!string.IsNullOrEmpty(this.key))

@@ -226,7 +226,7 @@ namespace MTC_Server.Code.User
                 return MediaData.GetListMedia(this.ID, from, out total,type);
         }
 
-        internal List<MediaData> FindMedias(string key, int from, int to, out int total)
+        internal List<MediaData> FindMedias(string key, int from, int to, out int total, int type=1)
         {
             //p_find_media
             List<MediaData> datas = null;
@@ -241,7 +241,7 @@ namespace MTC_Server.Code.User
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar,255) { Direction = System.Data.ParameterDirection.Input, Value = key });
                         cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
-                        cmd.Parameters.Add(new MySqlParameter("@_type_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = 1 });
+                        cmd.Parameters.Add(new MySqlParameter("@_type_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = type});
                         cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
                         cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
                         cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });

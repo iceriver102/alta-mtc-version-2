@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MTC_Server.UIView.Media"
              xmlns:Plugin="clr-namespace:MTC_Server.Plugin" x:Class="MTC_Server.UIView.Media.UIMediaEdit"
              mc:Ignorable="d" 
-             d:DesignHeight="578" d:DesignWidth="1366" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UserControl_Loaded" >
+             d:DesignHeight="578" d:DesignWidth="1366" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UserControl_Loaded" KeyUp="UIRootView_KeyUp" Focusable="True" Style="{DynamicResource noBorder}" >
     <Canvas x:Name="UIRoot" Background="#7F000000">
         <Canvas x:Name="UIContent" Height="470" Canvas.Left="489.5" Canvas.Top="64" Width="393" Background="White">
             <TextBlock x:Name="UITitle" Height="50" TextWrapping="NoWrap" Width="393" Text="Thêm Video Mới" Padding="5 15 0 0" Foreground="White" Background="#FFFF4F0D" FontWeight="SemiBold" FontSize="20"/>
