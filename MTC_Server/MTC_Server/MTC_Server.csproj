@@ -105,6 +105,9 @@
     <Compile Include="UIView\Device\UIDevice.xaml.cs">
       <DependentUpon>UIDevice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIView\Device\UIDeviceEdit.xaml.cs">
+      <DependentUpon>UIDeviceEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\Media\GridMedia.xaml.cs">
       <DependentUpon>GridMedia.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\Device\UIDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Device\UIDeviceEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

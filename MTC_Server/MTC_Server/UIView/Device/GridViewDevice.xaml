@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.Device"
              mc:Ignorable="d" 
-             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded">
-    <Canvas x:Name="UIroot">
-            <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="578" Canvas.Top="90">
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded" Focusable="True" IsTabStop="True" Style="{DynamicResource noBorder}" KeyUp="UIRootView_KeyUp">
+    <Canvas x:Name="UIRoot">
+        <Border BorderBrush="#7FF48120"  BorderThickness="0,1" Width="{Binding ElementName=UIRootView, Path=Width}" Height="578" Canvas.Top="90">
             <ListBox x:Name="list_Box_Item" SelectionMode="Single"  Margin="110,0,110,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}"  >
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="IsTabStop" Value="False"/>
                         <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     </Style>
                 </ListBox.Resources>
                 <ListBox.ItemsPanel>
@@ -32,6 +33,16 @@
                 </ListBox.ItemContainerStyle>
             </ListBox>
         </Border>
+        <Canvas Height="578" Width="99" Canvas.Top="90">
+            <Grid Height="578" Width="50">
+                <TextBlock x:Name="UILeftBtn" TextAlignment="Center" HorizontalAlignment="Stretch"   TextWrapping="NoWrap" Text="&#xf104;" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FF767676" FontSize="100" Cursor="Hand" MouseLeftButtonUp="UILeftBtn_MouseLeftButtonUp" />
+            </Grid>
+        </Canvas>
+        <Canvas Height="578" Canvas.Left="1268" Canvas.Top="90" Width="98">
+            <Grid Height="578" Width="50" Canvas.Left="48">
+                <TextBlock x:Name="UIRightBtn" TextAlignment="Center" HorizontalAlignment="Stretch"   TextWrapping="NoWrap" Text="&#xf105;" VerticalAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FFFF5D00" FontSize="100" Cursor="Hand" MouseLeftButtonUp="UIRightBtn_MouseLeftButtonUp" />
+            </Grid>
+        </Canvas>
         <Canvas x:Name="UIBar" Height="35" Canvas.Left="0" Canvas.Top="55" Width="{Binding ElementName=UIRootView,Path=Width}" Background="#FFFD0C00">
             <TextBlock x:Name="UIReload" Height="32" Canvas.Left="10" TextWrapping="NoWrap" Canvas.Top="2" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" Text="&#xf021;" Foreground="White" TextAlignment="Center" Padding="0 3" Cursor="Hand" MouseLeftButtonUp="UIReload_MouseLeftButtonUp" />
             <TextBlock x:Name="UIBtnAddDevice" Height="32" Canvas.Left="51" TextWrapping="NoWrap" Width="32" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="26.667" Text="&#xf0b1;" Foreground="White" TextAlignment="Center" Padding="0 3" Canvas.Top="1" Cursor="Hand" MouseLeftButtonUp="UIBtnAddUser_MouseLeftButtonUp"/>

@@ -69,8 +69,8 @@ namespace MTC_Server.Code
 		public const string device_status="device_status";
 		public const string device_comment="device_comment";
 		public const string device_time="device_time";
-		
-		
+        public const string device_ip = "device_ip";
+
 
 
 

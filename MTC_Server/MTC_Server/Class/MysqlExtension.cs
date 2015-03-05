@@ -28,6 +28,7 @@ namespace Alta.Class
                         d.Status = reader.GetBoolean(Define.device_status);
                         d.Time = reader.GetDateTime(Define.device_time);
                         d.Type = reader.GetInt32(Define.device_type);
+                        d.IP = reader.GetString(Define.device_ip);
                         try
                         {
                             d.Comment = reader.GetString(Define.device_comment);
@@ -56,6 +57,7 @@ namespace Alta.Class
                         d.Status = reader.GetBoolean(Define.device_status);
                         d.Time = reader.GetDateTime(Define.device_time);
                         d.Type = reader.GetInt32(Define.device_type);
+                        d.IP = reader.GetString(Define.device_ip);
                         try
                         {
                             d.Comment = reader.GetString(Define.device_comment);

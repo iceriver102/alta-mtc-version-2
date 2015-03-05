@@ -22,9 +22,19 @@ namespace MTC_Server.UIView.Media
     /// </summary>
     public partial class GridMedia : UserControl
     {
-        private string key = string.Empty;
+        private string key
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.UISearchEdit.Text))
+                {
+                    return string.Empty;
+                }
+                return string.Format("%{0}%", this.UISearchEdit.Text.Trim());
+            }
+        }
         private List<Code.Media.MediaData> Datas;
-        private int to = 10;
+        private int to = 12;
         private int from = 0;
         private int totalMedia = 0;
         private int _type = 1;
@@ -63,7 +73,7 @@ namespace MTC_Server.UIView.Media
                 bool isEdit = false;
                 if (e.TypeMedia.Code.ToUpper() == "FILE")
                 {
-                    
+
                     foreach (UIMedia m in this.list_Box_Item.Items)
                     {
                         if (m.Media.ID == e.ID)
@@ -72,7 +82,7 @@ namespace MTC_Server.UIView.Media
                             isEdit = true;
                             break;
                         }
-                    }                    
+                    }
                 }
                 else
                 {
@@ -97,12 +107,29 @@ namespace MTC_Server.UIView.Media
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Datas=  App.curUser.LoadMedias(from,to,out totalMedia,this.TypeMedia);
+            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
             this.LoadGUI();
+            this.Focus();
         }
         public void LoadGUI()
         {
             this.list_Box_Item.Items.Clear();
+            if (to < this.totalMedia)
+            {
+                this.UIRightBtn.Foreground = Brushes.DarkOrange;
+            }
+            else
+            {
+                this.UIRightBtn.Foreground = Brushes.Gray;
+            }
+            if (this.from > 0)
+            {
+                this.UILeftBtn.Foreground = Brushes.DarkOrange;
+            }
+            else
+            {
+                this.UILeftBtn.Foreground = Brushes.Gray;
+            }
             if (this.Datas != null)
             {
                 foreach (Code.Media.MediaData m in this.Datas)
@@ -129,7 +156,7 @@ namespace MTC_Server.UIView.Media
                         item.PlayMediaEvent += Item_PlayMediaEvent;
                         this.list_Box_Item.Items.Add(item);
                     }
-                   
+
                 }
             }
         }
@@ -141,24 +168,20 @@ namespace MTC_Server.UIView.Media
                 MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có muốn xoá camera này không?", "Xoá camera", System.Windows.MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    foreach (UIcamera m in this.list_Box_Item.Items)
+                    Code.Media.MediaData.Delete(e);
+                    UIcamera m = this.list_Box_Item.SelectedItem as UIcamera;
+                    m.Animation_Opacity_View_Frame(false, () =>
                     {
-                        if (m.Media.ID == e.ID)
+                        this.list_Box_Item.Items.Remove(m);
+                        this.Datas.Remove(e);
+                        this.totalMedia -= 1;
+                        if (this.to < this.totalMedia)
                         {
-                            if (this.list_Box_Item.Items.Count > 1)
-                            {
-                                if (this.list_Box_Item.SelectedIndex != 0)
-                                    this.list_Box_Item.SelectedIndex = 0;
-                                else
-                                    this.list_Box_Item.SelectedIndex = 1;
-                            }
-                            m.Animation_Opacity_View_Frame(false, () => {
-                                this.list_Box_Item.Items.Remove(m);
-                                this.Datas.Remove(e);
-                            }, 600);
-                            return;
+                            this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            this.LoadGUI();
                         }
-                    }
+                    }, 600);
+                    this.list_Box_Item.SelectedIndex = -1;
                 }
             }
         }
@@ -189,31 +212,24 @@ namespace MTC_Server.UIView.Media
             if (e != null)
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có muốn xoá file video này không?", "Xoá video", System.Windows.MessageBoxButton.YesNo);
-                if(messageBoxResult== MessageBoxResult.Yes)
+                if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    foreach (UIMedia m in this.list_Box_Item.Items)
+                    alta_class_ftp.deleteFile(e.Url, App.setting.ftp_user, App.setting.ftp_password);
+                    UIMedia m = this.list_Box_Item.SelectedItem as UIMedia;
+                    m.Animation_Opacity_View_Frame(false, () =>
                     {
-                        if (m.Media.ID == e.ID)
+                        this.list_Box_Item.Items.Remove(m);
+                        this.Datas.Remove(e);
+                        this.totalMedia -= 1;
+                        if (this.to < this.totalMedia)
                         {
-                            alta_class_ftp.deleteFile(e.Url, App.setting.ftp_user, App.setting.ftp_password);
-                            Code.Media.MediaData.Delete(e);
-                            if (this.list_Box_Item.Items.Count > 1)
-                            {
-                                if (this.list_Box_Item.SelectedIndex != 0)
-                                    this.list_Box_Item.SelectedIndex = 0;
-                                else
-                                    this.list_Box_Item.SelectedIndex = 1;
-                            }
-                            m.Animation_Opacity_View_Frame(false, () => {                                
-                                this.list_Box_Item.Items.Remove(m);
-                                this.Datas.Remove(e);
-                            },600);                           
-                            return;
+                            this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            this.LoadGUI();
                         }
-                    }
-
+                    }, 600);
+                    this.list_Box_Item.SelectedIndex = -1;
                 }
-               
+
             }
         }
 
@@ -238,8 +254,8 @@ namespace MTC_Server.UIView.Media
             this.UISearchEdit.Text = "";
             this.Focus();
             this.from = 0;
-            this.to = 10;
-            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia,this.TypeMedia);
+            this.to = 12;
+            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
             this.LoadGUI();
         }
 
@@ -250,21 +266,20 @@ namespace MTC_Server.UIView.Media
                 string key = this.UISearchEdit.Text.Trim();
                 if (key.Length > 3)
                 {
-                    this.key = string.Format("%{0}%", key);
-                    to = 10;
+                    to = 12;
                     from = 0;
-                    this.Datas = App.curUser.FindMedias(this.key, from, to, out this.totalMedia);
+                    this.Datas = App.curUser.FindMedias(this.key, from, to, out this.totalMedia, this.TypeMedia);
                     this.LoadGUI();
                 }
             }
             else if (e.Key == Key.Escape)
             {
-                this.UISearchEdit.Text = "";
+                this.UISearchEdit.reset();
                 if (!string.IsNullOrEmpty(this.key))
                 {
-                    this.to = 10;
+                    this.to = 12;
                     this.from = 0;
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia,this.TypeMedia);
+                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
                     this.LoadGUI();
                 }
                 this.Focus();
@@ -279,6 +294,47 @@ namespace MTC_Server.UIView.Media
         private void UISearchEdit_GotFocus(object sender, RoutedEventArgs e)
         {
             this.UIOverText.Animation_Opacity_View_Frame(false);
+        }
+
+        private void UILeftBtn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.from > 0)
+            {
+                this.to = this.from;
+                this.from -= 12;
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                else
+                    this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                this.LoadGUI();
+            }
+        }
+
+        private void UIRightBtn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.to < this.totalMedia)
+            {
+                this.from = this.to;
+                this.to += 12;
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                else
+                    this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                this.LoadGUI();
+            }
+        }
+        private void UIRootView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                this.UILeftBtn_MouseLeftButtonUp(null, null);
+                this.Focus();
+            }
+            else if (e.Key == Key.Right)
+            {
+                this.UIRightBtn_MouseLeftButtonUp(null, null);
+                this.Focus();
+            }
         }
     }
 }

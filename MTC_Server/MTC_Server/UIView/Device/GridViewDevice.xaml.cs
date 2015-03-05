@@ -23,10 +23,20 @@ namespace MTC_Server.UIView.Device
     public partial class GridViewDevice : UserControl
     {
         private List<DeviceData> Datas;
-        private int to = 10;
+        private int to = 12;
         private int from = 0;
         private int total = 0;
-        private string key = string.Empty;
+        private string key
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.UISearchEdit.Text))
+                {
+                    return string.Empty;
+                }
+                return string.Format("%{0}%", this.UISearchEdit.Text.Trim());
+            }
+        }
         public GridViewDevice()
         {
             InitializeComponent();
@@ -34,7 +44,7 @@ namespace MTC_Server.UIView.Device
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Datas = App.curUser.LoadDevices(this.from,this.to,out this.total);
+            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
             this.LoadGUI();
             this.Focus();
         }
@@ -42,25 +52,123 @@ namespace MTC_Server.UIView.Device
         private void LoadGUI()
         {
             this.list_Box_Item.Items.Clear();
+            if (to < this.total)
+            {
+                this.UIRightBtn.Foreground = Brushes.DarkOrange;
+            }
+            else
+            {
+                this.UIRightBtn.Foreground = Brushes.Gray;
+            }
+            if (this.from > 0)
+            {
+                this.UILeftBtn.Foreground = Brushes.DarkOrange;
+            }
+            else
+            {
+                this.UILeftBtn.Foreground = Brushes.Gray;
+            }
             if (this.Datas != null)
             {
-                foreach(DeviceData d in this.Datas)
+                foreach (DeviceData d in this.Datas)
                 {
+                    UIDevice item = new UIDevice();
+                    item.Width = 170;
+                    item.Height = 240;
+                    item.Device = d;
+                    item.ViewInfoEvent += Item_ViewInfoEvent;
+                    item.DeleteEvent += Item_DeleteEvent;
+                    this.list_Box_Item.Items.Add(item);
+                }
+            }
+        }
+
+        private void Item_DeleteEvent(object sender, DeviceData e)
+        {
+            if (e != null)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có muốn xoá thiết bị này không?", "Xoá thiết bị", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+
+                    UIDevice uid = (this.list_Box_Item.SelectedItem as UIDevice);
+                    if (this.list_Box_Item.SelectedIndex != 0)
+                    {
+                        this.list_Box_Item.SelectedIndex = 0;
+                    }
+                    else if (this.list_Box_Item.Items.Count > 1)
+                    {
+                        this.list_Box_Item.SelectedIndex = 1;
+                    }
+                    uid.Animation_Opacity_View_Frame(false, () =>
+                    {
+                        this.Datas.Remove(uid.Device);
+                        this.list_Box_Item.Items.Remove(uid);
+                        if (this.to < this.total)
+                        {
+                            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                            this.LoadGUI();
+                        }
+                    });
 
                 }
             }
         }
 
+        private void Item_ViewInfoEvent(object sender, DeviceData e)
+        {
+            if (e != null)
+            {
+                UIDeviceEdit item = new UIDeviceEdit();
+                item.setLeft(0);
+                item.setTop(90);
+                item.Height = 578;
+                item.Width = 1366;
+                item.Device = e;
+                item.CloseEvent += Item_CloseEvent;
+                this.UIRoot.Children.Add(item);
+            }
+        }
+
         private void UIBtnAddUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            UIDeviceEdit item = new UIDeviceEdit();
+            item.setLeft(0);
+            item.setTop(90);
+            item.Height = 578;
+            item.Width = 1366;
+            item.CloseEvent += Item_CloseEvent;
+            this.UIRoot.Children.Add(item);
+        }
 
+        private void Item_CloseEvent(object sender, DeviceData e)
+        {
+            if (e != null)
+            {
+                bool isEdit = false;
+                foreach (UIDevice uid in this.list_Box_Item.Items)
+                {
+                    if (uid.Device.ID == e.ID)
+                    {
+                        isEdit = true;
+                        uid.Device = e;
+                    }
+                }
+                if (!isEdit)
+                {
+                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                    LoadGUI();
+                }
+            }
+            this.UIRoot.Children.Remove(sender as UIDeviceEdit);
         }
 
         private void UIReload_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.to = 10;
+            this.UISearchEdit.reset();
+            this.to = 12;
             this.from = 0;
-            this.Datas = App.curUser.LoadDevices(this.from,this.to,out this.total);
+            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
             this.LoadGUI();
         }
 
@@ -71,8 +179,7 @@ namespace MTC_Server.UIView.Device
                 string key = this.UISearchEdit.Text.Trim();
                 if (key.Length > 3)
                 {
-                    this.key = string.Format("%{0}%", key);
-                    to = 10;
+                    to = 12;
                     from = 0;
                     this.Datas = App.curUser.FindDevices(this.key, from, to, out this.total);
                     this.LoadGUI();
@@ -80,10 +187,10 @@ namespace MTC_Server.UIView.Device
             }
             else if (e.Key == Key.Escape)
             {
-                this.UISearchEdit.Text = "";
+                this.UISearchEdit.reset();
                 if (!string.IsNullOrEmpty(this.key))
                 {
-                    this.to = 10;
+                    this.to = 12;
                     this.from = 0;
                     this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
                     this.LoadGUI();
@@ -100,6 +207,48 @@ namespace MTC_Server.UIView.Device
         private void UISearchEdit_GotFocus(object sender, RoutedEventArgs e)
         {
             this.UIOverText.Animation_Opacity_View_Frame(false);
+        }
+
+        private void UIRootView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                this.UILeftBtn_MouseLeftButtonUp(null,null);
+                this.Focus();
+            }
+            else if (e.Key == Key.Right)
+            {
+                this.UIRightBtn_MouseLeftButtonUp(null, null);
+                this.Focus();
+            }
+        }
+
+        private void UILeftBtn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.from > 0)
+            {
+                this.to = this.from;
+                this.from -= 12;
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                else
+                    this.Datas = App.curUser.FindDevices(this.key, this.from, this.to, out this.total);
+                LoadGUI();
+            }
+        }
+
+        private void UIRightBtn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.to < this.total)
+            {                
+                this.from = this.to;
+                this.to -= 12;
+                if (string.IsNullOrEmpty(this.key))
+                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                else
+                    this.Datas = App.curUser.FindDevices(this.key, this.from,this.to, out this.total);
+                LoadGUI();
+            }
         }
     }
 }

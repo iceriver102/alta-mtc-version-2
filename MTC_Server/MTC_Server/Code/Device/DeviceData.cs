@@ -11,6 +11,7 @@ namespace MTC_Server.Code.Device
         public int ID { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
+        public string IP { get; set; }
         private int type;
         public int Type
         {
@@ -26,5 +27,20 @@ namespace MTC_Server.Code.Device
         public DateTime Time { get; set; }
 
         public bool Status { get; set; }
+        public TypeDevice TypeDevice
+        {
+            get
+            {
+                try
+                {
+                    return App.TypeDevices[this.type];
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
     }
 }

@@ -56,13 +56,7 @@ namespace MTC_Server.UIView.User
                 this.UIPhoneEdit.Text = this.u.Phone;
                 this.viewPermision.Permision = this.u.Permision;
                 this.UIUserNameEdit.Visibility = Visibility.Hidden;
-                foreach(Code.User.UserTypeData type in this.UITypeUser.Items)
-                {
-                    if(type== this.u.TypeUser)
-                    {
-                        this.UITypeUser.SelectedItem = type;
-                    }
-                }
+                this.UITypeUser.SelectedItem = this.u.TypeUser;
             }
         }
         public UIUserEdit()
@@ -91,13 +85,7 @@ namespace MTC_Server.UIView.User
             this.UIOldPaswordEdit.Password = "";
             this.UIPaswordConfirmEdit.Password = "";
             this.UINewPaswordEdit.Password = "";
-            foreach (Code.User.UserTypeData type in this.UITypeUser.Items)
-            {
-                if (type == this.u.TypeUser)
-                {
-                    this.UITypeUser.SelectedItem = type;
-                }
-            }
+            this.UITypeUser.SelectedItem = this.u.TypeUser;
         }
 
         private void SaveUser(object sender, MouseButtonEventArgs e)
@@ -118,8 +106,8 @@ namespace MTC_Server.UIView.User
                     MessageBox.Show("Mật khẩu không khớp nhau vui lòng kiểm tra lại!");
                     return;
                 }
-                int type = (this.UITypeUser.SelectedItem as Code.User.UserTypeData).Id;
-                if (type != 0)
+                
+                if (this.UITypeUser.SelectedIndex ==-1)
                 {
                     MessageBox.Show("Vui lòng chọn loại tài khoản!");
                     return;
@@ -136,7 +124,7 @@ namespace MTC_Server.UIView.User
                 this.u.Full_Name = this.UIFullnameEdit.Text;
                 this.u.Email = this.UIEmailEdit.Text;
                 this.u.Phone = this.UIPhoneEdit.Text;
-                this.u.Type =type;
+                this.u.Type =(this.UITypeUser.SelectedItem as Code.User.UserTypeData).Id;
                 this.u.Permision = this.viewPermision.Permision;
                 this.u.Save();
                 if (this.CloseEvent != null)

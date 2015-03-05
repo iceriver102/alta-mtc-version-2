@@ -216,6 +216,7 @@ namespace MTC_Server.UIView.Media
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadGUI(this.Media);
+            this.Focus();
         }
         public void LoadGUI(Code.Media.MediaData m)
         {
@@ -272,6 +273,14 @@ namespace MTC_Server.UIView.Media
         private void UIBtnReset_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.LoadGUI(this.Media);
+        }
+
+        private void UIRootView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key== Key.Escape)
+            {
+                this.UIBtnClose_MouseLeftButtonUp(null, null);
+            }
         }
     }
 }
