@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,6 +82,7 @@
     <Compile Include="Class\CsvFileWriter.cs" />
     <Compile Include="Class\DateTimeExtensions.cs" />
     <Compile Include="Class\EasyTimer.cs" />
+    <Compile Include="Class\EncryptString.cs" />
     <Compile Include="Class\ExCss.cs" />
     <Compile Include="Class\StringExtensions.cs" />
     <Compile Include="Class\TimeExtensions.cs" />
@@ -98,6 +100,9 @@
     <Compile Include="Code\User\UserTypeData.cs" />
     <Compile Include="Plugin\ftp_download.xaml.cs">
       <DependentUpon>ftp_download.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UILogin.xaml.cs">
+      <DependentUpon>UILogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIView\Device\GridViewDevice.xaml.cs">
       <DependentUpon>GridViewDevice.xaml</DependentUpon>
@@ -181,6 +186,10 @@
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UILogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\Device\GridViewDevice.xaml">
       <SubType>Designer</SubType>

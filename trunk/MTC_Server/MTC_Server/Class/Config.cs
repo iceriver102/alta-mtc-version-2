@@ -23,6 +23,8 @@ namespace Alta.Class
         public int ftp_port = 21;
         public string ftp_folder = "Medias";
         public string temp_folder = "Medias";
+
+        public int secondAutoLogout = 3;
   
         public string connectString
         {

@@ -12,6 +12,7 @@ namespace Alta.Class
     {
         public bool autoLogin = true;
         public string hashUserName = "";
+        public string userName = string.Empty;
         public static AltaCache Read(string file)
         {
             if (!File.Exists(file))
