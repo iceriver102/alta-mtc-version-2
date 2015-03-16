@@ -52,20 +52,15 @@ namespace MTC_Server
                 if (tmpResult != 0)
                 {
                     curUserID = tmpResult;
-                    this.MainWindow = new MainWindow();
-                    this.MainWindow.Show();
+                  
                 }
                 else
                 {
-                    this.MainWindow = new Login();
-                    this.MainWindow.Show();
+                    curUserID = -1;
                 }
             }
-            else
-            {
-                this.MainWindow = new Login();
-                this.MainWindow.Show();
-            }
+            this.MainWindow = new UILogin();
+            this.MainWindow.Show();
         }
         public static string getHash(int id)
         {
@@ -76,7 +71,7 @@ namespace MTC_Server
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
-                    string query = "SELECT  `fc_get_hash_user` ( @user_id) AS " + Define.hash;
+                    string query = "SELECT  `fc_get_hash_user` (@user_id) AS " + Define.hash;
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {

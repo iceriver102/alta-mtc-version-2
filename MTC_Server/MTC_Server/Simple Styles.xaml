@@ -1152,4 +1152,38 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="Button" x:Key="FlatButtonStyle">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand"/>        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Part_UIBorder" BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="{TemplateBinding Background}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="0">
+                        <ContentControl x:Name="PART_Content" Foreground="{TemplateBinding Foreground}"  Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false" >
+                            <Setter Property="BorderBrush" Value="{DynamicResource DisabledBorderBrush}" TargetName="Part_UIBorder"/>
+                            <Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Part_UIBorder"/>
+                            <Setter Property="BorderThickness" Value="1" TargetName="Part_UIBorder"/>
+                            <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" TargetName="PART_Content"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+                
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>            
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{x:Null}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{x:Null}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

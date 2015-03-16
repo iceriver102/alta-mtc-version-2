@@ -30,12 +30,13 @@ namespace MTC_Server.UIView.Media
             get { return this.m; }
             set { this.m = value; }
         }
-        public int Type { get; set; } = 1;
+        public int Type { get; set; }
 
         public event EventHandler<Code.Media.MediaData> CloseEvent;
         public UIMediaEdit()
         {
             InitializeComponent();
+            this.Type = 1;
         }
 
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -136,24 +137,24 @@ namespace MTC_Server.UIView.Media
                 {
                     if (this.Media == null)
                     {
-                        Code.Media.MediaData tmpMedia = new Code.Media.MediaData();
-                        tmpMedia.Name = this.UINameEdit.Text.Trim();
-                        tmpMedia.FileSize = string.Format("{0}kb", 0);
-                        tmpMedia.Duration = "00:00:00";
-                        tmpMedia.Type = this.Type;
-                        tmpMedia.Url = this.UIUrlEdit.Text;
-                        tmpMedia.User_ID = App.curUser.ID;
-                        tmpMedia.Comment = this.UICommentEdit.Text;
+                        Code.Media.MediaData tmp = new Code.Media.MediaData();
+                        tmp.Name = this.UINameEdit.Text.Trim();
+                        tmp.FileSize = string.Format("{0}kb", 0);
+                        tmp.Duration = "00:00:00";
+                        tmp.Type = this.Type;
+                        tmp.Url = this.UIUrlEdit.Text;
+                        tmp.User_ID = App.curUser.ID;
+                        tmp.Comment = this.UICommentEdit.Text;
                         int result = Code.Media.MediaData.Insert(tmpMedia);
                         if (result <= 0)
                         {
                             MessageBox.Show("Không thể kết nối với CSDL!");
                             return;
                         }
-                        tmpMedia.ID = result;
+                        tmp.ID = result;
                         if (this.CloseEvent != null)
                         {
-                            this.CloseEvent(this, tmpMedia);
+                            this.CloseEvent(this, tmp);
                         }
                     }
                     else

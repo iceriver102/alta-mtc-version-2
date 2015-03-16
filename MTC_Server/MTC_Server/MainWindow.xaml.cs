@@ -30,6 +30,7 @@ namespace MTC_Server
         private const double W = 1366;
         private const double H = 768;
         private bool _menu_active = false;
+        public int Time = 3;
         public bool menuActivate
         {
             get
@@ -49,7 +50,7 @@ namespace MTC_Server
                     UIContent.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 164);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
-                        if(e is UIView.MenuItem)
+                        if (e is UIView.MenuItem)
                         {
                             UIView.MenuItem item = e as UIView.MenuItem;
                             item.Animation_Opacity_View_Frame(true);
@@ -62,7 +63,7 @@ namespace MTC_Server
                     MenuText.Foreground = Brushes.Black;
                     UIBtnMinimize.Foreground = Brushes.Black;
                     UIBtnClose.Foreground = Brushes.Black;
-                    UIMenu.Animation_Translate_Frame(double.NaN,double.NaN, 0, -64);
+                    UIMenu.Animation_Translate_Frame(double.NaN, double.NaN, 0, -64);
                     UIContent.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 100);
                     foreach (UIElement e in this.UIMenu.Children)
                     {
@@ -78,13 +79,29 @@ namespace MTC_Server
         public MainWindow()
         {
             InitializeComponent();
+            this.Time = App.setting.secondAutoLogout;
+            EasyTimer.Cancel();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.UIRoot.RenderTransform = new ScaleTransform(this.Width / W, this.Height / H);
             this.menuActivate = false;
-            App.curUser = UserData.Info(App.curUserID);
+            EasyTimer.SetInterval(() =>
+            {
+                this.Time--;
+                if (this.Time <= 0)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Application.Current.MainWindow = new UILogin();
+                        Application.Current.MainWindow.Show();
+                        this.Close();
+                        EasyTimer.Cancel();                        
+                    });
+                }
+            }, 1, System.Threading.ApartmentState.STA);
+
         }
 
         private void Asset_Images_btn_menu_png_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -165,10 +182,27 @@ namespace MTC_Server
         private void UILogOut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             App.cache.hashUserName = string.Empty;
-            AltaCache.Write(App.CacheName,App.cache);
-            Application.Current.MainWindow = new Login();
+            AltaCache.Write(App.CacheName, App.cache);
+            App.curUserID = 0;
+            App.curUser = null;
+            Application.Current.MainWindow = new UILogin();
             Application.Current.MainWindow.Show();
             this.Close();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+           this.Time = App.setting.secondAutoLogout;
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            this.Time = App.setting.secondAutoLogout;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Time = App.setting.secondAutoLogout;
         }
     }
 }
