@@ -19,6 +19,7 @@ using MTC_Server.Code.User;
 using MTC_Server.UIView.User;
 using MTC_Server.UIView.Media;
 using MTC_Server.UIView.Device;
+using System.Threading;
 
 namespace MTC_Server
 {
@@ -76,31 +77,48 @@ namespace MTC_Server
                 }
             }
         }
+        public Thread mainThread, StaThread;
+
         public MainWindow()
         {
             InitializeComponent();
             this.Time = App.setting.secondAutoLogout;
-            EasyTimer.Cancel();
+            this.mainThread = new Thread(RunMainThread);
+            this.mainThread.IsBackground = true;
+            this.StaThread = new Thread(AutoLogOff);
+            this.StaThread.SetApartmentState(ApartmentState.STA);
+            this.StaThread.IsBackground = true;
+        }
+
+        public void RunMainThread()
+        {
+            while (this.Time > 0)
+            {
+                Thread.Sleep(1000);
+                this.Time--;
+                if (this.StaThread.ThreadState != ThreadState.Running && this.Time <= 0)
+                {
+                    this.StaThread.Start();
+                }
+            }
+        }
+        public void AutoLogOff()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                Application.Current.MainWindow = new UILogin();
+                Application.Current.MainWindow.Show();
+                this.StaThread.Abort();
+                this.StaThread = null;
+                this.Close();
+            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.UIRoot.RenderTransform = new ScaleTransform(this.Width / W, this.Height / H);
             this.menuActivate = false;
-            EasyTimer.SetInterval(() =>
-            {
-                this.Time--;
-                if (this.Time <= 0)
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        Application.Current.MainWindow = new UILogin();
-                        Application.Current.MainWindow.Show();
-                        this.Close();
-                        EasyTimer.Cancel();                        
-                    });
-                }
-            }, 1, System.Threading.ApartmentState.STA);
+            this.mainThread.Start();
 
         }
 
@@ -192,7 +210,7 @@ namespace MTC_Server
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-           this.Time = App.setting.secondAutoLogout;
+            this.Time = App.setting.secondAutoLogout;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
