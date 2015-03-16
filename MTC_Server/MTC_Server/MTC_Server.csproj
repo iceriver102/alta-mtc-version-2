@@ -1208,7 +1208,10 @@
     <Content Include="Plugin\Vlc.DotNet.Core.Interops.dll" />
     <Content Include="Plugin\Vlc.DotNet.Wpf.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Code\About\" />
+    <Folder Include="Code\Setting\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
