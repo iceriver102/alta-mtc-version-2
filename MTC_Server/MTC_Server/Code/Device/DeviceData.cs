@@ -41,6 +41,13 @@ namespace MTC_Server.Code.Device
                 }
             }
         }
+        public User.UserData User
+        {
+            get
+            {
+                return this.getCurUser();
+            }
+        }
 
     }
 }

@@ -262,13 +262,13 @@ namespace MTC_Server.Code.User
             }
             return datas;
         }
-        public List<Device.DeviceData> FindDevices(string key,int from, int to, out int total)
+        public List<Device.DeviceData> FindDevices(string key,int from, ref int to, out int total)
         {
             total = 0;
+            List<Device.DeviceData> datas = null;
             if (this.Permision.mana_device)
             {
-                //p_find_device
-                List<Device.DeviceData> datas = null;
+                //p_find_device                
                 total = 0;
                 try
                 {
@@ -300,17 +300,45 @@ namespace MTC_Server.Code.User
             }
             else
             {
-
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "`p_find_device_by_user`";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                            cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = key });
+                            cmd.Parameters.Add(new MySqlParameter("@_from_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = DateTime.Now });
+                            cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                            total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                            to = total;
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                datas = reader.toDevices();
+                            }
+                        };
+                        conn.Close();
+                    };
+                    return datas;
+                }
+                catch (Exception)
+                {
+                }
             }
             return null;
         }
-        public List<Device.DeviceData> LoadDevices(int from,int to,out int total)
+        public List<Device.DeviceData> LoadDevices(int from,ref int to,out int total)
         {
             total = 0;
+            List<Device.DeviceData> datas = null;
             if (this.Permision.mana_device)
             {
                 //p_get_all_device
-                List<Device.DeviceData> datas = null;
+                
                 total = 0;
                 try
                 {
@@ -341,7 +369,34 @@ namespace MTC_Server.Code.User
             }
             else
             {
-
+                //p_get_all_devive_by_user
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "`p_get_all_device_by_user`";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                            cmd.Parameters.Add(new MySqlParameter("@_from_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = DateTime.Now });
+                            cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                            total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                            to = total;
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                datas = reader.toDevices();
+                            }
+                        };
+                        conn.Close();
+                    };
+                    return datas;
+                }
+                catch (Exception)
+                {
+                }
             }
             return null;
         }

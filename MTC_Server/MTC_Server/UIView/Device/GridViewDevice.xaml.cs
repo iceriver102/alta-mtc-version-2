@@ -44,7 +44,7 @@ namespace MTC_Server.UIView.Device
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+            this.Datas = App.curUser.LoadDevices(this.from,ref this.to, out this.total);
             this.LoadGUI();
             this.Focus();
         }
@@ -106,7 +106,7 @@ namespace MTC_Server.UIView.Device
                         this.list_Box_Item.Items.Remove(uid);
                         if (this.to < this.total)
                         {
-                            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                            this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
                             this.LoadGUI();
                         }
                     });
@@ -156,7 +156,7 @@ namespace MTC_Server.UIView.Device
                 }
                 if (!isEdit)
                 {
-                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                    this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
                     LoadGUI();
                 }
             }
@@ -168,7 +168,7 @@ namespace MTC_Server.UIView.Device
             this.UISearchEdit.reset();
             this.to = 12;
             this.from = 0;
-            this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+            this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
             this.LoadGUI();
         }
 
@@ -181,7 +181,7 @@ namespace MTC_Server.UIView.Device
                 {
                     to = 12;
                     from = 0;
-                    this.Datas = App.curUser.FindDevices(this.key, from, to, out this.total);
+                    this.Datas = App.curUser.FindDevices(this.key, from, ref to, out this.total);
                     this.LoadGUI();
                 }
             }
@@ -192,7 +192,7 @@ namespace MTC_Server.UIView.Device
                 {
                     this.to = 12;
                     this.from = 0;
-                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                    this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
                     this.LoadGUI();
                 }
                 this.Focus();
@@ -230,9 +230,9 @@ namespace MTC_Server.UIView.Device
                 this.to = this.from;
                 this.from -= 12;
                 if (string.IsNullOrEmpty(this.key))
-                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                    this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
                 else
-                    this.Datas = App.curUser.FindDevices(this.key, this.from, this.to, out this.total);
+                    this.Datas = App.curUser.FindDevices(this.key, this.from, ref this.to, out this.total);
                 LoadGUI();
             }
         }
@@ -244,9 +244,9 @@ namespace MTC_Server.UIView.Device
                 this.from = this.to;
                 this.to -= 12;
                 if (string.IsNullOrEmpty(this.key))
-                    this.Datas = App.curUser.LoadDevices(this.from, this.to, out this.total);
+                    this.Datas = App.curUser.LoadDevices(this.from, ref this.to, out this.total);
                 else
-                    this.Datas = App.curUser.FindDevices(this.key, this.from,this.to, out this.total);
+                    this.Datas = App.curUser.FindDevices(this.key, this.from,ref this.to, out this.total);
                 LoadGUI();
             }
         }

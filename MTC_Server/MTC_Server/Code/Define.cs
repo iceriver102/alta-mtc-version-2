@@ -71,7 +71,15 @@ namespace MTC_Server.Code
 		public const string device_time="device_time";
         public const string device_ip = "device_ip";
 
-
+        public const string schedule_id = "schedule_id";
+        public const string schedule_user = "schedule_user";
+        public const string schedule_parent = "schedule_parent";
+        public const string schedule_time_begin = "schedule_time_begin";
+        public const string schedule_time_end = "schedule_time_end";
+        public const string schedule_status = "schedule_status";
+        public const string schedule_comment = "schedule_comment";
+        public const string schedule_date = "schedule_date";
+        public const string schedule_device = "schedule_device";
 
 
     }

@@ -101,6 +101,37 @@ namespace MTC_Server.Code.Device
             }
         }
 
+        public User.UserData getCurUser()
+        {
+            User.UserData data = null;
+            //p_get_user_of_device
+            try
+            {
+                
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_get_user_of_device`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_device_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            data = reader.toUser();
+                        }
+                    };
+                    conn.Close();
+                };
+
+            }
+            catch (Exception)
+            {
+            }
+            return data;
+        }
+
         internal void setStatus()
         {
             try

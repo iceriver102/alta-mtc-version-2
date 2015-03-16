@@ -58,6 +58,10 @@ namespace MTC_Server.UIView.Device
             this.UITitle.Text = d.Name;
             this.UITime.Text = d.Time.format();
             this.UIType.Text = d.TypeDevice.Name;
+            if (d.User != null)
+                this.UIUser.Text = d.User.Full_Name;
+            else
+                this.UIUser.Text = string.Empty;
             if (d.Status)
             {
                 this.UIStatus.Text = Define.Fonts["fa-unlock"].Code;
