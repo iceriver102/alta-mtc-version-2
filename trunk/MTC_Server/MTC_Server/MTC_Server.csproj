@@ -96,6 +96,8 @@
     <Compile Include="Code\Media\MediaTypeArray.cs" />
     <Compile Include="Code\Media\TypeMedia.cs" />
     <Compile Include="Code\MysqlHelper.cs" />
+    <Compile Include="Code\Schedule\Event.cs" />
+    <Compile Include="Code\Schedule\GroupEvent.cs" />
     <Compile Include="Code\User\UserFunction.cs" />
     <Compile Include="Code\User\UserTypeData.cs" />
     <Compile Include="Plugin\ftp_download.xaml.cs">
@@ -131,6 +133,24 @@
     <Compile Include="UIView\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIView\Schedule\UI\Calendar.xaml.cs">
+      <DependentUpon>Calendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Schedule\UISchedule.xaml.cs">
+      <DependentUpon>UISchedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Schedule\UI\UIDayOfWeek.xaml.cs">
+      <DependentUpon>UIDayOfWeek.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Schedule\UI\UIEvent.xaml.cs">
+      <DependentUpon>UIEvent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Schedule\UI\UITime.xaml.cs">
+      <DependentUpon>UITime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Schedule\UI\UIWeek.xaml.cs">
+      <DependentUpon>UIWeek.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIView\User\GridViewUser.xaml.cs">
       <DependentUpon>GridViewUser.xaml</DependentUpon>
     </Compile>
@@ -146,6 +166,14 @@
     <Compile Include="UIWindow.xaml.cs">
       <DependentUpon>UIWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Asset\Themes\MetroScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Asset\Themes\MetroScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +252,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIView\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UI\Calendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UISchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UI\UIDayOfWeek.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UI\UIEvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UI\UITime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Schedule\UI\UIWeek.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

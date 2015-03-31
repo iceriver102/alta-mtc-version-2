@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="MTC_Server.UIView.Schedule.UI.UIEvent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="100" x:Name="UIRootView" Loaded="UserControl_Loaded" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" >
+    <Border x:Name="UIRoot" Height="{Binding ElementName=UIRootView, Path=Height}" Width="{Binding ElementName=UIRootView, Path=Width}" Background="#FFF01C12">
+        <StackPanel >
+            <TextBlock x:Name="Content" Margin="2" TextAlignment="Left" Text="" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
+            <TextBlock x:Name="UITime" Margin="2" TextAlignment="Left" Text="" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
+        </StackPanel>
+        
+    </Border>
+</UserControl>

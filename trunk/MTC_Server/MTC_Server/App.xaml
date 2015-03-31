@@ -8,6 +8,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Simple Styles.xaml"/>
+                <ResourceDictionary Source="Asset/Themes/MetroScrollViewer.xaml" />
+                <ResourceDictionary Source="Asset/Themes/MetroScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="MTC_Server.UIView.Schedule.UI.UITime"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="300" x:Name="RootView" Loaded="RootView_Loaded">
+    <Canvas x:Name="UIRoot">
+        <Path x:Name="LineTop"  Data="M171,50L574.5,50" Fill="#FF9E9EA6" Height="2" Canvas.Left="0" Stretch="Fill" Stroke="#FF9E9EA6" Canvas.Top="0" Width="{Binding ElementName=RootView, Path=Width}"/>
+        <Path x:Name="LineBottom"  Visibility="Hidden" Data="M171,50L574.5,50" Fill="#FF9E9EA6" Height="2" Canvas.Left="0" Stretch="Fill" Stroke="#FF9E9EA6" Canvas.Bottom="0" Width="{Binding ElementName=RootView, Path=Width}"/>
+        <TextBlock x:Name="UIText" Height="18" Canvas.Left="31" TextWrapping="NoWrap" Text="All" Canvas.Top="21" Width="40" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="13.333"/>
+        <Path x:Name="LineCenter"  Visibility="Hidden" Data="M171,50L574.5,50" Fill="#FF9E9EA6" Height="2" Canvas.Left="76" Stretch="Fill" Stroke="#FF9E9EA6" Canvas.Top="30" Width="1290"/>
+        <ScrollViewer Canvas.Top="1" Width="{Binding ElementName=UIContent, Path=Width}" Height="{Binding Height,ElementName=UIContent}" Canvas.Left="90" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+            <Canvas x:Name="UIContentScroll"  Width="{Binding ElementName=UIContent, Path=Width}" />
+        </ScrollViewer>
+        <Canvas x:Name="UIContent" Canvas.Top="1" Canvas.Left="90"></Canvas>
+    </Canvas>
+</UserControl>
