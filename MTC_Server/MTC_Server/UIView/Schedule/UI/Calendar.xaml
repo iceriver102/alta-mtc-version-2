@@ -1,0 +1,41 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:UI="clr-namespace:MTC_Server.UIView.Schedule.UI" x:Class="MTC_Server.UIView.Schedule.Calendar" 
+             mc:Ignorable="d" 
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="RootView" Loaded="RootView_Loaded">
+    <Canvas x:Name="UIRoot" Height="{Binding Height, ElementName=RootView}" Background="#00000000" ClipToBounds="True"  >       
+        <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Visible" Canvas.Left="0" Canvas.Top="0" HorizontalScrollBarVisibility="Disabled" Height="{Binding Height,ElementName=RootView}" Width="{Binding Width, ElementName=RootView}">
+            <Canvas x:Name="UICalendar" Canvas.Left="0" Canvas.Top="50" Width="{Binding Width, ElementName=RootView}" Height="2980">
+                <UI:UITime x:Name="Time_0" Height="60" Mode="DAY" Canvas.Left="0" Canvas.Top="0" Width="{Binding Width, ElementName=RootView}"/>
+                <UI:UITime x:Name="Time_1" Panel.ZIndex="33" Height="60" Canvas.Left="0" Canvas.Top="60" Width="{Binding Width, ElementName=RootView}" Text="00:00"/>
+                <UI:UITime x:Name="Time_2" Panel.ZIndex="32" Height="60" Canvas.Left="0" Canvas.Top="120" Width="{Binding Width, ElementName=RootView}" Text="01:00"/>
+                <UI:UITime x:Name="Time_3" Panel.ZIndex="31" Height="60" Canvas.Left="0" Canvas.Top="180" Width="{Binding Width, ElementName=RootView}" Text="02:00"/>
+                <UI:UITime x:Name="Time_4" Panel.ZIndex="30" Height="60" Canvas.Left="0" Canvas.Top="240" Width="{Binding Width, ElementName=RootView}" Text="03:00"/>
+                <UI:UITime x:Name="Time_5" Panel.ZIndex="29" Height="60" Canvas.Left="0" Canvas.Top="300" Width="{Binding Width, ElementName=RootView}" Text="04:00"/>
+                <UI:UITime x:Name="Time_6" Panel.ZIndex="28" Height="60" Canvas.Left="0" Canvas.Top="360" Width="{Binding Width, ElementName=RootView}" Text="05:00"/>
+                <UI:UITime x:Name="Time_7" Panel.ZIndex="27" Height="60" Canvas.Left="0" Canvas.Top="420" Width="{Binding Width, ElementName=RootView}" Text="06:00"/>
+                <UI:UITime x:Name="Time_8" Panel.ZIndex="26" Height="60" Canvas.Left="0" Canvas.Top="480" Width="{Binding Width, ElementName=RootView}" Text="07:00"/>
+                <UI:UITime x:Name="Time_9" Panel.ZIndex="25" Height="60" Canvas.Left="0" Canvas.Top="540" Width="{Binding Width, ElementName=RootView}" Text="08:00"/>
+                <UI:UITime x:Name="Time_10" Panel.ZIndex="24" Height="60" Canvas.Left="0" Canvas.Top="600" Width="{Binding Width, ElementName=RootView}" Text="09:00"/>
+                <UI:UITime x:Name="Time_11" Panel.ZIndex="23" Height="60" Canvas.Left="0" Canvas.Top="660" Width="{Binding Width, ElementName=RootView}" Text="10:00"/>
+                <UI:UITime x:Name="Time_12" Panel.ZIndex="22" Height="60" Canvas.Left="0" Canvas.Top="720" Width="{Binding Width, ElementName=RootView}" Text="11:00"/>
+                <UI:UITime x:Name="Time_13" Panel.ZIndex="21" Height="60" Canvas.Left="0" Canvas.Top="780" Width="{Binding Width, ElementName=RootView}" Text="12:00"/>
+                <UI:UITime x:Name="Time_14" Panel.ZIndex="20"  Height="60" Canvas.Left="0" Canvas.Top="840" Width="{Binding Width, ElementName=RootView}" Text="13:00"/>
+                <UI:UITime x:Name="Time_15" Panel.ZIndex="19"  Height="60" Canvas.Left="0" Canvas.Top="900" Width="{Binding Width, ElementName=RootView}" Text="14:00"/>
+                <UI:UITime x:Name="Time_16" Panel.ZIndex="18"  Height="60" Canvas.Left="0" Canvas.Top="960" Width="{Binding Width, ElementName=RootView}" Text="15:00"/>
+                <UI:UITime x:Name="Time_17" Panel.ZIndex="17"  Height="60" Canvas.Left="0" Canvas.Top="1020" Width="{Binding Width, ElementName=RootView}" Text="16:00"/>
+                <UI:UITime x:Name="Time_18" Panel.ZIndex="16"  Height="60" Canvas.Left="0" Canvas.Top="1080" Width="{Binding Width, ElementName=RootView}" Text="17:00"/>
+                <UI:UITime x:Name="Time_19" Panel.ZIndex="15"  Height="60" Canvas.Left="0" Canvas.Top="1140" Width="{Binding Width, ElementName=RootView}" Text="18:00"/>
+                <UI:UITime x:Name="Time_20" Panel.ZIndex="14"  Height="60" Canvas.Left="0" Canvas.Top="1200" Width="{Binding Width, ElementName=RootView}" Text="19:00"/>
+                <UI:UITime x:Name="Time_21" Panel.ZIndex="13"  Height="60" Canvas.Left="0" Canvas.Top="1260" Width="{Binding Width, ElementName=RootView}" Text="20:00"/>
+                <UI:UITime x:Name="Time_22" Panel.ZIndex="12"  Height="60" Canvas.Left="0" Canvas.Top="1320" Width="{Binding Width, ElementName=RootView}" Text="21:00"/>
+                <UI:UITime x:Name="Time_23" Panel.ZIndex="11"  Height="60" Canvas.Left="0" Canvas.Top="1380" Width="{Binding Width, ElementName=RootView}" Text="22:00"/>
+                <UI:UITime x:Name="Time_24" Panel.ZIndex="10" Height="60" Canvas.Left="0" Canvas.Top="1440" Width="{Binding Width, ElementName=RootView}" Text="23:00"/>
+            </Canvas>
+        </ScrollViewer>
+        
+    </Canvas>
+</UserControl>

@@ -20,6 +20,7 @@ using MTC_Server.UIView.User;
 using MTC_Server.UIView.Media;
 using MTC_Server.UIView.Device;
 using System.Threading;
+using MTC_Server.UIView.Schedule;
 
 namespace MTC_Server
 {
@@ -169,6 +170,16 @@ namespace MTC_Server
                     tmpDeviceItem.setLeft(0);
                     tmpDeviceItem.setTop(0);
                     this.UIContent.Children.Add(tmpDeviceItem);
+                    break;
+                case "Schedule":
+                    this.UIContent.Children.Clear();
+                    MTC_Server.UIView.Schedule.UISchedule tmpCalendar = new UIView.Schedule.UISchedule();
+                    tmpCalendar.Width = 1366;
+                    tmpCalendar.Height = 668;
+                    tmpCalendar.setLeft(0);
+                    tmpCalendar.setTop(0);
+                    this.UIContent.Children.Add(tmpCalendar);
+
                     break;
             }
         }

@@ -337,8 +337,6 @@ namespace MTC_Server.Code.User
             List<Device.DeviceData> datas = null;
             if (this.Permision.mana_device)
             {
-                //p_get_all_device
-                
                 total = 0;
                 try
                 {

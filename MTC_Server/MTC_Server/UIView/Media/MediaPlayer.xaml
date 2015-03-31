@@ -10,9 +10,9 @@
              d:DesignHeight="668" d:DesignWidth="1366" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UserControl_Loaded" MouseMove="UserControl_MouseMove">
     <Canvas x:Name="UIRoot" Background="#7F000000">
         <Wpf:VlcControl x:Name="myVlcControl" />
-        <Border  Height="522" Canvas.Left="223" Canvas.Top="20" Width="927" BorderBrush="White" BorderThickness="1">
+        <Border  Height="522" Canvas.Left="223" Canvas.Top="20" Width="927" BorderBrush="White" BorderThickness="1" Background="Black">
             <Canvas x:Name="UIView" Height="520"  Width="925" Margin="0" Background="#FF6E6E6E" ClipToBounds="True">
-                <Image x:Name="image" Height="{Binding Height, ElementName=UIView}" Source="{Binding VideoSource, ElementName=myVlcControl}" Canvas.Left="0" Canvas.Top="0" Width="{Binding Width, ElementName=UIView}"/>
+                <Image x:Name="image" Height="{Binding Height, ElementName=UIView}" Source="{Binding VideoSource, ElementName=myVlcControl}" Canvas.Left="0" Canvas.Top="0" Width="{Binding Width, ElementName=UIView}" Stretch="UniformToFill"/>
                 <Plugin:ftp_download x:Name="UIFtp" Height="5" Canvas.Left="0" Canvas.Top="0" Width="{Binding Width, ElementName=UIView}" Background="Transparent" Foreground="DarkOrange" CompleteEvent="UIFtp_CompleteEvent"/>
                 <Canvas x:Name="UIBar" Height="60" Canvas.Left="0" Canvas.Top="460" Width="{Binding Width, ElementName=UIView}" Background="Black">
                     <ProgressBar x:Name="barTimeSeek" Style="{DynamicResource ProgressBarStyle}" Width="800"   VerticalAlignment="Top" Height="6" Background="White" Foreground="#FFF46320" MouseLeftButtonDown="ProgressBarChange"  PreviewMouseLeftButtonDown="SliderMouseLeftButtonDown" PreviewMouseLeftButtonUp="SliderMouseLeftButtonUp" Cursor="Hand" Canvas.Left="60" BorderBrush="{x:Null}" Canvas.Top="-4" />
