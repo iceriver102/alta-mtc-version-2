@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace MTC_Server.Code.Schedule
 {
-    public class Event
+    public partial class Event
     {
+        public int Id { get; set; }
+        public int parent_id;
+        public int device_id;
+        public int user_id;
+        public bool status { get; set; }
         public string Content { get; set; }
         public DateTime Begin { get; set; }
         public DateTime End { get; set; }
@@ -16,76 +21,69 @@ namespace MTC_Server.Code.Schedule
             get;
             set;
         }
-        public int beginIndex(DateTime curTime)
-        {
-            if (this.isAllDay(curTime))
-                return 0;
-            if (this.Begin.Date < curTime.Date)
-                return 1;
-            return this.Begin.Hour + 1;
-        }
-
         public double Top { get; set; }
         public double Left { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
-
-        public int EndIndex(DateTime curTime)
+        public bool loop { get; set; }
+        public string NameDevice
         {
-            if (this.isAllDay(curTime))
+            get
             {
-                return 0;
+                return MysqlHelper.getNameDevice(this.device_id);
             }
-            if (this.End.Date > curTime.Date)
-                return 24;
-            return this.End.Hour + 1;
+        }
+        public string IPDevice
+        {
+            get
+            {
+                return MysqlHelper.getIPDevice(this.device_id);
+            }
+        }
+        public string NameUser
+        {
+            get
+            {
+                return MysqlHelper.getNameUser(this.user_id);
+            }
+        }
+        public string NameParent
+        {
+            get
+            {
+                return MysqlHelper.getNameUser(this.parent_id);
+            }
+        }
+        public Code.User.UserData User
+        {
+            get
+            {
+                if (this.user_id == 0)
+                    return null;
+                return Code.User.UserData.Info(this.user_id);
+            }
         }
 
-        public bool isAllDay(DateTime curDateView)
+        public Code.Device.DeviceData Device
         {
-            if ((this.End.Date > curDateView.Date || this.End.TimeOfDay == new TimeSpan(23, 59, 59)) && (this.Begin < curDateView.Date || this.Begin.TimeOfDay == new TimeSpan(23, 59, 59)))
-                return true;
-            return false;
+            get
+            {
+                if (this.device_id == 0)
+                    return null;
+                return Code.Device.DeviceData.Info(this.device_id);
+            }
         }
 
-        public double getHeight(DateTime curDateView)
+        public Code.User.UserData Parent
         {
-            if (this.Begin == null)
-                return double.NaN;
-            if (this.End == null)
-                return 0;
-            if (this.isAllDay(curDateView))
-                return 30;
-            TimeSpan tmp;
-            if (this.End.Date > curDateView.Date)
+            get
             {
-                curDateView = new DateTime(curDateView.Year, curDateView.Month, curDateView.Day, 23, 59, 59);
-                tmp = curDateView - this.Begin;
+                if (this.parent_id == 0)
+                {
+                    return null;
+                }
+                return Code.User.UserData.Info(this.parent_id);
             }
-            else if(this.Begin.Date == curDateView.Date)
-            {
-                tmp = this.End - this.Begin;
-            }
-            else
-            {
-                tmp = this.End - curDateView.Date;
-            }
-            return (tmp.TotalMinutes * 2 < 20) ? 20 : tmp.TotalMinutes * 2;
-        }
-
-        public double getTop(DateTime curDateView)
-        {
-            if (this.Begin == null)
-                return double.NaN;
-            if (curDateView == null)
-            {
-                curDateView = DateTime.Now;
-            }
-            if (this.isAllDay(curDateView))
-                return 0;
-            if (curDateView.Date > this.Begin.Date)
-                return 0;
-            return this.Begin.TimeOfDay.Minutes*2;
         }
 
     }

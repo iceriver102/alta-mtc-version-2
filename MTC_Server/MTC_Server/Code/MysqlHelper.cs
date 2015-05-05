@@ -12,6 +12,88 @@ namespace MTC_Server.Code
 
     public static class MysqlHelper
     {
+        public static string getNameDevice(int device_id)
+        {
+            string result = string.Empty;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    //string query = "CALL `p_get_all_user` (@_number , @_from, @total); ";
+                    string query = "`fc_get_name_device_by_id`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id_device", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = device_id });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.String) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        var tmp = cmd.ExecuteScalar();
+                        result = cmd.Parameters["@result"].Value.ToString();
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+        public static string getIPDevice(int device_id)
+        {
+            string result = string.Empty;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    //string query = "CALL `p_get_all_user` (@_number , @_from, @total); ";
+                    string query = "`fc_get_ip_device`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id_device", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = device_id });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.String) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        var tmp = cmd.ExecuteScalar();
+                        result = cmd.Parameters["@result"].Value.ToString();
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+        public static string getNameUser(int user_id)
+        {
+            string result= string.Empty;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    //string query = "CALL `p_get_all_user` (@_number , @_from, @total); ";
+                    string query = "`fc_get_full_name_id_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.String) { Direction = System.Data.ParameterDirection.ReturnValue});
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        var tmp = cmd.ExecuteScalar();
+                        result = cmd.Parameters["@result"].Value.ToString();
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+              
+            }
+            return result;
+        }
+
         public static List<UserData> getAllUser(int from, int number, out int total)
         {
             List<UserData> datas = null;

@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="MTC_Server.UIView.Schedule.UI.UIDay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="43" d:DesignWidth="43" x:Name="RootView"  FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="16" MouseLeftButtonUp="RootView_MouseLeftButtonUp" PreviewMouseDown="RootView_PreviewMouseDown" >
+    <Canvas x:Name="UIRoot">
+        <TextBlock x:Name="UIcurDay" Visibility="Hidden" Width="{Binding Width,ElementName=RootView}" Text="&#xf1db;" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FFF05223" Height="25" FontSize="26" />
+        <TextBlock x:Name="UINow" Visibility="Hidden" Width="{Binding Width,ElementName=RootView}" Text="&#xf111;" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="#FFF05223" Height="25" FontSize="26" />
+        <TextBlock x:Name="TextDay" Width="{Binding Width,ElementName=RootView}" Canvas.Top="3" Text="" TextAlignment="Center" ></TextBlock>
+        <TextBlock x:Name="Icon" Visibility="Hidden" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xf111;" Canvas.Left="0" Canvas.Top="23" Width="{Binding Width,ElementName=RootView}" TextAlignment="Center" FontSize="8" Foreground="Green"/>
+    </Canvas>
+</UserControl>

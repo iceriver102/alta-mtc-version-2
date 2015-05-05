@@ -10,6 +10,12 @@ namespace Alta.Class
 {
     public static class StringExtensions
     {
+        public static bool isEmpty(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return true;
+            return false;
+        }
         public static string toFileName(this string Url)
         {
             char[] splitchar= {' ','\\','/' };
