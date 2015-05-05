@@ -126,8 +126,21 @@ namespace MTC_Server.UIView.Schedule
                 return;
             foreach (Event e in this.Events)
             {
-                if (e.End.Date >= this.curDateView.Date && e.Begin.Date<= this.curDateView.Date)
+                if (e.End.Date >= this.curDateView.Date && e.Begin.Date<= this.curDateView.Date && e.loop== false)
                 {
+                    for (int i = e.beginIndex(this.curDateView); i <= e.EndIndex(this.curDateView); i++)
+                    {
+                        UITime time = this.UICalendar.Children[i] as UITime;
+                        if (time != null && time.hasEvent == false)
+                        {
+                            time.hasEvent = true;
+                        }
+                    }
+                }
+                else if (e.loop)
+                {
+                    e.Begin.setDate(DateTime.Now.Date);
+                    e.End.setDate(DateTime.Now.Date);
                     for (int i = e.beginIndex(this.curDateView); i <= e.EndIndex(this.curDateView); i++)
                     {
                         UITime time = this.UICalendar.Children[i] as UITime;

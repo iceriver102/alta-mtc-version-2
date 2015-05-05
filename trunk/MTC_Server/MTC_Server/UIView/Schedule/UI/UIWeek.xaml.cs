@@ -20,6 +20,7 @@ namespace MTC_Server.UIView.Schedule.UI
     /// </summary>
     public partial class UIWeek : UserControl
     {
+        public event EventHandler<DateTime> SelectDateEvent;
         private DateTime _sunday;
         public DateTime Sunday
         {
@@ -82,6 +83,17 @@ namespace MTC_Server.UIView.Schedule.UI
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
             this.UpdateLayout();
+        }
+
+
+        private void day_SelectDateEvent(object sender, DateTime e)
+        {
+            if (e == null)
+                return;
+            if (this.SelectDateEvent != null)
+            {
+                this.SelectDateEvent(this, e);
+            }
         }
     }
 }

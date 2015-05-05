@@ -70,7 +70,9 @@ namespace MTC_Server.Code
 		public const string device_comment="device_comment";
 		public const string device_time="device_time";
         public const string device_ip = "device_ip";
-
+        /// <summary>
+        /// dinh nghia bang schedule
+        /// </summary>
         public const string schedule_id = "schedule_id";
         public const string schedule_user = "schedule_user";
         public const string schedule_parent = "schedule_parent";

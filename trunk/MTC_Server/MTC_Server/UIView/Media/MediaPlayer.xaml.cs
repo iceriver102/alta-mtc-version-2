@@ -47,10 +47,10 @@ namespace MTC_Server.UIView.Media
                 {
                     this.index = -1;
                     int i = -1;
-                    foreach(Code.Media.MediaData m in this.Medias)
+                    foreach (Code.Media.MediaData m in this.Medias)
                     {
                         i++;
-                        if(m.ID== value.ID)
+                        if (m.ID == value.ID)
                         {
                             this.index = i;
                             break;
@@ -64,30 +64,30 @@ namespace MTC_Server.UIView.Media
             DoubleAnimation da = new DoubleAnimation(1, 1, TimeSpan.FromMilliseconds(this.TimeDelta));
             da.Completed += (s, e) =>
             {
-                if (this.myVlcControl.IsPlaying) {
+                if (this.myVlcControl.IsPlaying)
+                {
                     this.TimeHideMouse -= this.TimeDelta / 1000;
                     if (this.TimeHideMouse < 0)
                     {
                         if (this.UITitle.Visibility == Visibility.Visible)
                         {
                             this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 520);
-                            this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, -25,400, () => { this.UITitle.Visibility = Visibility.Hidden; });
-                        }
-                    } else
-                    {
-                        if (this.UITitle.Visibility != Visibility.Visible)
-                        {
-                            this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 460, 500);
-                            this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 0,400, () => { this.UITitle.Visibility = Visibility.Visible; });
+                            this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, -25, 400, () => { this.UITitle.Visibility = Visibility.Hidden; });
                         }
                     }
+                    else if (this.UITitle.Visibility != Visibility.Visible)
+                    {
+                        this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 460, 500);
+                        this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 0, 400, () => { this.UITitle.Visibility = Visibility.Visible; });
+                    }
+
                 }
                 else
                 {
                     if (this.UITitle.Visibility != Visibility.Visible)
                     {
                         this.UIBar.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 460, 500);
-                        this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 0, 400,() => { this.UITitle.Visibility = Visibility.Visible; });
+                        this.UITitle.Animation_Translate_Frame(double.NaN, double.NaN, double.NaN, 0, 400, () => { this.UITitle.Visibility = Visibility.Visible; });
                     }
                     this.TimeHideMouse = 3;
                 }
@@ -117,7 +117,7 @@ namespace MTC_Server.UIView.Media
 
         private void myVlcControl_Paused(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-          
+
         }
 
         private void VlcControlOnTimeChanged(VlcControl sender, VlcEventArgs<TimeSpan> e)
@@ -145,7 +145,7 @@ namespace MTC_Server.UIView.Media
                 myVlcControl.AudioProperties.IsMute = true;
                 UIBtnVolume.Text = Define.Fonts["fa-volume-off"].Code;
             }
-            else if(Convert.ToInt32(alta_volume.Value) <50)
+            else if (Convert.ToInt32(alta_volume.Value) < 50)
             {
                 myVlcControl.AudioProperties.IsMute = false;
                 UIBtnVolume.Text = Define.Fonts["fa-volume-down"].Code;
@@ -235,14 +235,14 @@ namespace MTC_Server.UIView.Media
             isVolumOff ^= true;
             myVlcControl.AudioProperties.IsMute = isVolumOff;
             if (!isVolumOff)
-            {                
+            {
                 if (Convert.ToInt32(alta_volume.Value) < 50)
                     UIBtnVolume.Text = Define.Fonts["fa-volume-down"].Code;
                 else
                     UIBtnVolume.Text = Define.Fonts["fa-volume-up"].Code;
             }
             else
-            {              
+            {
                 UIBtnVolume.Text = Define.Fonts["fa-volume-off"].Code;
             }
         }
@@ -262,7 +262,7 @@ namespace MTC_Server.UIView.Media
             }
             myVlcControl.Play();
         }
-       
+
 
         private void MediaOnParsedChanged(MediaBase sender, VlcEventArgs<int> e)
         {
@@ -271,8 +271,8 @@ namespace MTC_Server.UIView.Media
 
         private void UIFtp_CompleteEvent(object sender, string e)
         {
-            this.UITitle.Visibility= Visibility.Visible;
-            this.UIFtp.Visibility= Visibility.Collapsed; 
+            this.UITitle.Visibility = Visibility.Visible;
+            this.UIFtp.Visibility = Visibility.Collapsed;
             this.PlayMedia(this.Media);
         }
 
@@ -302,7 +302,7 @@ namespace MTC_Server.UIView.Media
 
         private void UIBtnNext_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(this.index!=-1 && this.index< this.Medias.Count-1)
+            if (this.index != -1 && this.index < this.Medias.Count - 1)
             {
                 this.index++;
                 this.Media = this.Medias[this.index];
@@ -316,7 +316,7 @@ namespace MTC_Server.UIView.Media
 
         private void UIBtnBack_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(this.index > 0)
+            if (this.index > 0)
             {
                 this.index--;
                 if (this.myVlcControl.IsPlaying)
@@ -327,7 +327,6 @@ namespace MTC_Server.UIView.Media
                 LoadGUI();
             }
         }
-
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
             this.TimeHideMouse = 3;

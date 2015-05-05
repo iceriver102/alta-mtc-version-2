@@ -73,6 +73,37 @@ namespace Alta.Class
             }
             return null;
         }
+        public static List<MTC_Server.Code.Schedule.Event> toSchedules(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<MTC_Server.Code.Schedule.Event> events = new List<MTC_Server.Code.Schedule.Event>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        MTC_Server.Code.Schedule.Event e = new MTC_Server.Code.Schedule.Event();
+                        e.Id = reader.GetInt32(Define.schedule_id);
+                        try
+                        {
+                            e.Content = reader.GetString(Define.schedule_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        e.parent_id = reader.GetInt32(Define.schedule_parent);
+                        e.device_id = reader.GetInt32(Define.schedule_device);
+                        e.user_id = reader.GetInt32(Define.schedule_user);
+                        e.status = reader.GetBoolean(Define.schedule_status);
+                        e.Begin = reader.GetDateTime(Define.schedule_time_begin);
+                        e.End = reader.GetDateTime(Define.schedule_time_end);
+                        events.Add(e);
+                    }
+                }
+                return events;
+            }
+            return null;
+        }
         public static List<TypeDevice> toTypeDevices(this MySqlDataReader reader)
         {
             if (reader.HasRows)

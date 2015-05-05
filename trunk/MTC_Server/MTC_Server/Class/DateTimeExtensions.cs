@@ -12,5 +12,17 @@ namespace Alta.Class
         {
             return string.Format("{0:" + format + "}", d);
         }
+        public static DateTime setTime(this DateTime d, TimeSpan time)
+        {
+            DateTime temp = d.Date;
+            return temp.AddSeconds(time.TotalSeconds);
+        }
+        public static DateTime setDate(this DateTime d, DateTime date)
+        {
+            DateTime tmp = date.Date;
+            tmp = tmp.setTime(d.TimeOfDay);
+            d = tmp;
+            return tmp;
+        }
     }
 }

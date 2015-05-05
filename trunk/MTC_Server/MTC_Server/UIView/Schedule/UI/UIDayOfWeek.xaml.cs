@@ -31,6 +31,7 @@ namespace MTC_Server.UIView.Schedule.UI
                 this.UIRoot.BorderThickness = value;
             }
         }
+        public event EventHandler<DateTime> SelectDateEvent;
         private DateTime _date;
         public DateTime Date
         {
@@ -70,6 +71,14 @@ namespace MTC_Server.UIView.Schedule.UI
         public UIDayOfWeek()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!this._active && this.SelectDateEvent != null)
+            {
+                this.SelectDateEvent(this, this._date);
+            }
         }
     }
 }

@@ -56,6 +56,14 @@ namespace MTC_Server.Code.User
         public static List<UserData> SearchUser(string key, int from, int to, out int total)
         {
             //CALL `p_search_user` (@p0, @p1, @p2, @p3);
+            if (key[0] != '%')
+            {
+                key = key.Insert(0, "%");
+            }
+            if (key[key.Length - 1] != '%')
+            {
+                key = key.Insert(key.Length, "%");
+            }
             List<UserData> datas = null;
             total = 0;
             try
@@ -229,6 +237,15 @@ namespace MTC_Server.Code.User
         internal List<MediaData> FindMedias(string key, int from, int to, out int total, int type=1)
         {
             //p_find_media
+
+            if (key[0] != '%')
+            {
+                key = key.Insert(0, "%");
+            }
+            if (key[key.Length - 1] != '%')
+            {
+                key = key.Insert(key.Length, "%");
+            }
             List<MediaData> datas = null;
             total = 0;
             try
@@ -265,6 +282,14 @@ namespace MTC_Server.Code.User
         public List<Device.DeviceData> FindDevices(string key,int from, ref int to, out int total)
         {
             total = 0;
+            if (key[0] != '%')
+            {
+                key=key.Insert(0, "%");
+            }
+            if (key[key.Length - 1] != '%')
+            {
+                key = key.Insert(key.Length, "%");
+            }
             List<Device.DeviceData> datas = null;
             if (this.Permision.mana_device)
             {
@@ -327,6 +352,71 @@ namespace MTC_Server.Code.User
                 }
                 catch (Exception)
                 {
+                }
+            }
+            return null;
+        }
+        public List<Schedule.Event> getEvents(DateTime date)
+        {
+            List<Schedule.Event> datas = null;
+            if (this.Permision.mana_schedule)
+            {
+                //p_get_schedule_date
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "p_get_schedule_date";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = date.Date });
+                           
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                datas = reader.toSchedules();
+                            }
+                        };
+                        conn.Close();
+                    };
+                    return datas;
+                }
+                catch (Exception)
+                {
+                    
+                }
+            }
+            else
+            {
+                //p_get_schedule_date_user
+
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "p_get_schedule_date_user";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = date.Date });
+                            cmd.Parameters.Add(new MySqlParameter("@_user", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                datas = reader.toSchedules();
+                            }
+                        };
+                        conn.Close();
+                    };
+                    return datas;
+                }
+                catch (Exception)
+                {
+
                 }
             }
             return null;

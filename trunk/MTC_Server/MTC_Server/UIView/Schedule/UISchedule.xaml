@@ -5,16 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.Schedule" xmlns:UI="clr-namespace:MTC_Server.UIView.Schedule.UI" x:Class="MTC_Server.UIView.Schedule.UISchedule" 
              mc:Ignorable="d" 
-              d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" IsTabStop="True" Focusable="True" Style="{DynamicResource noBorder}" Loaded="UIRootView_Loaded">
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" IsTabStop="True" Focusable="True" Style="{DynamicResource noBorder}" Loaded="UIRootView_Loaded">
     <Canvas x:Name="UIRoot">
         <Canvas x:Name="UIBar" Height="59" Canvas.Left="0" Canvas.Top="31" Width="{Binding Width, ElementName=UIRootView}" Background="#FFFD0C00">
-            <TextBlock x:Name="UIMonth" Height="59" TextWrapping="Wrap" TextAlignment="Center" Text="Tháng 4 2015" Width="108" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="22" FontWeight="Bold"/>
-            <TextBlock x:Name="UITitle" Height="35" Padding="3" Width="926" Text="Ngày Tháng " TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="20" Foreground="White" Canvas.Left="117" Canvas.Top="11"/>
-            <TextBlock Text="&#xF0A8;" Canvas.Left="117" Width="39" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="34" Padding="1"  TextAlignment="Center" Height="34" Foreground="White" MouseLeftButtonUp="BackEvent" Canvas.Top="10"/>
-            <TextBlock Text="&#xF0A9;" Canvas.Left="991" Width="39" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="34" Padding="1" TextAlignment="Center" Height="34" Foreground="White" Canvas.Top="10" MouseLeftButtonUp="NextEvent"/>
+            <TextBlock x:Name="UIMonth" Height="59" Padding="0 5" TextWrapping="Wrap" TextAlignment="Center" Text="Tháng 4 2015" Width="80" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="19" FontWeight="SemiBold"/>
+            <TextBlock x:Name="UITitle" Height="35" Padding="3" Width="963" Text="Ngày Tháng " TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="20" Foreground="White" Canvas.Left="80" Canvas.Top="11"/>
+            <TextBlock Text="&#xF0A8;" Canvas.Left="99" Width="39" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="34" Padding="1"  TextAlignment="Center" Height="34" Foreground="White" MouseLeftButtonUp="BackEvent" Canvas.Top="10"/>
+            <TextBlock Text="&#xF0A9;" Canvas.Left="975" Width="39" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="34" Padding="1" TextAlignment="Center" Height="34" Foreground="White" Canvas.Top="11" MouseLeftButtonUp="NextEvent"/>
+            <TextBlock Canvas.Left="1326" Foreground="White" TextWrapping="NoWrap" FontSize="35" Text="&#xf0fe;" Canvas.Top="14" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" />
         </Canvas>
-        <local:Calendar x:Name="UICalendar" Height="578" Canvas.Top="90" Width="932" Canvas.Left="113" Column="3"/>
-        <UI:UIWeek x:Name="UIWeekElement" Height="578" Canvas.Top="90" Width="113"/>
+        <local:Calendar x:Name="UICalendar" Height="578" Canvas.Top="90" Width="966" Canvas.Left="80" Column="3"/>
+        <UI:UIWeek x:Name="UIWeekElement" Height="578" Canvas.Top="90" Width="80" SelectDateEvent="UIWeekElement_SelectDateEvent"/>
+        <UI:UIMonth Height="320" Canvas.Left="1046" Canvas.Top="90" Width="320" SelectDateEvent="UIMonth_SelectDateEvent"/>
+
 
     </Canvas>
 </UserControl>
