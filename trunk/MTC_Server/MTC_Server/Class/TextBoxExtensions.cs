@@ -9,6 +9,11 @@ namespace Alta.Class
 {
     public static class TextBoxExtensions
     {
+        public static void LastSelect(this TextBox txt)
+        {
+            txt.Focus();
+            txt.Select(txt.Text.Length, 0);
+        }
         public static bool isEmpty(this TextBox txt)
         {
             if (txt.Text.isEmpty())

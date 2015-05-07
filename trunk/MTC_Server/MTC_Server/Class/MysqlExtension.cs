@@ -97,6 +97,7 @@ namespace Alta.Class
                         e.status = reader.GetBoolean(Define.schedule_status);
                         e.Begin = reader.GetDateTime(Define.schedule_time_begin);
                         e.End = reader.GetDateTime(Define.schedule_time_end);
+                        e.loop = reader.GetBoolean(Define.schedule_loop);
                         events.Add(e);
                     }
                 }
@@ -314,6 +315,17 @@ namespace Alta.Class
                     }
                     catch (Exception)
                     {
+                    }
+
+                    try
+                    {
+                        u.Finger_Print = new byte[10*1024*1024];
+                        long  bytesRead=reader.GetBytes(reader.GetOrdinal(Define.user_finger_print), 0, u.Finger_Print, 0, u.Finger_Print.Length);
+                        Console.WriteLine(bytesRead + " bytes downloaded from table to file."); 
+                    }
+                    catch (Exception)
+                    {
+
                     }
                 }
             }
