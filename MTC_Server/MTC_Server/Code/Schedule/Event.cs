@@ -26,6 +26,7 @@ namespace MTC_Server.Code.Schedule
         public double Height { get; set; }
         public double Width { get; set; }
         public bool loop { get; set; }
+        public int BeginIndex { get; set; }
         public string NameDevice
         {
             get

@@ -35,22 +35,33 @@ namespace MTC_Server.Code.User
         {
             get
             {
+                if (this._type <= 0)
+                {
+                    this._type = getTypeUser(this.ID);
+                    this._TypeUser = App.selectType(this._type);
+                }
                 return this._type;
             }
             set
             {
                 this._type = value;
-                this.TypeUser = App.selectType(value);
+                this._TypeUser = App.selectType(value);
             }
         }
         public string Comment { get; set; }
+        private UserTypeData _TypeUser;
         public UserTypeData TypeUser
         {
-            get;
-            private set;
+            get
+            {
+                if (this._TypeUser == null)
+                {
+                    this._TypeUser = UserData.getType(this.ID);
+                    this._type = this._TypeUser.Id;
+                }
+                return this._TypeUser;
+            }
         }
-
-        
-       
+        public byte[] Finger_Print;
     }
 }

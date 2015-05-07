@@ -27,6 +27,7 @@ namespace MTC_Server.Code
         public const string user_time = "user_time";
         public const string user_email = "user_email";
         public const string user_phone = "user_phone";
+        public const string user_finger_print = "user_finger_print";
         /// <summary>
         /// dinh nghia trong code
         /// </summary>
@@ -82,7 +83,6 @@ namespace MTC_Server.Code
         public const string schedule_comment = "schedule_comment";
         public const string schedule_date = "schedule_date";
         public const string schedule_device = "schedule_device";
-
-
+        public static string schedule_loop = "schedule_loop";
     }
 }
