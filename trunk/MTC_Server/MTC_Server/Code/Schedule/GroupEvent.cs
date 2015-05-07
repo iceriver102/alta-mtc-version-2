@@ -8,7 +8,7 @@ namespace MTC_Server.Code.Schedule
 {
     public enum ModeGroup
     {
-        Vertical, Horizontal,None
+        Vertical, Horizontal, None
     }
     public class GroupEvent
     {
@@ -16,6 +16,7 @@ namespace MTC_Server.Code.Schedule
         public ModeGroup Mode = ModeGroup.None;
         public double Left;
         public double Width;
+        public static List<int> ExpansionIndex;
 
         public GroupEvent(ModeGroup mode, double left, double w)
         {
@@ -37,16 +38,55 @@ namespace MTC_Server.Code.Schedule
                 E.Width = this.Width;
                 return true;
             }
+            if (E.Id == 7)
+            {
+                Console.Write(E.Id);
+            }
             if (this.Mode == ModeGroup.Vertical)
             {
-                bool canAdd= true;
+                bool canAdd = true;
                 foreach (Event e in this.Events)
                 {
-                    if (!((e.Top + e.Height <= E.Top) || (e.Top >= E.Top + E.Height)))
+                    double h = 0;
+                    int min = (e.BeginIndex <= E.BeginIndex) ? e.BeginIndex : E.BeginIndex;
+                    int max = (e.BeginIndex <= E.BeginIndex) ? E.BeginIndex : e.BeginIndex;
+                    for (int i = min; i < max; i++)
                     {
-                        canAdd = false;
-                        break;
+                        bool isEx = false;
+                        foreach (int j in ExpansionIndex)
+                        {
+                            if (i == j)
+                            {
+                                isEx = true;
+                                break;
+                            }
+                        }
+                        if (isEx)
+                            h += 120;
+                        else h += 60;
                     }
+
+                    if (e.BeginIndex < E.BeginIndex || (e.BeginIndex == E.BeginIndex && e.Top <= E.Top))
+                    {
+                        h -= e.Top;
+                        h += E.Top;
+                        if (e.Height >= h)
+                        {
+                            canAdd = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        h += e.Top;
+                        h -= E.Top;
+                        if (E.Height >= h)
+                        {
+                            canAdd = false;
+                            break;
+                        }
+                    }
+
                 }
                 if (canAdd)
                 {

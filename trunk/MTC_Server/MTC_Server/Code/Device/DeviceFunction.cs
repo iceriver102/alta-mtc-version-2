@@ -18,7 +18,7 @@ namespace MTC_Server.Code.Device
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
-                    string query = "`p_save_info_device`";
+                    string query = "`p_info_device`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = _d_id });

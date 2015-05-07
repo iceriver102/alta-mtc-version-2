@@ -15,6 +15,36 @@ namespace MTC_Server.Code.User
         {
             return MysqlHelper.InfoUser(id);
         }
+        public static UserData Info(string userName)
+        {
+            try
+            {
+                UserData data = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "p_get_info_user_by_text";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = userName });
+                        
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            data = reader.toUser();
+                        }
+
+                    };
+                    conn.Close();
+                };
+                return data;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         public List<UserData> getListUser(int from, int to, out int total)
         {
             if (this.Permision.mana_user)
@@ -116,6 +146,7 @@ namespace MTC_Server.Code.User
                         cmd.Parameters.Add(new MySqlParameter("@_user_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = u.Type });
                         cmd.Parameters.Add(new MySqlParameter("@_user_phone", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Phone });
                         cmd.Parameters.Add(new MySqlParameter("@_user_email", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Email });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_finger_print", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.Input, Value = u.Finger_Print });
                         cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
@@ -191,40 +222,126 @@ namespace MTC_Server.Code.User
         {
             this._pass = md5Pass;
         }
-        public void Save(bool permision = true)
+
+        public static UserTypeData getType(int user_id)
         {
-            //CALL `p_save_info_user` (@_user_id , @_fullName , @_email , @_phone , @_pass , @_type , @_content);
+            //p_get_type_user_by_id
+            UserTypeData type = null;
             try
             {
+
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
-                    string query = "CALL `p_save_info_user` (@_user_id , @_fullName , @_email , @_phone , @_pass , @_type , @_content);";
-
+                    string query = "fc_get_type_user_by_id";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@_user_id", this.ID);
-                        cmd.Parameters.AddWithValue("@_fullName", this.Full_Name);
-                        cmd.Parameters.AddWithValue("@_email", this.Email);
-                        cmd.Parameters.AddWithValue("@_phone", this.Phone);
-                        cmd.Parameters.AddWithValue("@_pass", this.Pass);
-                        cmd.Parameters.AddWithValue("@_type", this.Type);
-                        cmd.Parameters.AddWithValue("@_content", this.Comment);
-                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });                       
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            type = reader.toTypeUser();
+                        }
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetBaseException().ToString());
+            }
+            return type;
+        }
+
+        public static int getTypeUser(int user_id)
+        {
+            int type = 0;
+            try
+            {
+               
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_type_user_by_id";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        type = (int)cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+                
+            }
+            return type;
+        }
+        public int Save(bool permision = true)
+        {
+            int result = -1;
+            //CALL `p_save_info_user` (@_user_id , @_fullName , @_email , @_phone , @_pass , @_type , @_content);
+            try
+            {
+                //using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                //{
+                //    conn.Open();
+                //    string query = "CALL `p_save_info_user` (@_user_id , @_fullName , @_email , @_phone , @_pass , @_type , @_content);";
+
+                //    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                //    {
+                //        cmd.Parameters.AddWithValue("@_user_id", this.ID);
+                //        cmd.Parameters.AddWithValue("@_fullName", this.Full_Name);
+                //        cmd.Parameters.AddWithValue("@_email", this.Email);
+                //        cmd.Parameters.AddWithValue("@_phone", this.Phone);
+                //        cmd.Parameters.AddWithValue("@_pass", this.Pass);
+                //        cmd.Parameters.AddWithValue("@_type", this.Type);
+                //        cmd.Parameters.AddWithValue("@_content", this.Comment);
+                //        cmd.ExecuteNonQuery();
+                //    };
+                //    conn.Close();
+                //};
+
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_save_info_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_fullname", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = this.Full_Name });
+                        cmd.Parameters.Add(new MySqlParameter("@_email", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Email });
+                        cmd.Parameters.Add(new MySqlParameter("@_phone", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Phone });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_pass", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Pass });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_content", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = this.Comment });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_finger_print", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.Input, Value = this.Finger_Print });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        result = Convert.ToInt32(cmd.Parameters["@_result"].Value);
+
                     };
                     conn.Close();
                 };
             }
             catch (MySqlException)
             {
-
+               
             }
-            catch (Exception)
+            catch (Exception )
             {
-
+                
             }
             if (permision)
                 this.savePermission();
+            return result;
         }
         public List<MediaData> LoadMedias(int from, int to, out int total, int type=1)
         {
@@ -282,6 +399,8 @@ namespace MTC_Server.Code.User
         public List<Device.DeviceData> FindDevices(string key,int from, ref int to, out int total)
         {
             total = 0;
+            if (string.IsNullOrEmpty(key))
+                return null;           
             if (key[0] != '%')
             {
                 key=key.Insert(0, "%");
@@ -421,6 +540,176 @@ namespace MTC_Server.Code.User
             }
             return null;
         }
+
+
+        public static string getFullName(string _user_name)
+        {
+            try
+            {
+               string datas = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_full_name_by_text";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = _user_name });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (string)cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static byte[] getFingerPrinter(string _user_name)
+        {
+            
+            try
+            {
+                byte[] datas = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_finger_printer_user";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = _user_name});
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (byte[])cmd.Parameters["@_result"].Value;
+                        
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static byte[] getFingerPrinter(int id)
+        {
+
+            try
+            {
+                byte[] datas = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_finger_printer_user_by_int";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = id });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (byte[])cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        internal static string getFullName(int id)
+        {
+            try
+            {
+                string datas = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_full_name_id_user";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id_user", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = id });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (string)cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        internal static string getUserName(int id)
+        {
+            try
+            {
+                string datas = null;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_user_name_by_id";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id_user", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = id });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (string)cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static int getUserIdByHash(string hash)
+        {
+            try
+            {
+                int datas = -1;
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_login_hash";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_hash", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = hash });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        datas = (int)cmd.Parameters["@_result"].Value;
+
+                    };
+                    conn.Close();
+                };
+                return datas;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
         public List<Device.DeviceData> LoadDevices(int from,ref int to,out int total)
         {
             total = 0;

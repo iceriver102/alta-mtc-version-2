@@ -60,6 +60,10 @@ namespace MTC_Server.Code.Schedule
             {
                 curDateView = DateTime.Now;
             }
+            if(this.loop)
+            {
+                return this.Begin.TimeOfDay.Minutes * 2;
+            }
             if (this.isAllDay(curDateView))
                 return 0;
             if (curDateView.Date > this.Begin.Date)
@@ -75,6 +79,16 @@ namespace MTC_Server.Code.Schedule
             return this.Begin.Hour + 1;
         }
 
+        public int comitBeginIndex(DateTime curTime)
+        {
+            if (this.isAllDay(curTime))
+                this.BeginIndex = 0;
+            if (this.Begin.Date < curTime.Date)
+                this.BeginIndex = 1;
+            this.BeginIndex = this.Begin.Hour + 1;
+            return this.BeginIndex;
+        }
+
         public static void delete(Event e)
         {
             try
@@ -85,11 +99,9 @@ namespace MTC_Server.Code.Schedule
                     string query = "`p_delete_schedule`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_s_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.device_id });
-                       
+                        cmd.Parameters.Add(new MySqlParameter("@_s_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.Id });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
-
                     };
                     conn.Close();
                 };
@@ -100,7 +112,7 @@ namespace MTC_Server.Code.Schedule
             }
         }
 
-        public static int Save(Event e)
+        public int Save()
         {
             int result = 0;
             try
@@ -112,21 +124,21 @@ namespace MTC_Server.Code.Schedule
                     string query = "`p_update_schedule`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.Id });
-                        cmd.Parameters.Add(new MySqlParameter("@_device", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.device_id });
-                        cmd.Parameters.Add(new MySqlParameter("@_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.user_id });
-                        cmd.Parameters.Add(new MySqlParameter("@_parent", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.parent_id });
-                        cmd.Parameters.Add(new MySqlParameter("@_time_begin", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = e.Begin });
-                        cmd.Parameters.Add(new MySqlParameter("@_time_end", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = e.End });
-                        cmd.Parameters.Add(new MySqlParameter("@_loop", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.loop });
-                        cmd.Parameters.Add(new MySqlParameter("@_comment", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = e.Content });
-                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.Parameters.Add(new MySqlParameter("@_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Id });
+                        cmd.Parameters.Add(new MySqlParameter("@_device", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.device_id });
+                        cmd.Parameters.Add(new MySqlParameter("@_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.user_id });
+                        cmd.Parameters.Add(new MySqlParameter("@_parent", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.parent_id });
+                        cmd.Parameters.Add(new MySqlParameter("@_time_begin", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = this.Begin });
+                        cmd.Parameters.Add(new MySqlParameter("@_time_end", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = this.End });
+                        cmd.Parameters.Add(new MySqlParameter("@_loop", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.loop });
+                        cmd.Parameters.Add(new MySqlParameter("@_comment", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Content });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
-                        result = Convert.ToInt32(cmd.Parameters["@_result"].Value);
+                        result = Convert.ToInt32(cmd.Parameters["@result"].Value);
 
                     };
-                    conn.Close();
+                   conn.Close();
                 };
             }
             catch (Exception)
@@ -155,18 +167,18 @@ namespace MTC_Server.Code.Schedule
                         cmd.Parameters.Add(new MySqlParameter("@_time_end", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = e.End });
                         cmd.Parameters.Add(new MySqlParameter("@_loop", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.loop });
                         cmd.Parameters.Add(new MySqlParameter("@_comment", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = e.Content });
-                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
-                        result = Convert.ToInt32(cmd.Parameters["@_result"].Value);
+                        result = Convert.ToInt32(cmd.Parameters["@result"].Value);
 
                     };
                     conn.Close();
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.GetBaseException().ToString());
             }
             return result;
         }
