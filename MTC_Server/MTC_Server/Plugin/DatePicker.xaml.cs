@@ -19,7 +19,7 @@ namespace Alta.Plugin
 {
     public enum ModeView
     {
-        Left=0,Right=1,Down=2,Top=3
+        Left = 0, Right = 1, Down = 2, Top = 3
     }
     /// <summary>
     /// Interaction logic for DatePicker.xaml
@@ -98,6 +98,9 @@ namespace Alta.Plugin
                 this.DayOFWeek = (int)tmp.DayOfWeek;
                 this.firstDateOfMonth = tmp.AddDays(-this.DayOFWeek);
                 this.UITitle.Text = string.Format("Tháng {0} {1}", this._date.Month, this._date.Year);
+                this.tmpDate = this._date.Date;
+                this.UITime.Time = this._date.TimeOfDay;
+                this.Text = this._date.format("HH:mm:ss dd/MM/yyyy");
                 this.LoadGUI();
             }
         }
@@ -106,8 +109,8 @@ namespace Alta.Plugin
         {
             get
             {
-                 DateTime time = tmpDate;
-                return time.setTime(this.UITime.getTime());
+                DateTime time = tmpDate;
+                return time.setTime(this.UITime.Time);
             }
         }
 
@@ -117,8 +120,8 @@ namespace Alta.Plugin
         public DatePicker()
         {
             InitializeComponent();
-            this.LostFocus += DatePicker_LostFocus;
-            this.GotFocus += DatePicker_GotFocus;
+            this.UIDate.LostFocus += DatePicker_LostFocus;
+            this.UIDate.GotFocus += DatePicker_GotFocus;
         }
 
         void DatePicker_GotFocus(object sender, RoutedEventArgs e)
@@ -133,20 +136,24 @@ namespace Alta.Plugin
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.curDate = DateTime.Now;
-            tmpDate = DateTime.Now.Date;
+            if (this.curDate == null)
+            {
+                this.curDate = DateTime.Now;
+            }
             this.UICalendar.Visibility = Visibility.Hidden;
             if (this.View == ModeView.Down)
             {
                 this.UICalendar.setLeft(this.Width / 2 - 136);
                 this.UICalendar.setTop(this.Height);
             }
-            else if(this.View== ModeView.Left)
+            else if (this.View == ModeView.Left)
             {
                 this.UICalendar.setLeft(-272);
                 this.UICalendar.setTop(this.Height / 2 - 207);
-            }else if(this.View== ModeView.Right){
-                this.UICalendar.setLeft(this.Width);
+            }
+            else if (this.View == ModeView.Right)
+            {
+                this.UICalendar.setLeft(this.Width + 22);
                 this.UICalendar.setTop(this.Height / 2 - 307);
             }
             else
@@ -193,7 +200,7 @@ namespace Alta.Plugin
 
         private void Day_1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.LostFocus -= DatePicker_LostFocus;
+            this.UIDate.LostFocus -= DatePicker_LostFocus;
         }
 
         private void Day_SelectDateEvent(object sender, DateTime e)
@@ -212,10 +219,10 @@ namespace Alta.Plugin
             }
 
             tmp.isCurDay = true;
-            this.LostFocus += DatePicker_LostFocus;
+            this.UIDate.LostFocus += DatePicker_LostFocus;
             tmpDate = e.Date;
             DateTime time = tmpDate;
-            time = time.setTime(this.UITime.getTime());
+            time = time.setTime(this.UITime.Time);
             this.UIDate.Text = time.format("HH:mm:ss dd/MM/yyyy");
         }
 
@@ -231,10 +238,13 @@ namespace Alta.Plugin
 
         private void ChooseTime(object sender, RoutedEventArgs e)
         {
+            this.UIDate.GotFocus -= DatePicker_GotFocus;
             DateTime time = tmpDate;
-            time=time.setTime(this.UITime.getTime());
+            time = time.setTime(this.UITime.Time);
             this.UIDate.Text = time.format("HH:mm:ss dd/MM/yyyy");
             this.UICalendar.Visibility = Visibility.Hidden;
+            this.UIDate.LastSelect();
+            this.UIDate.GotFocus += DatePicker_GotFocus;
         }
 
         private void UITime_TimeChange(object sender, TimeSpan e)
@@ -242,7 +252,21 @@ namespace Alta.Plugin
             DateTime time = tmpDate;
             time = time.setTime(e);
             this.UIDate.Text = time.format("HH:mm:ss dd/MM/yyyy");
+            this.UIDate.LostFocus -= DatePicker_LostFocus;
+            this.UIDate.LostFocus += DatePicker_LostFocus;
+            this.UIDate.LastSelect();
         }
+
+        private void UITime_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.UIDate.LostFocus -= DatePicker_LostFocus;
+        }
+
+        private void UITime_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.UIDate.LostFocus += DatePicker_LostFocus;
+        }
+
         #region operator
 
 
@@ -287,5 +311,6 @@ namespace Alta.Plugin
             return false;
         }
         #endregion
+
     }
 }

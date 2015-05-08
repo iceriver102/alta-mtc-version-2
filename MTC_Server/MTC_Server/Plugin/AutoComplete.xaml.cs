@@ -26,8 +26,6 @@ namespace Alta.Plugin
     /// </summary>
     public partial class AutoComplete : UserControl
     {
-        
-
         private string _icon = string.Empty;
         public string Icon
         {
@@ -40,7 +38,36 @@ namespace Alta.Plugin
                 this._icon = value;
             }
         }
-        public DataAutoComplete SelectedItem;
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return this.UISearch.IsEnabled;
+            }
+            set
+            {
+                this.UISearch.IsEnabled = value;
+            }
+        }
+        public DataAutoComplete _select;
+        public DataAutoComplete SelectedItem
+        {
+            get
+            {
+                return this._select;
+            }
+            set
+            {
+                this._select = value;
+                this.UISearch.TextChanged -= AutoSearchFuntion;
+                if(value!=null)
+                {
+                    this.UISearch.Text = value.label;
+                }
+                this.UISearch.TextChanged += AutoSearchFuntion;
+            }
+        }
         public Thickness PaddingInside
         {
             get
@@ -95,12 +122,11 @@ namespace Alta.Plugin
         private void AutoSearchFuntion(object sender, TextChangedEventArgs e)
         {
             string typedString = this.UISearch.Text;
-            this.SelectedItem = null;
+            this._select = null;
             if (typedString.Length > _min)
             {
                 List<DataAutoComplete> autoList = new List<DataAutoComplete>();
-                autoList = SearchAction(this.UISearch.Text);
-                
+                autoList = SearchAction(this.UISearch.Text);                
                 if (autoList !=null &&autoList.Count > 0)
                 {
                     foreach (DataAutoComplete item in autoList)
@@ -126,11 +152,8 @@ namespace Alta.Plugin
         private void lbSuggestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataAutoComplete data = lbSuggestion.SelectedItem as DataAutoComplete;
-            this.UISearch.TextChanged -= AutoSearchFuntion;
-            this.UISearch.Text = data.label;
-            this.UISearch.TextChanged += AutoSearchFuntion;
+            this.SelectedItem = data;           
             lbSuggestion.Visibility = Visibility.Collapsed;
-            this.SelectedItem = data;
         }
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
