@@ -11,11 +11,11 @@
     </UserControl.Resources>
     <Canvas x:Name="UIRoot">
         <TextBlock  Canvas.Left="10" TextWrapping="NoWrap" Text="Giờ:" Canvas.Top="10"/>
-        <Slider x:Name="UIHour" Canvas.Left="52" Canvas.Top="10" Width="237" Value="0" Minimum="0" Maximum="23" Height="23" ValueChanged="UIHour_ValueChanged"/>
+        <Slider x:Name="UIHour" Canvas.Left="52" Canvas.Top="10" Width="237" Value="0" Minimum="0" Maximum="23" Height="23" ValueChanged="UIHour_ValueChanged" PreviewMouseDown="UIHour_PreviewMouseDown"/>
         <TextBlock Canvas.Left="10" TextWrapping="NoWrap" Text="Phút:" Canvas.Top="48"/>
-        <Slider x:Name="UIMinute" Canvas.Left="52" Canvas.Top="48" Width="237" Value="0" Minimum="0" Maximum="59" Height="23" ValueChanged="UIHour_ValueChanged"/>
+        <Slider x:Name="UIMinute" Canvas.Left="52" Canvas.Top="48" Width="237" Value="0" Minimum="0" Maximum="59" Height="23" ValueChanged="UIHour_ValueChanged"  PreviewMouseDown="UIHour_PreviewMouseDown"/>
         <TextBlock Canvas.Left="10" TextWrapping="NoWrap" Text="Giây:" Canvas.Top="82"/>
-        <Slider x:Name="UISecond" Canvas.Left="52" Canvas.Top="82" Width="237" Value="0" Minimum="0" Maximum="59" Height="23" ValueChanged="UIHour_ValueChanged"/>
+        <Slider x:Name="UISecond" Canvas.Left="52" Canvas.Top="82" Width="237" Value="0" Minimum="0" Maximum="59" Height="23" ValueChanged="UIHour_ValueChanged"  PreviewMouseDown="UIHour_PreviewMouseDown"/>
         <TextBlock Canvas.Left="289" TextWrapping="NoWrap" Text="{Binding ElementName=UIHour,Path=Value, Converter={StaticResource DoubleToIntConverter}}" Canvas.Top="10" Width="28" Height="18" TextAlignment="Center" FontSize="14.33"/>
         <TextBlock Canvas.Left="289" TextWrapping="NoWrap" Text="{Binding Value, ElementName=UIMinute, Converter={StaticResource DoubleToIntConverter}}" Canvas.Top="48" Width="28" Height="18" TextAlignment="Center" FontSize="14.33"/>
         <TextBlock Canvas.Left="289" TextWrapping="NoWrap" Text="{Binding Value, ElementName=UISecond, Converter={StaticResource DoubleToIntConverter}}" Canvas.Top="85" Width="28" Height="18" TextAlignment="Center" FontSize="14.33"/>

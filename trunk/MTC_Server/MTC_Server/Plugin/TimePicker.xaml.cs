@@ -21,16 +21,33 @@ namespace Alta.Plugin
     public partial class TimePicker : UserControl
     {
         public event EventHandler<TimeSpan> TimeChange;
+        public event EventHandler<TimeSpan> PreviewTimeChange;
+        public TimeSpan Time
+        {
+            get
+            {
+                return new TimeSpan(Convert.ToInt32(this.UIHour.Value), Convert.ToInt32(this.UIMinute.Value), Convert.ToInt32(this.UISecond.Value));
+            }
+            set
+            {
+                this.UIHour.ValueChanged -= UIHour_ValueChanged;
+                this.UIMinute.ValueChanged -= UIHour_ValueChanged;
+                this.UISecond.ValueChanged -= UIHour_ValueChanged;
+                this.UIHour.Value =value.Hours;
+                this.UIMinute.Value = value.Minutes;
+                this.UISecond.Value = value.Seconds;
+                this.UIHour.ValueChanged += UIHour_ValueChanged;
+                this.UIMinute.ValueChanged += UIHour_ValueChanged;
+                this.UISecond.ValueChanged += UIHour_ValueChanged;
+            }
+        }
         public TimePicker()
         {
             InitializeComponent();
            
         }
 
-        public TimeSpan getTime()
-        {
-            return new TimeSpan(Convert.ToInt32(this.UIHour.Value),Convert.ToInt32(this.UIMinute.Value),Convert.ToInt32(this.UISecond.Value));
-        }
+       
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,7 +58,15 @@ namespace Alta.Plugin
         {
             if (TimeChange != null)
             {
-                TimeChange(this, this.getTime());
+                TimeChange(this, this.Time);
+            }
+        }
+
+        private void UIHour_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (PreviewTimeChange != null)
+            {
+                PreviewTimeChange(this, this.Time);
             }
         }
     }

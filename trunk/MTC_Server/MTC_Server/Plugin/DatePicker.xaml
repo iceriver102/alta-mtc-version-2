@@ -72,7 +72,7 @@
             </Canvas>
             <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xF0A8;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
             <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xF0A9;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" Canvas.Left="281" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp_1"/>
-            <local1:TimePicker x:Name="UITime" Width="{Binding ElementName=UICalendar,Path=Width}" Height="120" Canvas.Top="332" TimeChange="UITime_TimeChange"/>
+            <local1:TimePicker x:Name="UITime" Width="{Binding ElementName=UICalendar,Path=Width}" Height="120" Canvas.Top="332" TimeChange="UITime_TimeChange" PreviewMouseDown="UITime_PreviewMouseDown" MouseDown="UITime_PreviewMouseUp"/>
             <Button Canvas.Left="10" Canvas.Top="452" Width="85" Height="25" Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xF044;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="15.333" />
