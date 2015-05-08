@@ -8,11 +8,71 @@ using MTC_Server.Code.User;
 using MTC_Server.Code.Media;
 using MySql.Data.MySqlClient;
 using MTC_Server.Code.Device;
+using MTC_Server.Code.Playlist;
 
 namespace Alta.Class
 {
     public static class MysqlExtensions
     {
+        public static Playlist toPlaylist(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                Playlist d = null;
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        d = new Playlist();
+                        d.ID = reader.GetInt32(Define.playlist_id);
+                        d.Name = reader.GetString(Define.playlist_name);
+                        d.Time = reader.GetDateTime(Define.playlist_datetime);
+                        d.user_id = reader.GetInt32(Define.playlist_user);
+                        d.Status = reader.GetBoolean(Define.playlist_status);
+                        d.Default = reader.GetBoolean(Define.playlist_default);
+                        try
+                        {
+                            d.Comment = reader.GetString(Define.playlist_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                }
+                return d;
+            }
+            return null;
+        }
+        public static List<Playlist> toPlaylists(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<Playlist> data = new List<Playlist>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        Playlist d = new Playlist();
+                        d.ID = reader.GetInt32(Define.playlist_id);
+                        d.Name = reader.GetString(Define.playlist_name);
+                        d.Time = reader.GetDateTime(Define.playlist_datetime);
+                        d.user_id = reader.GetInt32(Define.playlist_user);
+                        d.Status = reader.GetBoolean(Define.playlist_status);
+                        d.Default = reader.GetBoolean(Define.playlist_default);
+                        try
+                        {
+                            d.Comment = reader.GetString(Define.playlist_comment);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        data.Add(d);
+                    }
+                }
+                return data;
+            }
+            return null;
+        }
         public static DeviceData toDevice(this MySqlDataReader reader)
         {
             if (reader.HasRows)
@@ -91,6 +151,14 @@ namespace Alta.Class
                         catch (Exception)
                         {
                         }
+                        try
+                        {
+                            e.playlist_id = reader.GetInt32(Define.schedule_playlist);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                         e.parent_id = reader.GetInt32(Define.schedule_parent);
                         e.device_id = reader.GetInt32(Define.schedule_device);
                         e.user_id = reader.GetInt32(Define.schedule_user);
@@ -98,6 +166,7 @@ namespace Alta.Class
                         e.Begin = reader.GetDateTime(Define.schedule_time_begin);
                         e.End = reader.GetDateTime(Define.schedule_time_end);
                         e.loop = reader.GetBoolean(Define.schedule_loop);
+
                         events.Add(e);
                     }
                 }
