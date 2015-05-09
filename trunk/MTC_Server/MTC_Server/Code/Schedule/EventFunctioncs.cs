@@ -9,6 +9,57 @@ namespace MTC_Server.Code.Schedule
 {
     public partial class Event
     {
+        internal void setPlaylist(int p)
+        {
+            if (p > 0)
+            {
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "`p_set_playlist_to_schedule`";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_s_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Id });
+                            cmd.Parameters.Add(new MySqlParameter("@_playlist_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = p });
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                        };
+                        conn.Close();
+                    };
+                    this.playlist_id = p;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                    {
+                        conn.Open();
+                        string query = "`p_reset_playlist_schedule`";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.Add(new MySqlParameter("@_s_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Id });
+                            // cmd.Parameters.Add(new MySqlParameter("@_playlist_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = p });
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.ExecuteScalar();
+                        };
+                        conn.Close();
+                    };
+                    this.playlist_id = p;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
         public int EndIndex(DateTime curTime)
         {
             if (this.isAllDay(curTime))
@@ -60,7 +111,7 @@ namespace MTC_Server.Code.Schedule
             {
                 curDateView = DateTime.Now;
             }
-            if(this.loop)
+            if (this.loop)
             {
                 return this.Begin.TimeOfDay.Minutes * 2;
             }
@@ -83,9 +134,11 @@ namespace MTC_Server.Code.Schedule
         {
             if (this.isAllDay(curTime))
                 this.BeginIndex = 0;
-            if (this.Begin.Date < curTime.Date)
-                this.BeginIndex = 1;
-            this.BeginIndex = this.Begin.Hour + 1;
+            else
+                if (this.Begin.Date < curTime.Date)
+                    this.BeginIndex = 1;
+                else
+                    this.BeginIndex = this.Begin.Hour + 1;
             return this.BeginIndex;
         }
 
@@ -117,7 +170,7 @@ namespace MTC_Server.Code.Schedule
             int result = 0;
             try
             {
-                
+
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
@@ -138,7 +191,7 @@ namespace MTC_Server.Code.Schedule
                         result = Convert.ToInt32(cmd.Parameters["@result"].Value);
 
                     };
-                   conn.Close();
+                    conn.Close();
                 };
             }
             catch (Exception)
@@ -153,7 +206,7 @@ namespace MTC_Server.Code.Schedule
             int result = 0;
             try
             {
-               
+
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
@@ -166,7 +219,7 @@ namespace MTC_Server.Code.Schedule
                         cmd.Parameters.Add(new MySqlParameter("@_time_begin", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = e.Begin });
                         cmd.Parameters.Add(new MySqlParameter("@_time_end", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = e.End });
                         cmd.Parameters.Add(new MySqlParameter("@_loop", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = e.loop });
-                        cmd.Parameters.Add(new MySqlParameter("@_comment", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = e.Content });
+                        cmd.Parameters.Add(new MySqlParameter("@_comment", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = e.Content });
                         cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
@@ -183,6 +236,6 @@ namespace MTC_Server.Code.Schedule
             return result;
         }
 
-       
+
     }
 }

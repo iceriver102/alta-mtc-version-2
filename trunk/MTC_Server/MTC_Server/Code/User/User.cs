@@ -63,5 +63,7 @@ namespace MTC_Server.Code.User
             }
         }
         public byte[] Finger_Print;
+
+       
     }
 }

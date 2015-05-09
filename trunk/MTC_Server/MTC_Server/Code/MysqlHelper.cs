@@ -93,6 +93,33 @@ namespace MTC_Server.Code
             }
             return result;
         }
+        public static string getNameUserBySchedule(int schedule_id)
+        {
+            string result = string.Empty;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    //string query = "CALL `p_get_all_user` (@_number , @_from, @total); ";
+                    string query = "`fc_get_fullname_of_user_by_schedule_id`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_schedule_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = schedule_id });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.String) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        var tmp = cmd.ExecuteScalar();
+                        result = cmd.Parameters["@result"].Value.ToString();
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
 
         public static List<UserData> getAllUser(int from, int number, out int total)
         {
