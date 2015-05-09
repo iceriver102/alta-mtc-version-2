@@ -14,6 +14,54 @@ namespace Alta.Class
 {
     public static class MysqlExtensions
     {
+        public static MediaEvent toMediaEvent(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                MediaEvent d = null;
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        d = new MediaEvent();
+                        d.ID = reader.GetInt32(Define.detail_id);
+                        d.media_id = reader.GetInt32(Define.media_id);
+                        d.playlist_id = reader.GetInt32(Define.playlist_id);
+                        d.TimeBegin = reader.GetTimeSpan(Define.time_begin);
+                        d.TimeEnd = reader.GetTimeSpan(Define.time_end);
+                        d.Time = reader.GetDateTime(Define.detail_date);
+
+                    }
+                }
+                return d;
+            }
+            return null;
+        }
+
+        public static List<MediaEvent> toMediaEvents(this MySqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                List<MediaEvent> datas = new List<MediaEvent>();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        MediaEvent d = new MediaEvent();
+                        d.ID = reader.GetInt32(Define.detail_id);
+                        d.media_id = reader.GetInt32(Define.media_id);
+                        d.playlist_id = reader.GetInt32(Define.playlist_id);
+                        d.TimeBegin = reader.GetTimeSpan(Define.time_begin);
+                        d.TimeEnd = reader.GetTimeSpan(Define.time_end);
+                        d.Time = reader.GetDateTime(Define.detail_date);
+                        datas.Add(d);
+                    }
+                }
+                return datas;
+            }
+            return null;
+        }
+
         public static Playlist toPlaylist(this MySqlDataReader reader)
         {
             if (reader.HasRows)
