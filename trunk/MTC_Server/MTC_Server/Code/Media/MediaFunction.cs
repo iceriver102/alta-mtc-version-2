@@ -161,7 +161,7 @@ namespace MTC_Server.Code.Media
             }
         }
 
-        public static List<MediaData> GetListMedia(int user_id,int from, int to, out int total, int type=1)
+        public static List<MediaData> GetListMedia(int user_id,int from, int to, out int total, int type)
         {
             List<MediaData> datas = null;
             total = 0;
@@ -195,7 +195,7 @@ namespace MTC_Server.Code.Media
             }
             return datas;
         }
-        public static List<MediaData> GetListMedia( int from, int to, out int total, int type=1)
+        public static List<MediaData> GetListMedia( int from, int to, out int total, int type)
         {
             List<MediaData> datas = null;
             total = 0;

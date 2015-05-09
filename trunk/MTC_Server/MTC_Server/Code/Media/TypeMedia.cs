@@ -12,7 +12,18 @@ namespace MTC_Server.Code.Media
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Icon { get; set; }
+        private string icon = string.Empty;
+        public string Icon
+        {
+            get
+            {
+                return Define.Fonts[this.icon].Code;
+            }
+            set
+            {
+                this.icon = value;
+            }
+        }
         public string Code { get; set; }
         internal static List<TypeMedia> getList()
         {
