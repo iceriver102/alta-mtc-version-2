@@ -12,6 +12,7 @@ namespace MTC_Server.Code.Schedule
         public int parent_id;
         public int device_id;
         public int user_id;
+        public int playlist_id;
         public bool status { get; set; }
         public string Content { get; set; }
         public DateTime Begin { get; set; }
@@ -52,7 +53,7 @@ namespace MTC_Server.Code.Schedule
         {
             get
             {
-                return MysqlHelper.getNameUser(this.parent_id);
+                return MysqlHelper.getNameUserBySchedule(this.parent_id);
             }
         }
         public Code.User.UserData User
@@ -87,5 +88,25 @@ namespace MTC_Server.Code.Schedule
             }
         }
 
+        public Code.Playlist.Playlist Playlist
+        {
+            get
+            {
+                if (this.playlist_id == 0)
+                {
+                    if(this.User !=null)
+                    {
+                        Code.Playlist.Playlist tmp = this.User.getDefaultPlaylist();
+                        if (tmp == null)
+                            return tmp;
+                        this.playlist_id = tmp.ID;
+                        return tmp;
+                    }
+                    else
+                        return null;
+                }
+                return Code.Playlist.Playlist.Info(this.playlist_id);
+            }
+        }
     }
 }

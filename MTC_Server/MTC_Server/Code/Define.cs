@@ -83,6 +83,30 @@ namespace MTC_Server.Code
         public const string schedule_comment = "schedule_comment";
         public const string schedule_date = "schedule_date";
         public const string schedule_device = "schedule_device";
-        public static string schedule_loop = "schedule_loop";
+        public const string schedule_loop = "schedule_loop";
+        public const string schedule_playlist = "schedule_playlist";
+        /// <summary>
+        /// dinh nghia bang playlist
+        /// </summary>
+        public const string playlist_id = "playlist_id";
+        public const string playlist_name = "playlist_name";
+        public const string playlist_user = "playlist_user";
+        public const string playlist_comment = "playlist_comment";
+        public const string playlist_datetime = "playlist_datetime";
+        public const string playlist_default = "playlist_default";
+        public const string playlist_status = "playlist_status";
+        /// <summary>
+        /// dinh nghia bang mtc_playlist_details
+        /// </summary>
+        public const string detail_id = "detail_id";
+        public const string detail_date = "detail_date";
+        public const string time_begin = "time_begin";
+        public const string time_end = "time_end";
+        /// <summary>
+        /// dinh nghia bang mtc_plan
+        /// </summary>
+        public const string plan_id = "plan_id";
+        public const string plan_date = "plan_date";
+
     }
 }

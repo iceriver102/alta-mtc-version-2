@@ -27,7 +27,7 @@ namespace MTC_Server.Code.User
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = userName });
-                        
+
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
                         using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -144,8 +144,8 @@ namespace MTC_Server.Code.User
                         cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.User_Name });
                         cmd.Parameters.Add(new MySqlParameter("@_user_pass", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.Pass });
                         cmd.Parameters.Add(new MySqlParameter("@_user_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = u.Type });
-                        cmd.Parameters.Add(new MySqlParameter("@_user_phone", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Phone });
-                        cmd.Parameters.Add(new MySqlParameter("@_user_email", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = u.Email });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_phone", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.Phone });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_email", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = u.Email });
                         cmd.Parameters.Add(new MySqlParameter("@_user_finger_print", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.Input, Value = u.Finger_Print });
                         cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -156,9 +156,9 @@ namespace MTC_Server.Code.User
                     conn.Close();
                 };
             }
-            catch (Exception )
+            catch (Exception)
             {
-               
+
             }
             return result;
         }
@@ -236,7 +236,7 @@ namespace MTC_Server.Code.User
                     string query = "fc_get_type_user_by_id";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });                       
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = user_id });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
 
@@ -260,7 +260,7 @@ namespace MTC_Server.Code.User
             int type = 0;
             try
             {
-               
+
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
@@ -279,7 +279,7 @@ namespace MTC_Server.Code.User
             }
             catch (Exception)
             {
-                
+
             }
             return type;
         }
@@ -333,28 +333,30 @@ namespace MTC_Server.Code.User
             }
             catch (MySqlException)
             {
-               
+
             }
-            catch (Exception )
+            catch (Exception)
             {
-                
+
             }
             if (permision)
                 this.savePermission();
             return result;
         }
-        public List<MediaData> LoadMedias(int from, int to, out int total, int type=1)
+        public List<MediaData> LoadMedias(int from, int to, out int total, int type = 1,bool self= false)
         {
-            if (this.Permision.view_all_media)
-                return MediaData.GetListMedia(from, to, out total,type);
+            if (this.Permision.view_all_media && !self)
+                return MediaData.GetListMedia(from, to, out total, type);
             else
-                return MediaData.GetListMedia(this.ID, from, out total,type);
+                return MediaData.GetListMedia(this.ID, from, to,out total, type);
         }
 
-        internal List<MediaData> FindMedias(string key, int from, int to, out int total, int type=1)
+        internal List<MediaData> FindMedias(string key, int from, int to, out int total, int type = 1,bool self= false)
         {
+            total = 0;
             //p_find_media
-
+            if (key == "")
+                return null;
             if (key[0] != '%')
             {
                 key = key.Insert(0, "%");
@@ -364,7 +366,9 @@ namespace MTC_Server.Code.User
                 key = key.Insert(key.Length, "%");
             }
             List<MediaData> datas = null;
-            total = 0;
+            int id = this.ID;
+            if (this.Permision.view_all_media && !self)
+                id = -1;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
@@ -373,9 +377,9 @@ namespace MTC_Server.Code.User
                     string query = "`p_find_media`";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar,255) { Direction = System.Data.ParameterDirection.Input, Value = key });
-                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
-                        cmd.Parameters.Add(new MySqlParameter("@_type_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = type});
+                        cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = key });
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = id });
+                        cmd.Parameters.Add(new MySqlParameter("@_type_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = type });
                         cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
                         cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
                         cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
@@ -396,14 +400,14 @@ namespace MTC_Server.Code.User
             }
             return datas;
         }
-        public List<Device.DeviceData> FindDevices(string key,int from, ref int to, out int total)
+        public List<Device.DeviceData> FindDevices(string key, int from, ref int to, out int total)
         {
             total = 0;
             if (string.IsNullOrEmpty(key))
-                return null;           
+                return null;
             if (key[0] != '%')
             {
-                key=key.Insert(0, "%");
+                key = key.Insert(0, "%");
             }
             if (key[key.Length - 1] != '%')
             {
@@ -422,9 +426,9 @@ namespace MTC_Server.Code.User
                         string query = "`p_find_device`";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
-                            cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar,255) { Direction = System.Data.ParameterDirection.Input, Value = key });
+                            cmd.Parameters.Add(new MySqlParameter("@_key", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = key });
                             cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
-                            cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to-from });
+                            cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
                             cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;
                             cmd.ExecuteScalar();
@@ -490,7 +494,7 @@ namespace MTC_Server.Code.User
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             cmd.Parameters.Add(new MySqlParameter("@_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = date.Date });
-                           
+
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;
                             cmd.ExecuteScalar();
                             using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -504,13 +508,12 @@ namespace MTC_Server.Code.User
                 }
                 catch (Exception)
                 {
-                    
+
                 }
             }
             else
             {
                 //p_get_schedule_date_user
-
                 try
                 {
                     using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
@@ -520,7 +523,7 @@ namespace MTC_Server.Code.User
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             cmd.Parameters.Add(new MySqlParameter("@_date", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = date.Date });
-                            cmd.Parameters.Add(new MySqlParameter("@_user", MySqlDbType.DateTime) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                            cmd.Parameters.Add(new MySqlParameter("@_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
 
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;
                             cmd.ExecuteScalar();
@@ -533,9 +536,9 @@ namespace MTC_Server.Code.User
                     };
                     return datas;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    Console.Write(ex.GetBaseException().ToString());
                 }
             }
             return null;
@@ -546,7 +549,7 @@ namespace MTC_Server.Code.User
         {
             try
             {
-               string datas = null;
+                string datas = null;
                 using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
                 {
                     conn.Open();
@@ -554,7 +557,7 @@ namespace MTC_Server.Code.User
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = _user_name });
-                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.ReturnValue });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
                         datas = (string)cmd.Parameters["@_result"].Value;
@@ -572,7 +575,7 @@ namespace MTC_Server.Code.User
 
         public static byte[] getFingerPrinter(string _user_name)
         {
-            
+
             try
             {
                 byte[] datas = null;
@@ -582,12 +585,12 @@ namespace MTC_Server.Code.User
                     string query = "fc_get_finger_printer_user";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = _user_name});
+                        cmd.Parameters.Add(new MySqlParameter("@_user_name", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = _user_name });
                         cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.LongBlob) { Direction = System.Data.ParameterDirection.ReturnValue });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
                         datas = (byte[])cmd.Parameters["@_result"].Value;
-                        
+
                     };
                     conn.Close();
                 };
@@ -693,7 +696,7 @@ namespace MTC_Server.Code.User
                     string query = "fc_login_hash";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add(new MySqlParameter("@_hash", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = hash });
+                        cmd.Parameters.Add(new MySqlParameter("@_hash", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = hash });
                         cmd.Parameters.Add(new MySqlParameter("@_result", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.ReturnValue });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
@@ -709,8 +712,74 @@ namespace MTC_Server.Code.User
                 return -1;
             }
         }
+        public List<Playlist.Playlist> SearchPlaylist(string key, int from, int to, out int total)
+        {
+            total = 0;
+            List<Playlist.Playlist> datas = null;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_get_all_playlist_by_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
+                        cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
+                        cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            datas = reader.toPlaylists();
+                        }
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.GetBaseException().ToString());
+            }
+            return datas;
+        }
+        public List<Playlist.Playlist> LoadPlaylist(int from, int to, out int total)
+        {
+            total = 0;
+            List<Playlist.Playlist> datas = null;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_get_all_playlist_by_user`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
+                        cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
+                        cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        total = Convert.ToInt32(cmd.Parameters["@_total"].Value);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            datas = reader.toPlaylists();
+                        }
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.GetBaseException().ToString());
+            }
+            return datas;
+        }
 
-        public List<Device.DeviceData> LoadDevices(int from,ref int to,out int total)
+        public List<Device.DeviceData> LoadDevices(int from, ref int to, out int total)
         {
             total = 0;
             List<Device.DeviceData> datas = null;
@@ -726,7 +795,7 @@ namespace MTC_Server.Code.User
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             cmd.Parameters.Add(new MySqlParameter("@_from", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = from });
-                            cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to-from });
+                            cmd.Parameters.Add(new MySqlParameter("@_number", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = to - from });
                             cmd.Parameters.Add(new MySqlParameter("@_total", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;
                             cmd.ExecuteScalar();
@@ -777,6 +846,35 @@ namespace MTC_Server.Code.User
             }
             return null;
         }
+        internal Playlist.Playlist getDefaultPlaylist()
+        {
+            //p_get_playlist_default
+            Playlist.Playlist data = null;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "`p_get_playlist_default`";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_user_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
 
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteScalar();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            data = reader.toPlaylist();
+                        }
+                    };
+                    conn.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.GetBaseException().ToString());
+            }
+            return data;
+        }
     }
 }
