@@ -61,9 +61,13 @@ namespace Alta.Plugin
             {
                 this._select = value;
                 this.UISearch.TextChanged -= AutoSearchFuntion;
-                if(value!=null)
+                if (value != null)
                 {
                     this.UISearch.Text = value.label;
+                }
+                else
+                {
+                    this.UISearch.empty();
                 }
                 this.UISearch.TextChanged += AutoSearchFuntion;
             }
@@ -114,8 +118,8 @@ namespace Alta.Plugin
         public AutoComplete()
         {
             InitializeComponent();
-            this.UISearch.TextChanged+= AutoSearchFuntion;
-            this.lbSuggestion.SelectionChanged +=lbSuggestion_SelectionChanged;
+            this.UISearch.TextChanged += AutoSearchFuntion;
+            this.lbSuggestion.SelectionChanged += lbSuggestion_SelectionChanged;
             this.LostFocus += RootView_LostFocus;
         }
 
@@ -126,12 +130,16 @@ namespace Alta.Plugin
             if (typedString.Length > _min)
             {
                 List<DataAutoComplete> autoList = new List<DataAutoComplete>();
-                autoList = SearchAction(this.UISearch.Text);                
-                if (autoList !=null &&autoList.Count > 0)
+                autoList = SearchAction(this.UISearch.Text);
+                if (autoList != null && autoList.Count > 0)
                 {
-                    foreach (DataAutoComplete item in autoList)
+                    if (!string.IsNullOrEmpty(this._icon))
                     {
-                        item.icon = this._icon;
+                        foreach (DataAutoComplete item in autoList)
+                        {
+                            if (string.IsNullOrEmpty(item.icon))
+                                item.icon = this._icon;
+                        }
                     }
                     lbSuggestion.ItemsSource = autoList;
                     lbSuggestion.Visibility = Visibility.Visible;
@@ -152,7 +160,7 @@ namespace Alta.Plugin
         private void lbSuggestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataAutoComplete data = lbSuggestion.SelectedItem as DataAutoComplete;
-            this.SelectedItem = data;           
+            this.SelectedItem = data;
             lbSuggestion.Visibility = Visibility.Collapsed;
         }
 

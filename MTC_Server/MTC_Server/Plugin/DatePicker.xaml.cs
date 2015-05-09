@@ -70,6 +70,10 @@ namespace Alta.Plugin
             }
         }
         private DateTime _cuDate;
+
+        /// <summary>
+        /// Thời giang cài đặt hiển thị UI
+        /// </summary>
         public DateTime curDate
         {
             get
@@ -104,7 +108,9 @@ namespace Alta.Plugin
                 this.LoadGUI();
             }
         }
-
+        /// <summary>
+        /// Thời gian lựa chọn
+        /// </summary>
         public DateTime Time
         {
             get
@@ -120,6 +126,7 @@ namespace Alta.Plugin
         public DatePicker()
         {
             InitializeComponent();
+            this.curDate = DateTime.Now;
             this.UIDate.LostFocus += DatePicker_LostFocus;
             this.UIDate.GotFocus += DatePicker_GotFocus;
         }
@@ -136,10 +143,7 @@ namespace Alta.Plugin
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.curDate == null)
-            {
-                this.curDate = DateTime.Now;
-            }
+          
             this.UICalendar.Visibility = Visibility.Hidden;
             if (this.View == ModeView.Down)
             {
