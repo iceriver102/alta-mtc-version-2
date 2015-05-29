@@ -25,6 +25,7 @@ namespace MTC_Server.UIView.Schedule.UI
     /// </summary>
     public partial class UITime : UserControl
     {
+        public List<UIEvent> UIEvents;
         private ModeOfTime mode = ModeOfTime.HOUR;
         public ModeOfTime Mode
         {
@@ -119,6 +120,7 @@ namespace MTC_Server.UIView.Schedule.UI
         public UITime()
         {
             InitializeComponent();
+            UIEvents = new List<UIEvent>();
         }
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
@@ -138,6 +140,7 @@ namespace MTC_Server.UIView.Schedule.UI
         }
         public void AddChild(UIEvent E)
         {
+            UIEvents.Add(E);
             this.hasEvent = true;
             if (this.Mode == ModeOfTime.HOUR)
             {
@@ -153,6 +156,36 @@ namespace MTC_Server.UIView.Schedule.UI
                 E.setTop(tmpTop + 2);
                 this.UIContentScroll.Children.Add(E);
                 UIContentScroll.Height = tmpTop + 2 + E.Height;
+            }
+        }
+
+        public void RemoveChild(UIEvent E)
+        {
+            foreach (UIElement uiE in this.UIContent.Children)
+            {
+                if (uiE is UIEvent)
+                {
+                    UIEvent e = uiE as UIEvent;
+                    if (e == E)
+                    {
+                        this.UIContent.Children.Remove(uiE);
+                        UIEvents.Remove(E);
+                        return;
+                    }
+                }
+            }
+            foreach (UIElement uiE in this.UIContentScroll.Children)
+            {
+                if (uiE is UIEvent)
+                {
+                    UIEvent e = uiE as UIEvent;
+                    if (e == E)
+                    {
+                        this.UIContentScroll.Children.Remove(uiE);
+                        UIEvents.Remove(E);
+                        return;
+                    }
+                }
             }
         }
     }

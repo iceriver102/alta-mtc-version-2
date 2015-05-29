@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MTC_Server.UIView.Device"
              mc:Ignorable="d" 
-             d:DesignHeight="240" d:DesignWidth="170" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded">
+             d:DesignHeight="240" d:DesignWidth="170" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded" Unloaded="UIRootView_Unloaded">
     <Canvas x:Name="UIRoot" Background="White">
         <TextBlock x:Name="UITitle" Canvas.Left="0" TextWrapping="NoWrap" Text="" Canvas.Top="0" Height="25" Padding="5 3 0 0" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="White" Background="#FFFF3A00" FontSize="16"/>
         <Canvas x:Name="UIBar" Height="30" Width="{Binding ElementName=UIRootView,Path=Width}" Canvas.Left="0" Canvas.Top="210" Background="#FFFF3A00">
-            <Canvas x:Name="UIBarContent" Height="{Binding ElementName=UIBar,Path=Height}" Canvas.Left="0" Canvas.Top="0" Width="120">
-                <Grid Height="{Binding ElementName=UIBarContent,Path=Height}" Width="{Binding ElementName=UIBarContent,Path=Width}">
+            <Canvas x:Name="UIBarContent" Height="{Binding ElementName=UIBar,Path=Height}" Canvas.Left="0" Canvas.Top="0" Width="120" ClipToBounds="True">
+                <Grid x:Name="GridBar" Height="{Binding ElementName=UIBarContent,Path=Height}" Width="150" Canvas.Left="0" Canvas.Top="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -19,9 +20,12 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="UIBtnInfo" TextWrapping="NoWrap" Text="&#xf05a;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Cursor="Hand" MouseLeftButtonUp="UIBtnInfo_MouseLeftButtonUp"/>
                     <TextBlock x:Name="UIBtnDelete" TextWrapping="NoWrap" Text="&#xf1f8;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="1" MouseLeftButtonUp="UIBtnDelete_MouseLeftButtonUp"/>
-                    <TextBlock x:Name="UIBtnPlay" TextWrapping="NoWrap" Text="&#xf04b;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="2"/>
+                    <TextBlock x:Name="UIBtnMedia" TextWrapping="NoWrap" Text="&#xf008;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="20.667" Padding="0,3,0,0" Foreground="White" Grid.Column="2" MouseLeftButtonUp="UIBtnMedia_MouseLeftButtonUp" Visibility="{Binding ElementName=Next,Path=Visibility}"/>
+                    <TextBlock x:Name="UIBtnPlay" TextWrapping="NoWrap" Text="&#xf04d;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="3" MouseLeftButtonUp="UIBtnPlay_MouseLeftButtonUp" Visibility="{Binding ElementName=Next,Path=Visibility}"/>
+                    <TextBlock x:Name="UIBtnOff" TextWrapping="NoWrap" Text="&#xf011;" HorizontalAlignment="Stretch" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="22.667" Padding="0,3,0,0" Foreground="White" Grid.Column="4" MouseLeftButtonUp="UIBtnOff_MouseLeftButtonUp" Visibility="{Binding ElementName=Next,Path=Visibility}"/>
                 </Grid>
             </Canvas>
+            <Button Content="&#xf101;" Canvas.Left="147" Width="23" Height="30" x:Name="Next" Style="{DynamicResource FlatButtonStyle}" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="White" Click="Next_Click" Visibility="Collapsed"/>
         </Canvas>
         <TextBlock x:Name="UIIcon" Canvas.Left="0" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf1cb;" Canvas.Top="24.667" Height="97.337" Padding="5 5 0 0" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontSize="80" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome"/>
         <TextBlock x:Name="UIStatus" Canvas.Left="134" TextWrapping="NoWrap" TextAlignment="Center" Text="&#xf023;" Canvas.Top="93.667" Height="32" Padding="0 4 0 0"  Width="32" Foreground="#FFFF3A00" FontSize="24" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Cursor="Hand" MouseLeftButtonUp="UIStatus_MouseLeftButtonUp"/>
@@ -35,7 +39,7 @@
             <TextBlock x:Name="UIUser" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Text="" Canvas.Top="62.393" Width="129" Padding="0 2 0 0" Foreground="Black"/>
             <TextBlock x:Name="UIIP" Height="20" Canvas.Left="31" TextWrapping="NoWrap" Width="129" Padding="0 2 0 0" Text="000.000.000.000" Foreground="Black"/>
         </Canvas>
-        <TextBlock x:Name="UINetwork" Height="25" Canvas.Left="145.5" TextWrapping="Wrap" Text="&#xf0ac;" Width="25" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="17.333" Padding="0,3,0,0" Foreground="White"/>
+        <TextBlock x:Name="UINetwork" Height="25" Canvas.Left="145.5" TextWrapping="Wrap" Text="&#xf0ac;" Width="25" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="17.333" Padding="0,3,0,0" Foreground="Black"/>
 
     </Canvas>
 </UserControl>

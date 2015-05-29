@@ -1,0 +1,98 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace Alta.Class
+{
+    public static class RegexUtilities
+    {
+        private static bool invalid = false;
+
+        public static bool isValidPhone(this string strIn)
+        {
+            //\(?\d{3}\)?-? *\d{3}-? *-?\d{4}
+            if (string.IsNullOrEmpty(strIn))
+                return false;
+            return Regex.IsMatch(strIn,
+                      @"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+
+        }
+
+        public static bool isValidNumber(this string strIn)
+        {
+            //Regex regex = new Regex(@"^\d$");
+            if (string.IsNullOrEmpty(strIn))
+                return false;
+            return Regex.IsMatch(strIn,
+                      @"^\d$",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+        }
+
+        public static bool IsValidEmail(this string strIn)
+        {
+            invalid = false;
+            if (String.IsNullOrEmpty(strIn))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names. 
+            try
+            {
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+
+            if (invalid)
+                return false;
+
+            // Return true if strIn is in valid e-mail format. 
+            try
+            {
+                return Regex.IsMatch(strIn,
+                      @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                      @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                      RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+        }
+        public static bool  isUserName(this string data)
+        {
+            //^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$;
+            return Regex.IsMatch(data,
+                      @"^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$",
+                      RegexOptions.None, TimeSpan.FromMilliseconds(250));
+        }
+        private static string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
+            try
+            {
+                domainName = idn.GetAscii(domainName);
+            }
+            catch (ArgumentException)
+            {
+                invalid = true;
+            }
+            return match.Groups[1].Value + domainName;
+        }
+       
+        public static bool isIP(this string ip)
+        {
+            return Regex.IsMatch(ip, @"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$");
+        }
+    }
+}

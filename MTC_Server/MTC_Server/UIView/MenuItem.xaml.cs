@@ -101,7 +101,7 @@ namespace MTC_Server.UIView
         {
             if (!this.isActive)
             {
-                this.Animation_Translate_Frame(double.NaN, 6, 500, true);
+                this.Animation_Goto(double.NaN, 6, 500, true);
                 this.isActive = true;
                 if (this.ClickEvent != null)
                     this.ClickEvent(this, new EventArgs());

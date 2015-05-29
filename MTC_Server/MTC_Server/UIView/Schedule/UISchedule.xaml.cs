@@ -42,29 +42,74 @@ namespace MTC_Server.UIView.Schedule
             InitializeComponent();
             this.UICalendar.curDateView = DateTime.Now;
             List<Event> tmp = App.curUser.getEvents(DateTime.Now);
-           // tmp.Add(new Event() { Content = "demo", Begin = DateTime.Now.AddDays(-1), End = DateTime.Now.AddDays(1) });
-           // tmp.Add(new Event() { Content = "demo 2", Begin = DateTime.Now.AddDays(-1), End = DateTime.Now.AddDays(1) });
-           // tmp.Add(new Event() { Content = "demo", Begin = DateTime.Now, End = DateTime.Now.AddMinutes(1) });
-            //tmp.Add(new Event() { Content = "demo", Begin = DateTime.Now, End = DateTime.Now.AddMinutes(10) });
-           // tmp.Add(new Event() { Content = "demo", Begin = DateTime.Now.AddMinutes(30), End = DateTime.Now.AddHours(1) });
             this.UICalendar.setData(tmp);
         }
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
+            this.UICalendar.AddChildEvent += UICalendar_AddChildEvent;
+            this.UICalendar.EditChildEvent += UICalendar_EditChildEvent;
+            this.UICalendar.SelectEvent += UICalendar_SelectEvent;
+            this.UICalendar.LinkEvent += UICalendar_LinkEvent;
             this.curDateTime = DateTime.Now;
-            this.UICalendar.LoadUI();
+        }
 
+        void UICalendar_LinkEvent(object sender, Event e)
+        {
+            if (e != null)
+            {
+                UIViewPlaylist.Event = e;
+                UIViewPlaylist.showViewInput();
+            }
+        }
+
+        void UICalendar_SelectEvent(object sender, Event e)
+        {
+            if (e != null)
+            {
+                UIViewPlaylist.Event = e;
+                UIViewPlaylist.showPlaylist();
+            }
+        }
+
+        void UICalendar_EditChildEvent(object sender, Event e)
+        {
+            if (e != null)
+            {
+                UIAddEvent UI = new UIAddEvent();
+                UI.Width = 1366;
+                UI.Height = 668;
+                UI.setLeft(0);
+                UI.setTop(0);
+                UI.CloseEvent += CloseAddEvent;
+                UI.Event = e;
+                this.UIRoot.Children.Add(UI);
+            }
+        }
+
+        void UICalendar_AddChildEvent(object sender, Event e)
+        {
+            if (e != null)
+            {
+                UIAddEvent UI = new UIAddEvent();
+                UI.Width = 1366;
+                UI.Height = 668;
+                UI.setLeft(0);
+                UI.setTop(0);
+                UI.CloseEvent += CloseAddEvent;
+                UI.ParentEvent = e;
+                this.UIRoot.Children.Add(UI);
+            }
         }
 
         private void NextEvent(object sender, MouseButtonEventArgs e)
         {
-            this.curDateTime=this.curDateTime.AddDays(1);
+            this.curDateTime = this.curDateTime.AddDays(1);
         }
 
         private void BackEvent(object sender, MouseButtonEventArgs e)
         {
-            this.curDateTime=this.curDateTime.AddDays(-1);
+            this.curDateTime = this.curDateTime.AddDays(-1);
         }
 
         private void UIWeekElement_SelectDateEvent(object sender, DateTime e)
@@ -95,9 +140,11 @@ namespace MTC_Server.UIView.Schedule
 
         private void CloseAddEvent(object sender, CloseUIEventData e)
         {
-            if (e != null)
+            if (e.Data != null)
             {
-
+                List<Event> tmp = App.curUser.getEvents(this.UICalendar.curDateView);
+                this.UICalendar.setData(tmp);
+                this.UICalendar.LoadUI();
             }
             this.UIRoot.Children.Remove(sender as UIAddEvent);
         }

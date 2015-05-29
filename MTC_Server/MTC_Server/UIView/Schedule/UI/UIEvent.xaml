@@ -4,12 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="100" x:Name="UIRootView" Loaded="UserControl_Loaded" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" >
-    <Border x:Name="UIRoot" Height="{Binding ElementName=UIRootView, Path=Height}" Width="{Binding ElementName=UIRootView, Path=Width}" Background="#FFF01C12">
-        <StackPanel >
-            <TextBlock x:Name="Content" Margin="2" TextAlignment="Left" Text="" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
-            <TextBlock x:Name="UITime" Margin="2" TextAlignment="Left" Text="" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
+             d:DesignHeight="350" d:DesignWidth="100" x:Name="UIRootView" Loaded="UserControl_Loaded" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" ToolTipService.HorizontalOffset="0" MouseEnter="UIRootView_MouseEnter" MouseLeave="UIRootView_MouseLeave" MouseLeftButtonUp="UIRootView_MouseLeftButtonUp">
+    <Canvas >
+        <Border x:Name="UIRoot" Height="{Binding ElementName=UIRootView, Path=Height}" Width="{Binding ElementName=UIRootView, Path=Width}" Background="#FFF01C12" Panel.ZIndex="10">
+            <Border.ToolTip>
+                <Grid x:Name="LayoutRoot" Height="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="43*"/>
+                        <ColumnDefinition Width="307*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Row="0" Grid.Column="0" Text="&#xf20d;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.333"  />
+                    <TextBlock x:Name="T_Title" HorizontalAlignment="Stretch" Margin="10,0" Grid.Row="0"  TextWrapping="NoWrap" VerticalAlignment="Center"  FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="20.333" Text="" Grid.Column="1" />
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="1" Text="&#xf073;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="20.667"/>
+                    <TextBlock x:Name="T_Date" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10,0" FontSize="12.667" />
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="2" Text="&#xf007;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.667"/>
+                    <TextBlock x:Name="T_User" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="10,0" FontSize="13.667" Text=""/>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="3" Text="&#xf21b;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.667" />
+                    <TextBlock x:Name="T_Parent" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" Margin="10,0" FontSize="13.667" Text=""/>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="4" Text="&#xf1e6;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="21.667" />
+                    <TextBlock x:Name="T_NameDevice" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="10,0" FontSize="13.667" Text=""/>
+                </Grid>
+            </Border.ToolTip>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="28"/>
+                    <RowDefinition Height="28"/>
+                    <RowDefinition Height="28"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="79*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xf20d;" FontSize="18.5" VerticalAlignment="Center" TextAlignment="Center" Grid.Row="1" Foreground="White"/>
+                <TextBlock FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xf073;" FontSize="18.5" VerticalAlignment="Center" TextAlignment="Center" Grid.Row="2" Foreground="White"/>
+                <TextBlock FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xf007;" FontSize="18.5" VerticalAlignment="Center" TextAlignment="Center" Grid.Row="3" Foreground="White"/>
+                <TextBlock FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Text="&#xf1e6;" FontSize="18.5" VerticalAlignment="Center" TextAlignment="Center" Grid.Row="4" Foreground="White"/>
+                <TextBlock x:Name="Content" Margin="3,2" TextAlignment="Left" Text="" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" Grid.Column="1" Grid.Row="1" FontSize="17.333" Height="22"/>
+                <TextBlock x:Name="UITime" Margin="3" TextAlignment="Left" Text="" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" Grid.Column="1" Grid.Row="2" FontSize="13.333" Height="16"/>
+                <TextBlock x:Name="UIUser" Margin="3" TextAlignment="Left" Text="" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" Grid.Column="1" Grid.Row="3" FontSize="13.333" Height="16"/>
+                <TextBlock x:Name="UINameDevice" Margin="3" TextAlignment="Left" Text="" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" Grid.Column="1" Grid.Row="4" FontSize="13.333" Height="16"/>
+            </Grid>
+        </Border>
+        <StackPanel x:Name="UIMenuButton" Panel.ZIndex="9999" Orientation="Vertical" Opacity="0" Canvas.Right="5" Canvas.Top="5">
+            <Button x:Name="UILink"  Width="25" Height="25"  Style="{DynamicResource FlatButtonStyle}" Content="&#xf1e0;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Foreground="White" Opacity="1" Click="UILink_Click"/>
+            <StackPanel x:Name="UIMenuAction" Orientation="{Binding ElementName=UIMenuButton,Path=Orientation}"  Visibility="Hidden" >
+                <Button x:Name="UIDelete"  Width="25" Height="25"  Style="{DynamicResource FlatButtonStyle}" Content="&#xf014;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Foreground="White" Opacity="1" Click="UIDelete_Click"/>
+                <Button x:Name="UIEdit" Width="25" Height="25"  Style="{DynamicResource FlatButtonStyle}" Content="&#xf013;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Foreground="White" Opacity="1" Click="UIEdit_Click"/>
+                <Button x:Name="UIAdd"  Width="25" Height="25"  Style="{DynamicResource FlatButtonStyle}" Content="&#xf0fe;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Foreground="White" Opacity="1" Click="UIAdd_Click"/>
+            </StackPanel>
+            
         </StackPanel>
-        
-    </Border>
+    </Canvas>
 </UserControl>

@@ -26,6 +26,7 @@ namespace MTC_Server.UIView.Device
         private int to = 12;
         private int from = 0;
         private int total = 0;
+        private bool isPlayingMedia = false;
         private string key
         {
             get
@@ -47,6 +48,7 @@ namespace MTC_Server.UIView.Device
             this.Datas = App.curUser.LoadDevices(this.from,ref this.to, out this.total);
             this.LoadGUI();
             this.Focus();
+            UIBtnAddDevice.IsEnabled = App.curUser.Permision.mana_device;
         }
 
         private void LoadGUI()
@@ -78,9 +80,37 @@ namespace MTC_Server.UIView.Device
                     item.Device = d;
                     item.ViewInfoEvent += Item_ViewInfoEvent;
                     item.DeleteEvent += Item_DeleteEvent;
+                    item.PlayMediaEvent += item_PlayMediaEvent;
                     this.list_Box_Item.Items.Add(item);
                 }
             }
+        }
+
+        void item_PlayMediaEvent(object sender, PlayEvent e)
+        {
+            if (e.Media != null && !this.isPlayingMedia)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    UIView.Media.MediaPlayer player = new UIView.Media.MediaPlayer();
+                    player.Width = 1366;
+                    player.Height = 668;
+                    player.setLeft(0);
+                    player.setTop(90);
+                    player.Media = e.Media;
+                    player.Position = e.Postion;
+                    player.CloseEvent += Player_CloseEvent;
+                    this.UIRoot.Children.Add(player);
+                    this.isPlayingMedia = true;
+                });
+                
+            }
+        }
+
+        private void Player_CloseEvent(object sender, Code.Media.MediaData e)
+        {
+            this.UIRoot.Children.Remove(sender as UIView.Media.MediaPlayer);
+            this.isPlayingMedia = false;
         }
 
         private void Item_DeleteEvent(object sender, DeviceData e)

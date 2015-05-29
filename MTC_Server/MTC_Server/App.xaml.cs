@@ -12,6 +12,7 @@ using MTC_Server.Code.User;
 using MTC_Server.Code.Media;
 using Vlc.DotNet.Core;
 using MTC_Server.Code.Device;
+using System.IO;
 
 namespace MTC_Server
 {
@@ -21,7 +22,7 @@ namespace MTC_Server
     public partial class App : Application
     {
         public static Config setting;
-        public static string FileName = "setting.xml";
+        public static string FileName = "setting.mtc";
         public static int curUserID = 0;
         public static UserData curUser;
         public static AltaCache cache;
@@ -29,10 +30,35 @@ namespace MTC_Server
         public static List<UserTypeData> TypeUsers;
         public static MediaTypeArray TypeMedias;
         public static DeviceTypeArray TypeDevices;
+        public static string key="";
+        public static ModifyRegistry Registry;
+        public static DateTime Zero;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Define.Fonts = ExCss.ReadFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,@"Asset\Fonts\font-awesome.min.css"));
-            setting = Config.Read(FileName);
+            Define.Fonts = ExCss.ReadFile(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Asset\Fonts\font-awesome.min.css"));
+            if (!File.Exists(FileName))
+            {
+                MessageBox.Show("Không tìm thấy file cấu hình!");
+                Application.Current.Shutdown();
+                return;
+            }
+            Registry = new ModifyRegistry();
+            key = Registry.Read("MTC_KEY");
+            if (string.IsNullOrEmpty(key))
+            {
+                this.MainWindow = new MTC();
+                this.MainWindow.Show();
+                return;
+            }           
+            setting = Config.Read(FileName,key);
+            if (setting == null || setting.EndDate.Date< DateTime.Now.Date)
+            {
+                MessageBox.Show("Phần mềm đã hết hạn sử dụng.");
+                this.MainWindow = new MTC();
+                this.MainWindow.Show();
+                return;
+
+            }
             if (setting.temp_folder.IndexOf(@"://") < 0 || setting.temp_folder.IndexOf(@"\\")<0)
             {
                 setting.temp_folder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, setting.temp_folder);
@@ -48,19 +74,29 @@ namespace MTC_Server
             initVLC();
             if (cache.autoLogin && !string.IsNullOrEmpty(cache.hashUserName))
             {
-                int tmpResult = Login(cache.hashUserName);
-                if (tmpResult != 0)
+                int tmpResult = UserData.getUserIdByHash(cache.hashUserName);
+                UILogin form = new UILogin();
+                if (tmpResult != -1)
                 {
-                    curUserID = tmpResult;
-                  
+                    byte[] tmp = UserData.getFingerPrinter(tmpResult);
+                    form.cacheName = UserData.getUserName(tmpResult);
+                    if (tmp != null)
+                    {
+                        form.Template = new DPFP.Template();
+                        form.Template.DeSerialize(tmp);
+                    }
+                    form.Show();
                 }
                 else
                 {
-                    curUserID = -1;
+                    form.Show();
                 }
+                return;
+               
             }
             this.MainWindow = new UILogin();
             this.MainWindow.Show();
+            Console.WriteLine("Debug");
         }
         public static string getHash(int id)
         {
@@ -90,7 +126,6 @@ namespace MTC_Server
             {
                 MessageBox.Show(ex.ToString());
             }
-
             return result;
         }
 
@@ -106,46 +141,22 @@ namespace MTC_Server
             }
             return null;
         }
-
-        public int Login(string hash)
-        {
-
-            int result = 0;
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
-                {
-                    conn.Open();
-                    string query = "SELECT  `fc_login_hash` (@hash) AS  `user_id`";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@hash", hash);
-                        var tmp = cmd.ExecuteScalar();
-                        result = (int)tmp;
-                    };
-                    conn.Close();
-                };
-            }
-            catch (MySqlException)
-            {
-                MessageBox.Show("Không thể kết nối với csdl");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-            return result;
-        }
+        
         public void initVLC()
         {
-            // Set libvlc.dll and libvlccore.dll directory path
-            VlcContext.LibVlcDllsPath = @"VLC";
-
-            // Set the vlc plugins directory path
-            VlcContext.LibVlcPluginsPath = @"VLC\plugins";
-
+            if (Environment.Is64BitOperatingSystem)
+            {
+                VlcContext.LibVlcDllsPath = @"VLC\x86";
+                // Set the vlc plugins directory path
+                VlcContext.LibVlcPluginsPath = @"VLC\x86\plugins";
+            }
+            else
+            {
+                // Set libvlc.dll and libvlccore.dll directory path
+                VlcContext.LibVlcDllsPath = @"VLC\x86";
+                // Set the vlc plugins directory path
+                VlcContext.LibVlcPluginsPath = @"VLC\x86\plugins";
+            }
 
             // Ignore the VLC configuration file
             VlcContext.StartupOptions.IgnoreConfig = true;
@@ -154,10 +165,10 @@ namespace MTC_Server
             VlcContext.StartupOptions.LogOptions.LogInFile = true;
 
             // Shows the VLC log console (in addition to the applications window)
-            // VlcContext.StartupOptions.LogOptions.ShowLoggerConsole = true;
+             VlcContext.StartupOptions.LogOptions.ShowLoggerConsole = false;
 
             // Set the log level for the VLC instance
-            //   VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
+            //VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Warnings;
             VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
             // Disable showing the movie file name as an overlay
             VlcContext.StartupOptions.AddOption("--no-video-title-show");
@@ -179,7 +190,7 @@ namespace MTC_Server
 
             // Pauses the playback of a movie on the last frame
             VlcContext.StartupOptions.AddOption("--play-and-pause");
-
+            VlcContext.CloseAll();
             // Initialize the VlcContext
             VlcContext.Initialize();
         }

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MTC_Server.UIView.Playlist.UI.UIPlaylist"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="260" d:DesignWidth="200" x:Name="UIRootView" MouseEnter="UIRootView_MouseEnter" MouseLeave="UIRootView_MouseLeave" MouseLeftButtonUp="UIRootView_MouseLeftButtonUp" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded" >
+    <Canvas x:Name="UIRoot" Background="White" ClipToBounds="True">
+        <TextBlock x:Name="UIIcon" Height="135" Padding="3,15" TextWrapping="NoWrap" TextAlignment="Center" Width="{Binding Width, ElementName=UIRootView}" Foreground="#FFFF3A00" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="98" Canvas.Top="30"><Run Text="&#xf1ed;"/></TextBlock>
+        <Canvas Height="57" Canvas.Top="159"  Width="200">
+            <TextBlock x:Name="UIDate" Height="20" Canvas.Left="29" Text="" Canvas.Top="33" Width="161" FontSize="13.333" Foreground="Black"/>
+            <TextBlock Height="14" Canvas.Left="6" Text="&#xf073;" TextAlignment="Center" Canvas.Top="33" Width="13.333" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
+            <TextBlock x:Name="UIUser" Height="20" Canvas.Left="29" Text="" Canvas.Top="5" Width="161" FontSize="12.333" Foreground="Black"/>
+            <TextBlock Height="14" Canvas.Left="6" Text="&#xf007;" TextAlignment="Center" Canvas.Top="5" Width="13" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="13.333" Foreground="#FFFF6800"/>
+        </Canvas>
+
+        <Canvas x:Name="UIBar" Height="30" Canvas.Top="250"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
+            <Grid Height="30" Canvas.Left="0" Canvas.Top="0" Width="160">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="UIBtnView" Grid.Column="0"  TextWrapping="NoWrap" Text="&#xf05a;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="20" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseLeftButtonUp="ViewInfoUser" Cursor="Hand"  />
+                <TextBlock x:Name="UIBtnDel" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf1f8;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="19" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseLeftButtonUp="DeleteUser" Cursor="Hand"/>
+                <TextBlock x:Name="UIBtnMedia" Grid.Column="1" TextWrapping="NoWrap" Text="&#xf008;"  FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="18" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="UIBtnMedia_MouseLeftButtonUp"/>
+                <TextBlock x:Name="UIBtnUnlink" Grid.Column="2" TextWrapping="NoWrap" Text="&#xf127;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" TextAlignment="Center" FontSize="19" Foreground="#FFEA5712"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MouseLeftButtonUp="UnlinkSchedule" Cursor="Hand"/>
+            </Grid>
+        </Canvas>
+        <TextBlock x:Name="UIDefault" Height="20" Text="&#xf0ac;" TextAlignment="Center" Canvas.Top="35" Width="20" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="18.667" Foreground="#FFFF6800" Canvas.Left="6" MouseLeftButtonUp="UIDefault_MouseLeftButtonUp" Cursor="Hand"/>
+        <TextBlock x:Name="UIStatus" Height="20" Canvas.Left="173" TextWrapping="NoWrap" Cursor="Hand" Text="&#xf023;" Canvas.Top="133" Width="20" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="18.667" TextAlignment="Center" Foreground="#FFDE4A1F" MouseLeftButtonUp="UIStatus_MouseLeftButtonUp"/>
+        <Canvas Height="30" Canvas.Left="0" Canvas.Top="0"  Width="{Binding ElementName=UIRootView, Path=Width}" Background="#99000000">
+            <Grid Height="30" Width="{Binding ElementName=UIRootView, Path=Width}">
+                <TextBlock x:Name="UIFullName" Padding="10 0" TextWrapping="NoWrap" Text="" Width="{Binding ElementName=UIRootView, Path=Width}" Foreground="#FFFF3A00" VerticalAlignment="Center" FontSize="13.333" FontWeight="SemiBold" />
+            </Grid>
+        </Canvas>
+    </Canvas>
+</UserControl>

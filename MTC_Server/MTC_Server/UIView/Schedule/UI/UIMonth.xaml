@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="360" d:DesignWidth="320" x:Name="RootView" Loaded="RootView_Loaded" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro">
     <Canvas x:Name="UIRoot" Background="Transparent">
-        <TextBlock x:Name="UITitle" TextWrapping="Wrap" Text="23 April 2015" Height="53" Width="320" TextAlignment="Center" FontWeight="SemiBold" FontSize="20" Padding="0 13"/>
-        <StackPanel Orientation="Horizontal" Height="32" Canvas.Left="9.5" Canvas.Top="53" Width="301">
+        <TextBlock x:Name="UITitle" TextWrapping="Wrap" Text="23 April 2015" Height="40" Width="320" TextAlignment="Center" FontWeight="SemiBold" FontSize="18" Padding="0 10" Foreground="White"/>
+        <StackPanel Orientation="Horizontal" Height="32" Canvas.Left="10" Canvas.Top="40" Width="301">
             <TextBlock Text="S" VerticalAlignment="Center" TextAlignment="Center" Width="43" FontWeight="SemiBold" FontSize="16" Foreground="Red"/>
             <TextBlock Text="M" VerticalAlignment="Center" TextAlignment="Center" Width="43" FontWeight="SemiBold" FontSize="16" Margin="0,6.4,0,5.6"/>
             <TextBlock Text="T" VerticalAlignment="Center" TextAlignment="Center" Width="43" FontWeight="SemiBold" FontSize="16" Margin="0,6.8,0,5.2"/>
@@ -17,8 +17,8 @@
             <TextBlock Text="F" VerticalAlignment="Center" TextAlignment="Center" Width="43" FontWeight="SemiBold" FontSize="16" Margin="0,8,0,4"/>
             <TextBlock Text="S" VerticalAlignment="Center" TextAlignment="Center" Width="43" FontWeight="SemiBold" FontSize="16" Margin="0,8.4,0,3.6"/>
         </StackPanel>
-        <Path Data="M56,119 L289,119" Height="2" Canvas.Left="20" Stretch="Fill" Stroke="#FF6C6C6C" Canvas.Top="85" Width="280"/>
-        <Canvas x:Name="UIDays" Height="221" Width="301" Canvas.Top="89" Canvas.Left="10" >
+        <Path Data="M56,119 L289,119" Height="2" Canvas.Left="20" Stretch="Fill" Stroke="#FF6C6C6C" Canvas.Top="73" Width="280"/>
+        <Canvas x:Name="UIDays" Height="222" Width="301" Canvas.Top="75" Canvas.Left="10" >
             <local:UIDay x:Name="Day_1" Height="32" Width="43" Canvas.Left="0" Canvas.Top="0" FontSize="16.5" SelectDateEvent="Day_SelectDateEvent"/>
             <local:UIDay x:Name="Day_2" Height="32" Width="43" Canvas.Left="43" Canvas.Top="0" FontSize="16.5" SelectDateEvent="Day_SelectDateEvent"/>
             <local:UIDay x:Name="Day_3" Height="32" Width="43" Canvas.Left="86" Canvas.Top="0" FontSize="16.5" SelectDateEvent="Day_SelectDateEvent"/>
@@ -62,9 +62,9 @@
             <local:UIDay x:Name="Day_41" Height="32" Width="43" Canvas.Left="215" Canvas.Top="190" FontSize="16.5" SelectDateEvent="Day_SelectDateEvent"/>
             <local:UIDay x:Name="Day_42" Height="32" Width="43" Canvas.Left="258" Canvas.Top="190" FontSize="16.5" SelectDateEvent="Day_SelectDateEvent"/>
         </Canvas>
-        <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xf0a8;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
-        <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xf0a9;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" Canvas.Left="281" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp_1"/>
-        <Button Canvas.Left="11" Canvas.Top="325" Width="85" Height="25" Click="Button_Click">
+        <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xf0a8;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Foreground="White"/>
+        <TextBlock Padding="3" TextWrapping="NoWrap" Text="&#xf0a9;" Height="30" Width="39" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="23" Canvas.Top="7" Canvas.Left="281" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp_1" Foreground="White"/>
+        <Button Canvas.Left="20" Canvas.Top="300" Width="85" Height="25" Click="Button_Click">
             <Button.Content>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xf044;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="15.333" />

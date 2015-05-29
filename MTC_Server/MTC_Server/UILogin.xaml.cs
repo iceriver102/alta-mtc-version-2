@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -20,11 +21,97 @@ namespace MTC_Server
     /// <summary>
     /// Interaction logic for UILogin.xaml
     /// </summary>
-    public partial class UILogin : Window
+    public partial class UILogin : Window, DPFP.Capture.EventHandler
     {
+        private DPFP.Capture.Capture Capturer;
+        private byte[] CacheFingerPrinter;
+        public new DPFP.Template Template;
+        private DPFP.Verification.Verification Verificator;
+        protected DPFP.FeatureSet ExtractFeatures(DPFP.Sample Sample, DPFP.Processing.DataPurpose Purpose)
+        {
+            DPFP.Processing.FeatureExtraction Extractor = new DPFP.Processing.FeatureExtraction();	// Create a feature extractor
+            DPFP.Capture.CaptureFeedback feedback = DPFP.Capture.CaptureFeedback.None;
+            DPFP.FeatureSet features = new DPFP.FeatureSet();
+            Extractor.CreateFeatureSet(Sample, Purpose, ref feedback, ref features);			// TODO: return features as a result?
+            if (feedback == DPFP.Capture.CaptureFeedback.Good)
+                return features;
+            else
+                return null;
+        }
         public UILogin()
         {
             InitializeComponent();
+            
+            UIFinger_Printer.Foreground = new SolidColorBrush(Colors.White);
+            Verificator = new DPFP.Verification.Verification();
+            try
+            {
+                Capturer = new DPFP.Capture.Capture();				// Create a capture operation.
+                if (null != Capturer)
+                    Capturer.EventHandler = this;					// Subscribe for capturing events.
+               
+            }
+            catch
+            {
+               
+            }
+           
+        }
+        public void Verify(DPFP.Sample Sample)
+        {
+            DPFP.FeatureSet features = ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Verification);
+
+            // Check quality of the sample and start verification if it's good
+            // TODO: move to a separate task
+            if (features != null)
+            {
+                // Compare the feature set with our template
+                DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
+                Verificator.Verify(features, Template, ref result);
+                if (result.Verified)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (this.ClockShow != null)
+                            this.ClockShow.Controller.Pause();
+                        ColorAnimation animation = new ColorAnimation();
+                        animation.From = (this.UIFinger_Printer.Foreground as SolidColorBrush).Color;
+                        animation.To = Colors.Green;
+                        animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+                        animation.EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseInOut };
+                        animation.Completed += (s,e) => 
+                        {
+                            App.curUser = UserData.Info(this.cacheName);
+                            App.curUserID = App.curUser.ID;
+                            if (this.UIAutoLogin.IsChecked.Value)
+                            {
+                                App.cache.hashUserName = App.getHash(App.curUserID);
+                                App.cache.userName = Encrypt.EncryptString(this.UITxtName.Text.Trim(), FunctionStatics.getCPUID());
+                                AltaCache.Write(App.CacheName, App.cache);
+                            }
+                            else
+                            {
+                                App.cache.userName = string.Empty;
+                                App.cache.hashUserName = string.Empty;
+                            }
+                            this.UIFullName.Text = App.curUser.Full_Name;
+                            this.UILoginFinger.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
+                            this.UILoginSusscess.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500, () => { LoadData(); });
+                        };
+                        this.ClockHide = animation.CreateClock();
+                        this.UIFinger_Printer.Foreground.ApplyAnimationClock(SolidColorBrush.ColorProperty, ClockHide);
+                        this.UIFinger_Status.Text = string.Empty;
+                    });                   
+                    this.Stop();
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        this.UIFinger_Status.Text = "Try again ...";
+                    });
+                }
+            }
         }
 
         private void TextBlock_MouseMove(object sender, MouseEventArgs e)
@@ -140,7 +227,6 @@ namespace MTC_Server
                     App.cache.userName = string.Empty;
                     App.cache.hashUserName = string.Empty;
                 }
-                this.UIAvatar.Text = App.curUser.Full_Name[0].ToString();
                 this.UIFullName.Text = App.curUser.Full_Name;
                 this.UILoginForm.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN,500);
                 this.UILoginSusscess.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500, () => { LoadData(); });
@@ -154,35 +240,93 @@ namespace MTC_Server
             {
                 this.UIAutoLogin.IsChecked = true;
             }
-            if (App.curUserID > 0)
+
+            //if (App.curUserID > 0)
+            //{
+            //    if (App.curUser == null)
+            //    {
+            //        App.curUser = UserData.Info(App.curUserID);
+            //        this.UIAvatar.Text = App.curUser.Full_Name[0].ToString().ToUpper();
+            //        this.UIFullName.Text = App.curUser.Full_Name;
+            //        this.UILoginSusscess.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500, () => { LoadData(); });
+            //    }
+            //    else
+            //    {
+                   
+            //        this.UIFullName_off.Text = App.curUser.Full_Name;
+            //        this.UILoginLogOff.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
+            //    }
+            //    this.UILoginForm.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
+                
+            //}
+
+            if (!string.IsNullOrEmpty(this.cacheName))
             {
-                if (App.curUser == null)
+                if (this.Template != null)
                 {
-                    App.curUser = UserData.Info(App.curUserID);
-                    this.UIAvatar.Text = App.curUser.Full_Name[0].ToString().ToUpper();
-                    this.UIFullName.Text = App.curUser.Full_Name;
-                    this.UILoginSusscess.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500, () => { LoadData(); });
+                    this.UIFullName_Finger.Text = UserData.getFullName(cacheName);                   
+                    this.UILoginFinger.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
+                    this.Start();
                 }
                 else
                 {
-                    this.UIAvatar_off.Text = App.curUser.Full_Name[0].ToString().ToUpper();
-                    this.UIFullName_off.Text = App.curUser.Full_Name;
+                    this.UIFullName_off.Text = UserData.getFullName(cacheName);
                     this.UILoginLogOff.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
+
                 }
                 this.UILoginForm.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
-                
             }
+
             if (!string.IsNullOrEmpty(App.cache.userName))
             {
                 this.UITxtName.Text = Encrypt.DecryptString(App.cache.userName, FunctionStatics.getCPUID());
                 this.UIMaskUserName.Animation_Opacity_View_Frame(false, null, 200);
             }
+            this.UIFinger_Status.Text = string.Empty;
+            this.UIFinger_Status.Foreground = new SolidColorBrush(Colors.White);
+            ColorAnimation animation = new ColorAnimation();
+            animation.From = Colors.Black;
+            animation.To = Colors.OrangeRed;
+            animation.AutoReverse = true;
+            animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+            animation.EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 };
+            animation.RepeatBehavior = RepeatBehavior.Forever;
+            this.UIFinger_Status.Foreground.BeginAnimation(SolidColorBrush.ColorProperty, animation);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             App.cache.autoLogin = this.UIAutoLogin.IsChecked.Value;
             AltaCache.Write(App.CacheName, App.cache);
+            Stop();
+        }
+        protected void Start()
+        {
+            if (null != Capturer)
+            {
+                try
+                {
+                    Capturer.StartCapture();
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        protected void Stop()
+        {
+            if (null != Capturer)
+            {
+                try
+                {
+                    Capturer.StopCapture();
+                }
+                catch
+                {
+                  
+                }
+            }
         }
 
         private void UITxtName_KeyUp(object sender, KeyEventArgs e)
@@ -195,6 +339,7 @@ namespace MTC_Server
             else
             {
                 UILoginButton.IsEnabled = true;
+               
             }
             if (e.Key == Key.Enter)
             {
@@ -238,7 +383,7 @@ namespace MTC_Server
                 this.UIErrRelogin.Animation_Opacity_View_Frame(true);
                 return;
             }
-            int result = LoginData(App.curUser.User_Name, FunctionStatics.MD5String(UIPassword_off.Password));
+            int result = LoginData(this.cacheName, FunctionStatics.MD5String(UIPassword_off.Password));
             if (result == 0)
             {
                 this.UIErrRelogin.Text = "* Mật khẩu đăng nhập không đúng!";
@@ -300,7 +445,114 @@ namespace MTC_Server
             this.UITxtName.Text = string.Empty;
             this.UILoginLogOff.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
             this.UILoginForm.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
-        }        
+        }
 
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (this.CacheFingerPrinter != null)
+            {
+                this.Template = new DPFP.Template();
+                this.Template.DeSerialize(this.CacheFingerPrinter);
+                this.UIFullName_Finger.Text = UserData.getFullName(cacheName);
+                this.UILoginForm.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
+                this.UILoginFinger.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
+                this.Start();
+            }
+        }
+        public string cacheName { get; set; }
+        private void UITxtName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+            if (!string.IsNullOrEmpty(txt.Text))
+            {
+                CacheFingerPrinter = UserData.getFingerPrinter(txt.Text);
+                if (CacheFingerPrinter != null)
+                {
+                    cacheName = txt.Text;
+                }
+            }
+        }
+
+        private void TextBlock_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+            this.UILoginFinger.Animation_Translate_Frame(double.NaN, double.NaN, 400, double.NaN, 500);
+            this.UILoginForm.Animation_Translate_Frame(-400, double.NaN, 0, double.NaN, 500);
+            this.Stop();
+        }
+
+
+        public void OnComplete(object Capture, string ReaderSerialNumber, DPFP.Sample Sample)
+        {
+            this.Verify(Sample);
+        }
+
+        public void OnFingerGone(object Capture, string ReaderSerialNumber)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (this.ClockShow != null)
+                    this.ClockShow.Controller.Pause();
+                ColorAnimation animation = new ColorAnimation();
+                animation.From = (this.UIFinger_Printer.Foreground as SolidColorBrush).Color;
+                animation.To = Colors.Blue;
+                animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+                animation.EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseInOut };
+                this.ClockHide = animation.CreateClock();
+                this.UIFinger_Printer.Foreground.ApplyAnimationClock(SolidColorBrush.ColorProperty, ClockHide);
+            });
+        }
+
+        public void OnFingerTouch(object Capture, string ReaderSerialNumber)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (this.ClockHide != null)
+                    this.ClockHide.Controller.Pause();
+                ColorAnimation animation = new ColorAnimation();
+                animation.From = (this.UIFinger_Printer.Foreground as SolidColorBrush).Color;
+                animation.To = Colors.Red;
+                animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+                animation.EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseInOut };
+                this.ClockShow = animation.CreateClock();
+                this.UIFinger_Printer.Foreground.ApplyAnimationClock(SolidColorBrush.ColorProperty, ClockShow);
+            });
+        }
+
+        public void OnReaderConnect(object Capture, string ReaderSerialNumber)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                ColorAnimation animation = new ColorAnimation();
+                animation.From = (this.UIFinger_Printer.Foreground as SolidColorBrush).Color;
+                animation.To = Colors.Blue;
+                animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+                animation.EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseInOut };
+                this.ClockHide = animation.CreateClock();
+                this.UIFinger_Printer.Foreground.ApplyAnimationClock(SolidColorBrush.ColorProperty, ClockHide);
+            });
+        }
+
+        public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (this.ClockHide != null)
+                    this.ClockHide.Controller.Pause();
+                ColorAnimation animation = new ColorAnimation();
+                animation.From = (this.UIFinger_Printer.Foreground as SolidColorBrush).Color;
+                animation.To = Colors.Black;
+                animation.Duration = new Duration(TimeSpan.FromMilliseconds(450));
+                animation.EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseInOut };
+                this.ClockShow = animation.CreateClock();
+                this.UIFinger_Printer.Foreground.ApplyAnimationClock(SolidColorBrush.ColorProperty, ClockShow);
+            });
+        }
+
+        public void OnSampleQuality(object Capture, string ReaderSerialNumber, DPFP.Capture.CaptureFeedback CaptureFeedback)
+        {
+            
+        }
+        private AnimationClock ClockShow, ClockHide;
     }
 }

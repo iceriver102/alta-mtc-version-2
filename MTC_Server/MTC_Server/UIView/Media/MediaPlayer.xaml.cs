@@ -30,8 +30,8 @@ namespace MTC_Server.UIView.Media
         private double TimeDelta = 500;
         private double TimeHideMouse = 3;
         private bool isVolumOff = false;
+        public float Position { get; set; }
         public bool myPositionChanging { get; set; }
-
         private Code.Media.MediaData m;
         public Code.Media.MediaData Media
         {
@@ -108,6 +108,7 @@ namespace MTC_Server.UIView.Media
             myVlcControl.Playing += myVlcControl_Playing;
             myVlcControl.AudioProperties.Volume = Convert.ToInt32(alta_volume.Value);
             myVlcControl.AudioProperties.IsMute = isVolumOff;
+           
         }
 
         private void myVlcControl_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
@@ -253,6 +254,7 @@ namespace MTC_Server.UIView.Media
                 PathMedia media = new PathMedia(m.LocalFile.FullName);
                 media.ParsedChanged += MediaOnParsedChanged;
                 myVlcControl.Media = media;
+                myVlcControl.Position = this.Position;
             }
             else
             {

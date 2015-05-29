@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Camera_Final.UIView.UIMapCamera"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="34" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="30" PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp" MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseMove="UserControl_MouseMove" Cursor="Hand" MouseDoubleClick="UserControl_MouseDoubleClick" Width="200" Foreground="#FFFF4600">
+    <Canvas x:Name="UIRoot">
+        <TextBlock x:Name="Icon" Width="34" Text="&#xf03d;" Height="34" Padding="2"  />
+        <TextBlock x:Name="UIName"  Canvas.Left="39" Height="34" Text="Demo" FontFamily="/Camera_Final;component/Asset/Fonts/#Myriad Pro" FontSize="14.333" Padding="3,7"/>
+    </Canvas>
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Thêm Preset" Click="AddPreset" />
+            <MenuItem Header="Kết nối đầu dò" Click="ConnectCamera"/>
+            <MenuItem Header="Xóa Camera" Click="DeleteCamera"/>
+            <MenuItem Header="Xem Camera" Click="ViewCamera"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+</UserControl>

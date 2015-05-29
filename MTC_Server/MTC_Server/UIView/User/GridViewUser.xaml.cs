@@ -26,6 +26,8 @@ namespace MTC_Server.UIView.User
         public int totalUser;
         public int to = 10;
         public int from = 0;
+        public event EventHandler<UserData> BrowserMediaEvent;
+        public event EventHandler<UserData> BrowserCameraEvent;
         public string key
         {
             get
@@ -47,6 +49,7 @@ namespace MTC_Server.UIView.User
             Datas = App.curUser.getListUser(from, to, out totalUser);
             this.Focus();
             LoadGUI();
+            UIBtnAddUser.IsEnabled = App.curUser.Permision.mana_user;
         }
         private void LoadGUI()
         {
@@ -62,6 +65,8 @@ namespace MTC_Server.UIView.User
                     item.ViewInfoUserEvent += Item_ViewInfouserEvent;
                     item.DeleteUserEvent += Item_DeleteUserEvent;
                     item.ViewPermison += Item_ViewPermison;
+                    item.BrowserMediaEvent += item_BroswerMediaEvent;
+                    item.BrowserCameraEvent += item_BrowserCameraEvent;
                     this.list_Box_Item.Items.Add(item);
                 }
             }
@@ -83,6 +88,22 @@ namespace MTC_Server.UIView.User
             }
         }
 
+        void item_BrowserCameraEvent(object sender, UserData e)
+        {
+            if (e != null && BrowserCameraEvent != null)
+            {
+                BrowserCameraEvent(this, e);
+            }
+        }
+
+        void item_BroswerMediaEvent(object sender, UserData e)
+        {
+            if (e != null && BrowserMediaEvent!=null)
+            {
+                BrowserMediaEvent(this, e);
+            }
+        }
+
         private void Item_ViewPermison(object sender, UserData e)
         {
             if (e != null)
@@ -96,10 +117,10 @@ namespace MTC_Server.UIView.User
                 item.isPermison = true;
                 item.CloseEvent += Item_CloseEvent;
                 item.DeleteUserEvent += Item_DeleteUserEvent1;
+               
                 this.UIRoot.Children.Add(item);
             }
         }
-
         private void Item_DeleteUserEvent(object sender, UserData e)
         {
             if (e != null)
@@ -131,6 +152,7 @@ namespace MTC_Server.UIView.User
                 item.User = e;
                 item.CloseEvent += Item_CloseEvent;
                 item.DeleteUserEvent += Item_DeleteUserEvent1;
+              
                 this.UIRoot.Children.Add(item);
             }
         }
@@ -281,6 +303,7 @@ namespace MTC_Server.UIView.User
             item.Width = 1366;
             item.Height = 578;
             item.CloseEvent += Item_CloseEvent;
+           
             this.UIRoot.Children.Add(item);
         }
     }

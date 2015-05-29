@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="MTC_Server.UIView.User.FingerPrinter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="150" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    <Grid x:Name="UIRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="103*"/>
+            <RowDefinition Height="47*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="UIStatus" Text="&#xf211;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontSize="90" Height="90" Margin="0,10,0,3" />
+        <TextBlock x:Name="UITime" Text="Try again ..." Grid.Row="1" VerticalAlignment="Center" TextAlignment="Center" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="15.3333" Foreground="White" />
+    </Grid>
+</UserControl>

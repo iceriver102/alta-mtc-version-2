@@ -37,7 +37,15 @@ namespace MTC_Server.UIView.Media
                 this.m = value;
                 this.UITitle.Text = this.m.Name;
                 this.UIUser.Text = this.m.User.Full_Name;
-                this.UIUrl.Text = this.m.Url.toIP();
+                try
+                {
+                    this.UIUrl.Text = this.m.Url.toIP();
+                }catch(Exception )
+                {
+                    this.UIUrl.Text = "ERR";
+                }
+                if (this.m.TypeMedia != null && !string.IsNullOrEmpty(this.m.TypeMedia.Icon))
+                    this.UIIcon.Text = this.m.TypeMedia.Icon;
             }
         }
         public UIcamera()
