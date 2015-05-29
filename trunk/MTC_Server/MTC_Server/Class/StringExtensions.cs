@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,6 +16,44 @@ namespace Alta.Class
             if (string.IsNullOrEmpty(str))
                 return true;
             return false;
+        }
+
+        public static string Clone(this string data, float time)
+        {
+            int l = Convert.ToInt32(data.Length * time);
+            string tmp = data;
+            if (l > data.Length)
+            {
+                int j = 0;
+                for (int i = data.Length; i < l; i++, j++)
+                {
+                    if (j >= data.Length)
+                    {
+                        j = 0;
+                    }
+                    tmp += data[j];
+                }
+            }
+            else
+            {
+                tmp.Remove(l, data.Length - l);
+            }
+            return tmp;
+
+        }
+        public static byte[] toBytes(this string data)
+        {
+            
+            return Encoding.UTF8.GetBytes(data);
+        }
+        public static string toMD5(this string input)
+        {
+            using (MD5 md5Hash = MD5.Create())
+            {
+                byte[] data = md5Hash.ComputeHash(Encoding.ASCII.GetBytes(input));
+                String tmp = BitConverter.ToString(data).Replace("-", "");
+                return tmp.ToLower();
+            }
         }
         public static string toFileName(this string Url)
         {

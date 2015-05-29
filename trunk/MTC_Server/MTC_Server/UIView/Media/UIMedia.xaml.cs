@@ -36,7 +36,7 @@ namespace MTC_Server.UIView.Media
             {
                 this.m = value;
                 if (this.m.TypeMedia != null && !string.IsNullOrEmpty(this.m.TypeMedia.Icon))
-                    this.UIIcon.Text = this.m.TypeMedia.Icon.DecodeEncodedNonAsciiCharacters();
+                    this.UIIcon.Text = this.m.TypeMedia.Icon;
                 if (!this.Media.Status)
                 {
                     this.UIBtnStatus.Text = Define.Fonts["fa-lock"].Code;

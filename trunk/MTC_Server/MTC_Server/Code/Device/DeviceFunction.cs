@@ -42,6 +42,36 @@ namespace MTC_Server.Code.Device
             }
             return m;
         }
+        public string getHash()
+        {
+            string result = string.Empty;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(App.setting.connectString))
+                {
+                    conn.Open();
+                    string query = "fc_get_hash_device";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new MySqlParameter("@_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
+                        cmd.Parameters.Add(new MySqlParameter("@result", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.ReturnValue });
+                        var tmp = cmd.ExecuteScalar();
+                        result = Convert.ToString(cmd.Parameters["@result"].Value);
+                    };
+                    conn.Close();
+                };
+            }
+            catch (MySqlException)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
         public static int Insert(DeviceData d)
         {
             int result = -1;
@@ -57,6 +87,7 @@ namespace MTC_Server.Code.Device
                         cmd.Parameters.Add(new MySqlParameter("@_d_name", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = d.Name });
                         cmd.Parameters.Add(new MySqlParameter("@_d_ip", MySqlDbType.VarChar, 30) { Direction = System.Data.ParameterDirection.Input, Value = d.IP });
                         cmd.Parameters.Add(new MySqlParameter("@_d_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value =d.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_pass", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = d.Pass });
                         cmd.Parameters.Add(new MySqlParameter("@_d_comment", MySqlDbType.Text) { Direction = System.Data.ParameterDirection.Input, Value = d.Comment });
                         cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -87,7 +118,8 @@ namespace MTC_Server.Code.Device
                         cmd.Parameters.Add(new MySqlParameter("@_d_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.ID });
                         cmd.Parameters.Add(new MySqlParameter("@_d_name", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Name });
                         cmd.Parameters.Add(new MySqlParameter("@_d_ip", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.IP });
-                        cmd.Parameters.Add(new MySqlParameter("@_d_type", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_type", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.Type });
+                        cmd.Parameters.Add(new MySqlParameter("@_d_pass", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Pass });
                         cmd.Parameters.Add(new MySqlParameter("@_d_comment", MySqlDbType.VarChar, 255) { Direction = System.Data.ParameterDirection.Input, Value = this.Comment });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();

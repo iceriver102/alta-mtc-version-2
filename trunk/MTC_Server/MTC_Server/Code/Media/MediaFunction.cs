@@ -87,6 +87,7 @@ namespace MTC_Server.Code.Media
                         cmd.Parameters.Add(new MySqlParameter("@_media_size", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = m.FileSize });
                         cmd.Parameters.Add(new MySqlParameter("@_media_duration", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = m.Duration });
                         cmd.Parameters.Add(new MySqlParameter("@_media_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = m.User_ID });
+                        cmd.Parameters.Add(new MySqlParameter("@_media_md5", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = m.Md5 });
                         cmd.Parameters.Add(new MySqlParameter("@_media_id", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Output, Value = 0 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
@@ -97,8 +98,9 @@ namespace MTC_Server.Code.Media
                 };
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
             }
             return result;
         }
@@ -122,7 +124,7 @@ namespace MTC_Server.Code.Media
                         cmd.Parameters.Add(new MySqlParameter("@_media_size", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.FileSize });
                         cmd.Parameters.Add(new MySqlParameter("@_media_duration", MySqlDbType.VarChar, 100) { Direction = System.Data.ParameterDirection.Input, Value = this.Duration });
                         cmd.Parameters.Add(new MySqlParameter("@_media_user", MySqlDbType.Int32) { Direction = System.Data.ParameterDirection.Input, Value = this.User_ID });
-                        
+                        cmd.Parameters.Add(new MySqlParameter("@_media_md5", MySqlDbType.VarChar,100) { Direction = System.Data.ParameterDirection.Input, Value = this.Md5 });
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.ExecuteScalar();
                       

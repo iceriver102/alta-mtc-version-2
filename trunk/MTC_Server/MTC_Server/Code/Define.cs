@@ -60,7 +60,7 @@ namespace MTC_Server.Code
         public const string media_user = "media_user";
         public const string media_time = "media_time";
         public const string media_status = "media_status";
-
+        public const string media_md5 = "media_md5";
 		/// <summary>
         /// dinh nghia bang device
         /// </summary>
@@ -71,6 +71,7 @@ namespace MTC_Server.Code
 		public const string device_comment="device_comment";
 		public const string device_time="device_time";
         public const string device_ip = "device_ip";
+        public const string device_pass = "device_pass";
         /// <summary>
         /// dinh nghia bang schedule
         /// </summary>

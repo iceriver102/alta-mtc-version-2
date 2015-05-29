@@ -57,19 +57,18 @@ namespace MTC_Server.UIView.Device
             if (this.Device == null)
             {
                 this.UITitle.Text = "Thêm thiết bị mới";
-                // this.UIName.Text = string.Empty;
                 this.UIName.reset();
                 this.UIIP.reset();
-                this.UIComment.reset();
                 this.UIType.SelectedIndex =- 1;
+                UIContent.Height = 445;
             }
             else
             {
                 this.UIName.Text = d.Name;
                 this.UIIP.Text = d.IP;
                 this.UITitle.Text = d.Name;
-                this.UIComment.Text = d.Comment;
                 this.UIType.SelectedItem = d.TypeDevice;
+                UIContent.Height = 505;
             }
         }
 
@@ -98,12 +97,27 @@ namespace MTC_Server.UIView.Device
                 MessageBox.Show("Địa chỉ IP không đúng định dạng");
                 return;
             }
+            if (string.IsNullOrEmpty(this.UIPass.Password) && this.Device == null)
+            {
+                MessageBox.Show("Mật khẩu không được để trống");
+                return;
+            }
+            if (this.UIPass.Password != this.UIPass_Again.Password) 
+            {
+                MessageBox.Show("Mật khẩu không khớp. Kiểm tra lại!");
+                return;
+            }
+            if (this.Device != null && this.Device.Pass != this.UIPass_Old.Password.MD5String())
+            {
+                MessageBox.Show("Mật khẩu đúng. Vui lòng kiểm tra lại!");
+                return;
+            }
             if(this.Device== null)
             {
                 DeviceData d = new DeviceData();
                 d.Name = this.UIName.Text;
                 d.IP = this.UIIP.Text;
-                d.Comment = this.UIComment.Text;
+                d.Pass = this.UIPass.Password.MD5String();
                 d.Type = (this.UIType.SelectedItem as TypeDevice).ID;
                 int result= DeviceData.Insert(d);
                 if(result <=0)
@@ -119,9 +133,12 @@ namespace MTC_Server.UIView.Device
             }else
             {
                 this.d.Name = this.UIName.Text;
-                this.d.Comment = this.UIComment.Text;
                 this.d.Type = (this.UIType.SelectedItem as TypeDevice).ID;
                 this.d.IP = this.UIIP.Text;
+                if (!string.IsNullOrEmpty(this.UIPass.Password))
+                {
+                    this.d.Pass = this.UIPass.Password.MD5String();
+                }
                 this.d.save();
                 if (this.CloseEvent != null)
                 {

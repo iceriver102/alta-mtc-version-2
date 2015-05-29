@@ -137,6 +137,7 @@ namespace Alta.Class
                         d.Time = reader.GetDateTime(Define.device_time);
                         d.Type = reader.GetInt32(Define.device_type);
                         d.IP = reader.GetString(Define.device_ip);
+                        d.Pass = reader.GetString(Define.device_pass);
                         try
                         {
                             d.Comment = reader.GetString(Define.device_comment);
@@ -166,6 +167,7 @@ namespace Alta.Class
                         d.Time = reader.GetDateTime(Define.device_time);
                         d.Type = reader.GetInt32(Define.device_type);
                         d.IP = reader.GetString(Define.device_ip);
+                        d.Pass = reader.GetString(Define.device_pass);
                         try
                         {
                             d.Comment = reader.GetString(Define.device_comment);
@@ -265,6 +267,14 @@ namespace Alta.Class
                         m.Type = reader.GetInt32(Define.media_type);
                         try
                         {
+                            m.Md5 = reader.GetString(Define.media_md5);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                        try
+                        {
                             m.FileSize = reader.GetString(Define.media_size);
                         }
                         catch (Exception)
@@ -309,6 +319,14 @@ namespace Alta.Class
                         m.Url = reader.GetString(Define.media_url);
                         m.Type = reader.GetInt32(Define.media_type);
                         m.FileSize = reader.GetString(Define.media_size);
+                        try
+                        {
+                            m.Md5 = reader.GetString(Define.media_md5);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                         try
                         {
                             m.FileSize = reader.GetString(Define.media_size);

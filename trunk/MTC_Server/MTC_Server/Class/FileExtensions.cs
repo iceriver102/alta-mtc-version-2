@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Shell;
+using System.Security.Cryptography;
 
 namespace Alta.Class
 {
@@ -43,6 +44,24 @@ namespace Alta.Class
             }
             return tmp.Format();
         }
+
+        public static string toMD5(this FileInfo file)
+        {
+            if (file.Exists)
+            {
+                using (var md5 = MD5.Create())
+                {
+                    using (var stream = File.OpenRead(file.FullName))
+                    {
+                         byte[] data= md5.ComputeHash(stream);
+                         String tmp = BitConverter.ToString(data).Replace("-", "");
+                         return tmp.ToLower();
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
         /*
         public static string ConvertImageToBase64(this FileInfo inf)
         {

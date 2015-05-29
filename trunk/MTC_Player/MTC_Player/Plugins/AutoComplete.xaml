@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Alta.Plugin.AutoComplete"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300" x:Name="RootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="RootView_Loaded" KeyUp="RootView_KeyUp" Focusable="True" IsTabStop="True">
+    <Canvas x:Name="UIRoot">
+        <TextBox x:Name="UISearch" Height="{Binding ElementName=RootView,Path=Height}" Canvas.Left="0" TextWrapping="NoWrap" Text="" Canvas.Top="0" Width="{Binding ElementName=RootView, Path=Width}"/>
+        <ListBox x:Name="lbSuggestion" 
+            Background="LightYellow"  Visibility="Collapsed" 
+                 HorizontalAlignment="Right" VerticalAlignment="Top" Width="{Binding ElementName=RootView, Path=Width}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                        <TextBlock Text="{Binding Path=icon}" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="20" Margin="2,0,6,0"/>
+                        <TextBlock Text="{Binding Path=label}" FontSize="14.333"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Canvas>
+</UserControl>

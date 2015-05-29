@@ -1,0 +1,24 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:UI="clr-namespace:MTC_Server.UIView.Playlist.UI" xmlns:Plugin="clr-namespace:Alta.Plugin" x:Class="MTC_Server.UIView.Schedule.ViewPlaylist" 
+             mc:Ignorable="d" 
+             d:DesignHeight="295" d:DesignWidth="315" x:Name="RootView">
+    <Canvas x:Name="UIRoot" ClipToBounds="True">
+        <UI:UIPlaylist x:Name="UIPlaylist" Height="260" Canvas.Left="-400" Canvas.Top="10" Width="195" UnLinkScheduleEvent="UIPlaylist_UnLinkScheduleEvent" />
+        <Canvas x:Name="UIInput" Width="{Binding Width, ElementName=RootView}" Height="{Binding Height, ElementName=RootView}" Canvas.Left="-400" Canvas.Top="0">
+            <Plugin:AutoComplete x:Name="UIFindPlaylist" Height="29" Canvas.Left="10" Canvas.Top="82" Width="295" SearchAction="SearchPlaylist" Icon="&#xf1ed;" PaddingInside="3,5,3,5" FontSize="13" />
+            <Button Canvas.Left="206" Canvas.Top="125" Width="99" Height="28" Click="Button_Click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xf044;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="16.333" />
+                        <TextBlock TextAlignment="Center" Text="OK" Padding="22 0 30 0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Canvas>
+
+    </Canvas>
+</UserControl>

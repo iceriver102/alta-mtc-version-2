@@ -80,7 +80,7 @@ namespace MTC_Server.UIView.Media
                         this.UIFtp.FtpUser = App.setting.ftp_user;
                         this.UIFtp.FtpPassword = App.setting.ftp_password;
                         if (this.Media == null)
-                            this.UIFtp.Url = string.Format("{0}/{1}/video_{2}.{3}", App.setting.ftp_server, App.setting.ftp_folder, DateTime.Now.Ticks, file.Extension);
+                            this.UIFtp.Url = string.Format("{0}/{1}/video_{2}{3}", App.setting.ftp_server, App.setting.ftp_folder, DateTime.Now.Ticks, file.Extension);
                         else
                         {
                             if (this.Media.LocalFile.Exists)
@@ -94,6 +94,7 @@ namespace MTC_Server.UIView.Media
                         this.Media.Name = this.UINameEdit.Text.Trim();
                         this.Media.Url = this.UIUrlEdit.Text;
                         this.Media.Comment = this.UICommentEdit.Text;
+                        this.Media.Md5 = this.Media.LocalFile.toMD5();
                         this.Media.Save();
                         if (this.CloseEvent != null)
                         {
@@ -106,6 +107,7 @@ namespace MTC_Server.UIView.Media
                         {
                             tmpMedia.Name = this.UINameEdit.Text.Trim();
                             tmpMedia.Comment = this.UICommentEdit.Text;
+                            tmpMedia.Md5 = tmpMedia.LocalFile.toMD5();
                             int result = Code.Media.MediaData.Insert(tmpMedia);
                             if (result <= 0)
                             {
@@ -113,6 +115,7 @@ namespace MTC_Server.UIView.Media
                                 return;
                             }
                             tmpMedia.ID = result;
+
                             if (this.CloseEvent != null)
                             {
                                 this.CloseEvent(this, tmpMedia);
@@ -145,7 +148,7 @@ namespace MTC_Server.UIView.Media
                         tmp.Url = this.UIUrlEdit.Text;
                         tmp.User_ID = App.curUser.ID;
                         tmp.Comment = this.UICommentEdit.Text;
-                        int result = Code.Media.MediaData.Insert(tmpMedia);
+                        int result = Code.Media.MediaData.Insert(tmp);
                         if (result <= 0)
                         {
                             MessageBox.Show("Không thể kết nối với CSDL!");
@@ -182,6 +185,7 @@ namespace MTC_Server.UIView.Media
                 this.Media.Url = e;
                 this.Media.Name = this.UINameEdit.Text.Trim();
                 this.Media.Comment = this.UICommentEdit.Text.Trim();
+                this.Media.Md5 = file.toMD5();
                 this.Media.Save();
                 if (this.CloseEvent != null)
                 {
@@ -198,6 +202,7 @@ namespace MTC_Server.UIView.Media
                 tmpMedia.Url = e;
                 tmpMedia.User_ID = App.curUser.ID;
                 tmpMedia.Comment = this.UICommentEdit.Text;
+                tmpMedia.Md5 =file.toMD5();
                 int result = Code.Media.MediaData.Insert(tmpMedia);
                 if (result <= 0)
                 {

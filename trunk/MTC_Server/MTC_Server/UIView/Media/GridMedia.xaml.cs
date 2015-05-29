@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Alta.Class;
 using MTC_Server.Code.Media;
+using MTC_Server.Code.User;
 
 namespace MTC_Server.UIView.Media
 {
@@ -22,6 +23,7 @@ namespace MTC_Server.UIView.Media
     /// </summary>
     public partial class GridMedia : UserControl
     {
+        public event EventHandler BackEvent;
         private string key
         {
             get
@@ -31,6 +33,32 @@ namespace MTC_Server.UIView.Media
                     return string.Empty;
                 }
                 return string.Format("%{0}%", this.UISearchEdit.Text.Trim());
+            }
+        }
+
+        private UserData u;
+
+        public UserData User
+        {
+            get
+            {
+                return this.u;
+            }
+            set
+            {
+                this.u = value;
+                if (this.u == null)
+                {
+                    UIBtnAddMedia.setLeft(15);
+                    UIBtnBack.Visibility = Visibility.Hidden;
+                    UIReload.setLeft(60);
+                }
+                else
+                {
+                    UIBtnAddMedia.setLeft(55);
+                    UIBtnBack.Visibility = Visibility.Visible;
+                    UIReload.setLeft(100);
+                }
             }
         }
         private List<Code.Media.MediaData> Datas;
@@ -98,7 +126,14 @@ namespace MTC_Server.UIView.Media
                 }
                 if (!isEdit)
                 {
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
                     this.LoadGUI();
                 }
             }
@@ -107,7 +142,14 @@ namespace MTC_Server.UIView.Media
 
         private void UIRootView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
+            if (this.User == null)
+            {
+                this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
+            }
+            else
+            {
+                this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+            }
             this.LoadGUI();
             this.Focus();
         }
@@ -130,6 +172,7 @@ namespace MTC_Server.UIView.Media
             {
                 this.UILeftBtn.Foreground = Brushes.Gray;
             }
+           
             if (this.Datas != null)
             {
                 foreach (Code.Media.MediaData m in this.Datas)
@@ -177,7 +220,14 @@ namespace MTC_Server.UIView.Media
                         this.totalMedia -= 1;
                         if (this.to < this.totalMedia)
                         {
-                            this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            if (this.User == null)
+                            {
+                                this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            }
+                            else
+                            {
+                                this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                            }
                             this.LoadGUI();
                         }
                     }, 600);
@@ -215,6 +265,7 @@ namespace MTC_Server.UIView.Media
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     alta_class_ftp.deleteFile(e.Url, App.setting.ftp_user, App.setting.ftp_password);
+                    MediaData.Delete(e);
                     UIMedia m = this.list_Box_Item.SelectedItem as UIMedia;
                     m.Animation_Opacity_View_Frame(false, () =>
                     {
@@ -223,7 +274,14 @@ namespace MTC_Server.UIView.Media
                         this.totalMedia -= 1;
                         if (this.to < this.totalMedia)
                         {
-                            this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            if (this.User == null)
+                            {
+                                this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                            }
+                            else
+                            {
+                                this.Datas= this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                            }
                             this.LoadGUI();
                         }
                     }, 600);
@@ -255,7 +313,14 @@ namespace MTC_Server.UIView.Media
             this.Focus();
             this.from = 0;
             this.to = 12;
-            this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
+            if (this.User == null)
+            {
+                this.Datas = App.curUser.LoadMedias(from, to, out totalMedia, this.TypeMedia);
+            }
+            else
+            {
+                this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+            }
             this.LoadGUI();
         }
 
@@ -268,7 +333,12 @@ namespace MTC_Server.UIView.Media
                 {
                     to = 12;
                     from = 0;
-                    this.Datas = App.curUser.FindMedias(this.key, from, to, out this.totalMedia, this.TypeMedia);
+                    if(this.User==null)
+                        this.Datas = App.curUser.FindMedias(this.key, from, to, out this.totalMedia, this.TypeMedia);
+                    else
+                    {
+                        this.Datas = this.User.FindMedias(this.key, from, to, out this.totalMedia, this.TypeMedia,true);
+                    }
                     this.LoadGUI();
                 }
             }
@@ -279,7 +349,14 @@ namespace MTC_Server.UIView.Media
                 {
                     this.to = 12;
                     this.from = 0;
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
                     this.LoadGUI();
                 }
                 this.Focus();
@@ -303,9 +380,27 @@ namespace MTC_Server.UIView.Media
                 this.to = this.from;
                 this.from -= 12;
                 if (string.IsNullOrEmpty(this.key))
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                {
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
+                }
                 else
-                    this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                {
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
+                }
                 this.LoadGUI();
             }
         }
@@ -317,9 +412,27 @@ namespace MTC_Server.UIView.Media
                 this.from = this.to;
                 this.to += 12;
                 if (string.IsNullOrEmpty(this.key))
-                    this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                {
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.LoadMedias(this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
+                }
                 else
-                    this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                {
+                    if (this.User == null)
+                    {
+                        this.Datas = App.curUser.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia);
+                    }
+                    else
+                    {
+                        this.Datas = this.User.FindMedias(this.key, this.from, this.to, out this.totalMedia, this.TypeMedia,true);
+                    }
+                }
                 this.LoadGUI();
             }
         }
@@ -334,6 +447,13 @@ namespace MTC_Server.UIView.Media
             {
                 this.UIRightBtn_MouseLeftButtonUp(null, null);
                 this.Focus();
+            }
+        }
+        private void UIBtnBack_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (BackEvent != null)
+            {
+                BackEvent(this, new EventArgs());
             }
         }
     }

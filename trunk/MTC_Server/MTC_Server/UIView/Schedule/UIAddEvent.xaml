@@ -7,28 +7,29 @@
              mc:Ignorable="d" 
             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Loaded="UIRootView_Loaded">
     <Canvas x:Name="UIRoot" Background="#7F000000">
-        <Canvas x:Name="MainView" Height="420" Width="310" Background="White" Canvas.Top="185" Canvas.Left="530">
-            <TextBlock Text="Tên lịch phát:" Canvas.Left="10" Canvas.Top="74" FontSize="13.333" Panel.ZIndex="10"  />
-            <TextBox x:Name="UIComment" Height="26" Canvas.Left="10" Canvas.Top="95" Width="280"  Panel.ZIndex="999" Padding="4"  />
+        <Canvas x:Name="MainView" Height="430" Width="325" Background="White" Canvas.Top="175" Canvas.Left="530">
             <TextBlock x:Name="UITitle" TextWrapping="NoWrap" Padding="15 8 0 0" Text="Thêm lịch chiếu" Background="#FFFF471E" Height="38" Width="{Binding Width, ElementName=MainView}" Foreground="White" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" FontSize="16.3333"/>
             <TextBlock FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="28" Height="38" Width="38" Canvas.Right="5" Text="&#xF00D;" TextAlignment="Center" Foreground="White" Padding="0 3" Cursor="Hand" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
-            <TextBlock Text="Tên user:" Canvas.Left="10" Canvas.Top="133" FontSize="13.333" Panel.ZIndex="10" />
-            <Plugin:AutoComplete x:Name="UIUser" Height="26" Canvas.Left="10" Canvas.Top="154" Width="280" SearchAction="SearchUser" PaddingInside="4" Text="" Panel.ZIndex="999" Icon="&#xf21d;" />
-            <TextBlock Text="IP thiết bị:" Canvas.Left="10" Canvas.Top="193" FontSize="13.333" Panel.ZIndex="10" />
-            <Plugin:AutoComplete x:Name="UIDevice" Height="26" Canvas.Left="10" Canvas.Top="215" Width="280" SearchAction="SearchDevice" PaddingInside="4" Text="" Panel.ZIndex="998" Icon="&#xf126;"/>
-            <TextBlock Text="Thời gian bắt đầu:" Canvas.Left="10" Canvas.Top="254" FontSize="13.333" Panel.ZIndex="10" />
-            <Plugin:DatePicker x:Name="UITimeBegin" Height="25" Canvas.Left="10" Canvas.Top="275" Width="280" PaddingInside="4" Panel.ZIndex="997" View="Right"  />
-            <TextBlock Text="Thời gian kết thúc:" Canvas.Left="10" Canvas.Top="311" FontSize="13.333" Panel.ZIndex="10" />
-            <Plugin:DatePicker x:Name="UITimeEnd" Height="25" Canvas.Left="10" Canvas.Top="332" Width="280" PaddingInside="4" Panel.ZIndex="997" View="Right"  />
-            <CheckBox x:Name="UILoop" Content="Lặp lại" Canvas.Left="10" Canvas.Top="369"/>
+            <Canvas x:Name="UIContent" Height="352" Width="310" Canvas.Top="38" Canvas.Left="5">
+                <TextBlock Text="Tên lịch phát:" Canvas.Left="10" Canvas.Top="11" FontSize="13.333" Panel.ZIndex="10"  />
+                <TextBox x:Name="UIComment" Height="26" Canvas.Left="10" Canvas.Top="32" Width="290"  Panel.ZIndex="999" Padding="4"  />
+                <TextBlock Text="Tên user:" Canvas.Left="10" Canvas.Top="70" FontSize="13.333" Panel.ZIndex="10" />
+                <Plugin:AutoComplete x:Name="UIUser" Height="26" Canvas.Left="10" Canvas.Top="91" Width="290" SearchAction="SearchUser" PaddingInside="4" Text="" Panel.ZIndex="999" Icon="&#xf21d;" />
+                <TextBlock Text="IP thiết bị:" Canvas.Left="10" Canvas.Top="130" FontSize="13.333" Panel.ZIndex="10" />
+                <Plugin:AutoComplete x:Name="UIDevice" Height="26" Canvas.Left="10" Canvas.Top="152" Width="290" SearchAction="SearchDevice" PaddingInside="4" Text="" Panel.ZIndex="998" Icon="&#xf126;"/>
+                <TextBlock Text="Thời gian bắt đầu:" Canvas.Left="10" Canvas.Top="191" FontSize="13.333" Panel.ZIndex="10" />
+                <Plugin:DatePicker x:Name="UITimeBegin" Height="25" Canvas.Left="10" Canvas.Top="212" Width="290" PaddingInside="4" Panel.ZIndex="997" View="Right"  />
+                <TextBlock Text="Thời gian kết thúc:" Canvas.Left="10" Canvas.Top="248" FontSize="13.333" Panel.ZIndex="10" />
+                <Plugin:DatePicker x:Name="UITimeEnd" Height="25" Canvas.Left="10" Canvas.Top="269" Width="290" PaddingInside="4" Panel.ZIndex="997" View="Right"  />
+                <CheckBox x:Name="UILoop" Content="Lặp lại" Canvas.Left="10" Canvas.Top="308" Width="74"/>
+            </Canvas>
             <Canvas Height="30" Canvas.Left="0" Canvas.Bottom="0" Width="{Binding ElementName=MainView,Path=Width}" ClipToBounds="True" Background="#FFFF471E">
-                <StackPanel x:Name="UIBar" Orientation="Horizontal" Height="30" Canvas.Left="205" >
+                <StackPanel x:Name="UIBar" Orientation="Horizontal" Height="30" Canvas.Right="5" >
                     <TextBlock HorizontalAlignment="Right" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Text="&#xf13d;" Foreground="White" Padding="10 2" Margin="2,0" MouseLeftButtonUp="ResetButtonClick" />
-                    <TextBlock HorizontalAlignment="Right" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Text="&#xf0c7;" Foreground="White" Padding="10 2" Margin="2,0" MouseLeftButtonUp="SaveButtonClick"/>
+                    <TextBlock x:Name="UISaveBtn" HorizontalAlignment="Right" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Text="&#xf0c7;" Foreground="White" Padding="10 2" Margin="2,0" MouseLeftButtonUp="SaveButtonClick"/>
                 </StackPanel>
             </Canvas>
-            <TextBlock x:Name="UIErr" Text="" Canvas.Left="10" Canvas.Top="51" FontSize="13.333" Panel.ZIndex="10" Width="280" Foreground="Red" />
-
+            <TextBlock x:Name="UIErr" Text="" Canvas.Left="10" Canvas.Top="51" FontSize="13" Panel.ZIndex="10" Width="305" Foreground="Red" Opacity="0"/>
         </Canvas>
 
     </Canvas>

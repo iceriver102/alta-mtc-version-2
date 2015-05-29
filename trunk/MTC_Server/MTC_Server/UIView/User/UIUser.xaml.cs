@@ -26,6 +26,8 @@ namespace MTC_Server.UIView.User
         public event EventHandler<UserData> ViewInfoUserEvent;
         public event EventHandler<UserData> DeleteUserEvent;
         public event EventHandler<UserData> ViewPermison;
+        public event EventHandler<UserData> BrowserMediaEvent;
+        public event EventHandler<UserData> BrowserCameraEvent;
         private UserData _u;
         public UserData User
         {
@@ -36,20 +38,23 @@ namespace MTC_Server.UIView.User
             set
             {
                 this._u = value;
-                this.UIFullName.Text = string.Format("{0} ({1})", this._u.Full_Name, this._u.User_Name);               
-                if (this._u.TypeUser != null)
-                    this.UIIcon.Text = this._u.TypeUser.Icon.DecodeEncodedNonAsciiCharacters();
-                this.UIPhone.Text = this._u.Phone;
-                this.UIEmail.Text = this._u.Email;
-                this.UIType.Text = this._u.TypeUser.Name;
-                this.UIDate.Text = this._u.Time.format();
-                if (this._u.Status)
+                if (this._u != null)
                 {
-                    this.UIStatus.Text = Define.Fonts["fa-unlock"].Code;
-                }
-                else
-                {
-                    this.UIStatus.Text = Define.Fonts["fa-lock"].Code;
+                    this.UIFullName.Text = string.Format("{0} ({1})", this._u.Full_Name, this._u.User_Name);
+                    if (this._u.TypeUser != null)
+                        this.UIIcon.Text = this._u.TypeUser.Icon.DecodeEncodedNonAsciiCharacters();
+                    this.UIPhone.Text = this._u.Phone;
+                    this.UIEmail.Text = this._u.Email;
+                    this.UIType.Text = this._u.TypeUser.Name;                    
+                    this.UIDate.Text = this._u.Time.format();
+                    if (this._u.Status)
+                    {
+                        this.UIStatus.Text = Define.Fonts["fa-unlock"].Code;
+                    }
+                    else
+                    {
+                        this.UIStatus.Text = Define.Fonts["fa-lock"].Code;
+                    }
                 }
             }
         }
@@ -95,7 +100,7 @@ namespace MTC_Server.UIView.User
 
         private void ViewInfoUser(object sender, MouseButtonEventArgs e)
         {
-            if (this.ViewInfoUserEvent != null && App.curUser.Permision.mana_user)
+            if (this.ViewInfoUserEvent != null && (App.curUser.Permision.mana_user || App.curUser.ID == this.User.ID ))
             {
                 this.ViewInfoUserEvent(this, this.User);
             }
@@ -121,6 +126,22 @@ namespace MTC_Server.UIView.User
             if (this.ViewPermison != null && App.curUser.Permision.mana_user)
             {
                 this.ViewPermison(this, this.User);
+            }
+        }
+
+        private void BroswerMedia(object sender, MouseButtonEventArgs e)
+        {
+            if (BrowserMediaEvent != null)
+            {
+                BrowserMediaEvent(this, this.User);
+            }
+        }
+
+        private void CameraView(object sender, MouseButtonEventArgs e)
+        {
+            if (BrowserCameraEvent != null)
+            {
+                BrowserCameraEvent(this, this.User);
             }
         }
     }

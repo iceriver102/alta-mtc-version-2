@@ -15,6 +15,7 @@ namespace MTC_Server.Code.Media
         public string Url { get; set; }
         public string Comment { get; set; }
         private int type;
+        public string Md5 { get; set; }
         public int Type
         {
             get { return this.type; }

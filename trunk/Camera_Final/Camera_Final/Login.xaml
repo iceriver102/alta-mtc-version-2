@@ -1,0 +1,20 @@
+﻿<Window x:Class="Camera_Final.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đăng nhập" Height="560" Width="330"  x:Name="UIRootView" FontFamily="/Camera_Final;component/Asset/Fonts/#Myriad Pro" ResizeMode="CanMinimize">
+    <Canvas x:Name="UIView" Background="#FFDC7033">
+        <Canvas Height="74" Width="270" Canvas.Left="22" Canvas.Top="205" Background="White">
+            <Path Data="M0,0L20,0" Stroke="#FF938989" Height="74" Stretch="Fill" Width="242" Canvas.Left="10" StrokeThickness="0.6" />
+            <TextBlock x:Name="Place_Holder_User" Text="Tên đăng nhập" Width="242" Height="26" FontStyle="Italic" Foreground="#FFC1B4B4" Canvas.Top="11" Canvas.Left="10" FontSize="13.33"></TextBlock>
+            <TextBlock x:Name="Place_Holder_Pass" Text="Mật khẩu" Width="242" Height="26" FontStyle="Italic" Foreground="#FFC1B4B4" Canvas.Top="45" Canvas.Left="10" FontSize="13.33"/>
+            <TextBox x:Name="UIUser"  Height="35" Padding="8,10,8,0" TextWrapping="NoWrap" Width="270" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFC7B8B8" FontSize="13.333" TextChanged="TextBox_TextChanged" BorderThickness="0" />
+            <PasswordBox x:Name="UIPass"  Height="39" Padding="8,10"  Width="270" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFC1B4B4" FontSize="13.333"  Canvas.Top="35" PasswordChanged="PasswordBox_PasswordChanged" BorderThickness="0" />
+        </Canvas>
+        <TextBlock Canvas.Left="22" TextWrapping="NoWrap" TextAlignment="Center" Text="MTC" Canvas.Top="97" FontWeight="ExtraBold" FontStretch="UltraExpanded" Width="270" FontSize="70" Foreground="White"/>
+        <TextBlock x:Name="UIBtn" Cursor="Hand" Canvas.Left="22" TextWrapping="NoWrap" TextAlignment="Center" Padding="5,8" Text="Đăng nhập" Canvas.Top="295" Width="270" Height="35" FontSize="14" Foreground="#FFF1F1F1" Background="#FFFF5500" MouseLeftButtonUp="UIBtn_MouseLeftButtonUp" MouseEnter="UIBtn_MouseEnter" MouseLeave="UIBtn_MouseLeave" MouseLeftButtonDown="UIBtn_MouseLeftButtonDown" PreviewMouseUp="UIBtn_PreviewMouseUp"/>
+        <TextBlock TextAlignment="Center" Canvas.Left="91" TextWrapping="Wrap" Text="Altamedia &#x00A9; 2015" Canvas.Top="493" Width="132" FontWeight="SemiBold" Foreground="White" FontSize="13.333"/>
+        <TextBlock x:Name="UIWaring" Canvas.Left="22" TextWrapping="Wrap" Text="" Canvas.Top="184" Width="270" Foreground="#FFC7B8B8" FontStyle="Italic" FontWeight="Thin" FontSize="13.333"/>
+
+
+    </Canvas>
+</Window>

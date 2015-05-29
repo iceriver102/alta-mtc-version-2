@@ -1,0 +1,36 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Plugin="clr-namespace:Alta.Plugin" 
+             x:Class="MTC_Server.UIView.Playlist.UI.Playlist_Media" 
+             mc:Ignorable="d" 
+             d:DesignHeight="668" d:DesignWidth="1366" x:Name="UIRootView" Loaded="UIRootView_Loaded" Focusable="True" IsTabStop="True" Style="{DynamicResource noBorder}" KeyUp="UIRootView_KeyUp">
+    <Canvas x:Name="UIRoot" Background="#CC000000">
+        <Canvas x:Name="layout" Height="500" Width="738" Canvas.Left="312" Canvas.Top="102" Background="LightGray">
+            <Canvas x:Name="UIBar" Height="35" Canvas.Left="0" Canvas.Top="0" Width="{Binding Width, ElementName=layout}" Background="#FFFD0C00">
+                <TextBlock x:Name="UITitle" Width="696" Canvas.Left="0" Canvas.Top="9" FontSize="16.888" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro" Text="" Foreground="White" TextAlignment="Center" FontWeight="SemiBold"/>
+                <Button Width="37" Height="35" Style="{DynamicResource FlatButtonStyle}" Content="&#xf00d;" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="24" Canvas.Left="701" Foreground="White" Click="Close_click"/>
+            </Canvas>
+            <Border Canvas.Top="35" Canvas.Left="0" BorderThickness="2,0,2,2" BorderBrush="OrangeRed" Height="465" Width="395">
+                <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Width="395" >
+                    <StackPanel x:Name="StackMedia" Orientation="Vertical"/>
+                </ScrollViewer>
+            </Border>
+            <Border Width="343" Height="465" Canvas.Left="395" Canvas.Top="35" BorderBrush="OrangeRed" BorderThickness="0,0,2,2">
+                <Canvas x:Name="UIViewInput">
+                    <TextBlock TextWrapping="NoWrap" Text="Media:" Canvas.Left="20" Canvas.Top="18" FontSize="16.333" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro"/>
+                    <Plugin:AutoComplete x:Name="MediaSelect" HorizontalAlignment="Left" Height="29" Grid.Row="1" VerticalAlignment="Top" Width="305" Canvas.Left="20" Canvas.Top="49" PaddingInside="2,5,2,5" SearchAction="SearchMedia" Panel.ZIndex="999"/>
+                    <TextBlock TextWrapping="NoWrap" Text="Thời gian bắt đầu:" Canvas.Left="20" Canvas.Top="96" FontSize="16.333" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro"/>
+                    <Plugin:DatePicker x:Name="UITimeEnd" Height="29" Canvas.Left="20" Canvas.Top="212" Width="305" PaddingInside="5" Panel.ZIndex="995" View="Right"  />
+                    <TextBlock TextWrapping="NoWrap" Text="Thời gian kết thúc:" Canvas.Left="20" Canvas.Top="178" FontSize="16.333" FontFamily="/MTC_Server;component/Asset/Fonts/#Myriad Pro"/>
+                    <Plugin:DatePicker x:Name="UITimeBegin" Height="29" Canvas.Left="20" Canvas.Top="130" Width="305" PaddingInside="5" Panel.ZIndex="996" View="Right"  />
+                    <Canvas Height="40" Width="341" Background="OrangeRed" Canvas.Bottom="0" Canvas.Top="423">
+                        <Button Content="&#xf0c7;" Canvas.Left="284" Width="51" Style="{DynamicResource FlatButtonStyle}" Height="40" FontFamily="/MTC_Server;component/Asset/Fonts/#FontAwesome" FontSize="28" Foreground="White" Click="Button_Click"/>
+                    </Canvas>
+                </Canvas>
+            </Border>
+        </Canvas>
+    </Canvas>
+</UserControl>

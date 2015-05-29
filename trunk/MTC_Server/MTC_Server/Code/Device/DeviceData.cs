@@ -12,6 +12,8 @@ namespace MTC_Server.Code.Device
         public string Name { get; set; }
         public string Comment { get; set; }
         public string IP { get; set; }
+        public string Pass { get; set; }
+
         private int type;
         public int Type
         {
