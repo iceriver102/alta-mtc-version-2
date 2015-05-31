@@ -15,6 +15,7 @@ namespace Alta.Class
         public string suffix_rtsp = "/ISAPI/streaming/channels/101";
         public Stretch @Stretch = Stretch.UniformToFill;
         public string Folder = "Record";
+        public bool AutoRecord = true;
         public static Config Read(string file)
         {
             if (!File.Exists(file))
