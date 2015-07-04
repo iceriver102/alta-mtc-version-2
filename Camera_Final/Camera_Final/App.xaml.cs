@@ -46,10 +46,12 @@ namespace Camera_Final
         public const string _FILE_Alarm_Data = @"Data\alarm.xml";
         public const string _FILE_PRESET_DATA = @"Data\preset.xml";
         public const string _FILE_DEFINE_COMMAND = @"Data\command.xml";
-        public const string _FILE_CSV_COMMAND = @"Data\log.csv";
+        public const string _FILE_CSV_COMMAND = @"Data\LogDaudo.csv";
+        public const string _FILE_Send_COMMAND = @"Data\Log.csv";
         public static string curFolder;
         private Thread checkFile;
         public static List<CsvRow> Rows;
+        public static List<CsvRow> RowsSend;
 
         /*
         public static void initVLC()
@@ -120,6 +122,7 @@ namespace Camera_Final
         {
             bool login = true;
             Rows = new List<CsvRow>();
+            RowsSend = new List<CsvRow>();
             Fonts = ExCss.ReadFile(@"Asset\Fonts\font-awesome.min.css");
             Timethread = new Thread(CheckTimeFunctionThread);
             Timethread.IsBackground = true;
@@ -135,8 +138,12 @@ namespace Camera_Final
             {
                 File.Create(_FILE_CSV_COMMAND);
             }
-          //  initVLC();
-            DefineCommand = CommandDefine.Read(_FILE_DEFINE_COMMAND);           
+            if (!File.Exists(_FILE_Send_COMMAND))
+            {
+                File.Create(_FILE_Send_COMMAND);
+            }
+            //  initVLC();
+            DefineCommand = CommandDefine.Read(_FILE_DEFINE_COMMAND);
             setting = Config.Read(_FILE_Config);
             if (!Directory.Exists("Data"))
             {
@@ -149,7 +156,7 @@ namespace Camera_Final
             }
             curDate = DateTime.Now;
             Timethread.Start();
-            curFolder=System.IO.Path.Combine(setting.Folder,this.curDate.ToString("dd-MM-yyyy"));
+            curFolder = System.IO.Path.Combine(setting.Folder, this.curDate.ToString("dd-MM-yyyy"));
             if (!Directory.Exists(curFolder))
             {
                 Directory.CreateDirectory(curFolder);
@@ -217,7 +224,7 @@ namespace Camera_Final
                     }
                     catch (Exception)
                     {
-                      
+
                     }
                 }
 
@@ -274,7 +281,7 @@ namespace Camera_Final
                         }
                     }
                 }
-               Thread.Sleep(24 * 3600 * 1000);
+                Thread.Sleep(24 * 3600 * 1000);
             }
         }
 
@@ -291,7 +298,7 @@ namespace Camera_Final
                     {
                         Directory.CreateDirectory(curFolder);
                     }
-                }                
+                }
             }
         }
         private string cmd;
@@ -301,78 +308,88 @@ namespace Camera_Final
             char[] charsToTrim = { '\n' };
             SerialPort s = sender as SerialPort;
             string tmp = s.ReadExisting().Trim(charsToTrim);
-          
+           
+            if (!string.IsNullOrEmpty(tmp))
+            {
                 CsvRow row = new CsvRow();
                 row.Add(DateTime.Now.format("dd-MM-yyy HH:mm:ss"));
                 row.Add(s.PortName);
                 row.Add(tmp);
                 Rows.Add(row);
-            
-            if (tmp.IndexOf("#") >= 0)
-            {
-                this.cmd = string.Empty;
-                this.cmd += tmp;
-                flag = false;
-            }
-            if (tmp.IndexOf("$") >= 0)
-            {
-                this.cmd += tmp;
-                int to = this.cmd.IndexOf("#");
-                if (to >= 0)
+                if (tmp.IndexOf("#") >= 0)
                 {
-                    int from = this.cmd.IndexOf("$", to + 1);
-                    this.cmd = this.cmd.Substring(to + 1, from - to - 1);
-                    string[] element = this.cmd.Split(' ');
-                    if (element.Length == 4)
+                    this.cmd = string.Empty;
+                    this.cmd += tmp;
+                    flag = false;
+                }
+                if (tmp.IndexOf("$") >= 0)
+                {
+                    this.cmd += tmp;
+                    int to = this.cmd.IndexOf("#");
+                    if (to >= 0)
                     {
-                        if ((element[1] == "A" || element[1] == "B") && (element[3] == "1") && element.Length < 5)
+                        int from = 0;
+                        try
                         {
-                            QueueCMD.Enqueue(this.cmd);
-                            //alert = true;  
+                            from = this.cmd.IndexOf("$", to + 1);
+                            this.cmd = this.cmd.Substring(to + 1, from - to - 1);
                         }
-                    }
-                   
-                    Regex myRegex = new Regex(@"\d$");
-                    if (myRegex.IsMatch(this.cmd) && !string.IsNullOrEmpty(this.cmd))
-                    {
-                        s.sendCommand(element[0] + " OK$");
-                    }
-                   // else if (!string.IsNullOrEmpty(this.cmd) && this.command != null)
-                   // {
+                        catch (Exception)
+                        {
+
+                        }
+                        string[] element = this.cmd.Split(' ');
+                        if (element.Length == 4)
+                        {
+                            if ((element[1] == "A" || element[1] == "B") && (element[3] == "1") && element.Length < 5)
+                            {
+                                QueueCMD.Enqueue(this.cmd);
+                                //alert = true;  
+                            }
+                        }
+
+                        Regex myRegex = new Regex(@"\d$");
+                        if (myRegex.IsMatch(this.cmd) && !string.IsNullOrEmpty(this.cmd))
+                        {
+                            s.sendCommand(element[0] + " OK$");
+                        }
+                        // else if (!string.IsNullOrEmpty(this.cmd) && this.command != null)
+                        // {
                         //if (s.PortName.ToLower() == command.name.ToLower() && command.mode == CommandMode.WAIT)
                         //{
                         //    command.mode = CommandMode.RUN;
                         //}
-                   // }
-                    try
-                    {
-                        int id_board = Convert.ToInt32(element[0]);
-                        
-                        if (App.DataAlarm != null)
+                        // }
+                        try
                         {
-                            for (int i = 0; i < App.DataAlarm.Count; i++)
+                            int id_board = Convert.ToInt32(element[0]);
+
+                            if (App.DataAlarm != null)
                             {
-                                if (App.DataAlarm[i].board == id_board)
+                                for (int i = 0; i < App.DataAlarm.Count; i++)
                                 {
-                                    App.DataAlarm[i].Com = s.PortName;
-                                                                      
+                                    if (App.DataAlarm[i].board == id_board)
+                                    {
+                                        App.DataAlarm[i].Com = s.PortName;
+
+                                    }
                                 }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.GetBaseException().ToString() + "id: "+this.cmd);
-                    }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.GetBaseException().ToString() + "id: " + this.cmd);
+                        }
 
-                    //mysql_helpper.setCommand(this.cmd, s.PortName.ToString());
+                        //mysql_helpper.setCommand(this.cmd, s.PortName.ToString());
+                    }
+                    flag = false;
+                    this.cmd = string.Empty;
+
                 }
-                flag = false;
-                this.cmd = string.Empty;
-
+                if (flag)
+                    this.cmd += tmp;
             }
-            if (flag)
-                this.cmd += tmp;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
@@ -391,18 +408,25 @@ namespace Camera_Final
             Alarms.Write(_FILE_Alarm_Data, DataAlarm);
             Users.write(_FILE_User_Data, DataUser);
             Cameras.Write(_FILE_Camera_Data, DataCamera);
-          //  Map.Write(_FILE_Map_Data, Map);
+            //  Map.Write(_FILE_Map_Data, Map);
             Presets.Write(_FILE_PRESET_DATA, DataPreset);
-           // Config.Write(_FILE_Config, setting);
+            // Config.Write(_FILE_Config, setting);
             if (m_bInitSDK == true)
             {
                 CHCNetSDK.NET_DVR_Cleanup();
             }
-            using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND, FileMode.Append),Encoding.UTF8))
+            using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND, FileMode.Append), Encoding.UTF8))
             {
                 for (int i = 0; i < Rows.Count; i++)
                 {
                     LogCSV.WriteRow(Rows[i]);
+                }
+            }
+            using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_Send_COMMAND, FileMode.Append), Encoding.UTF8))
+            {
+                for (int i = 0; i < RowsSend.Count; i++)
+                {
+                    LogCSV.WriteRow(RowsSend[i]);
                 }
             }
             //VlcContext.CloseAll();
@@ -416,14 +440,14 @@ namespace Camera_Final
             {
                 List<string> result = new List<string>();
                 foreach (COMPortInfo comPort in COMPortInfo.GetCOMPortsInfo())
-                {                    
+                {
                     if (comPort.Description.IndexOf("Prolific USB-to-Serial Comm Port") >= 0)
                     {
                         result.Add(comPort.Name);
                     }
-                }             
+                }
                 return result.ToArray();
-                
+
             }
             catch (Exception)
             {

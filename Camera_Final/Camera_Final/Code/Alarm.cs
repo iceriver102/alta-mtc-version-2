@@ -65,9 +65,14 @@ namespace Camera_Final.Code
         public bool Auto = true;
         public void RunCommand(string cmd)
         {
+            CsvRow row = new CsvRow();
+            row.Add(DateTime.Now.format("dd-MM-yyyy HH:mm:ss"));
+            row.Add(this.Com);
+            row.Add(this.Name);           
             try
             {
                 string msg = string.Format(cmd, this.board, this.pos);
+                 row.Add(msg);
                 if (App.listSerialPort != null)
                 {
                     for (int i = 0; i < App.listSerialPort.Count; i++)
@@ -84,20 +89,23 @@ namespace Camera_Final.Code
             {
                
             }
+            
+            App.RowsSend.Add(row);
         }
 
 
 
         internal void Disable()
         {
-            this.RunCommand(App.DefineCommand.OFF);
-            this.RunCommand(App.DefineCommand.ALARM_OFF);
+            this.RunCommand(App.DefineCommand.DISABLE);
+            EasyTimer.SetTimeout(() => { this.RunCommand(App.DefineCommand.ALARM_OFF); }, 500);
+          
             this.status = false;
         }
 
         internal void Enable()
         {
-            this.RunCommand(App.DefineCommand.ON);
+            this.RunCommand(App.DefineCommand.ENABLE);
             this.status = true;
         }
     }

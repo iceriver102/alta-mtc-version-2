@@ -8,11 +8,11 @@
     <Camera Camera="5" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA CHINH" com="COM3" left="972" top="657.42448979591882" board="2" pos="3">
+  <Alarm name="CUA CHINH" com="COM3" left="993" top="619.8081632653068" board="2" pos="3">
     <Camera Camera="7" Postion="20" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA GM" com="COM3" left="692" top="657.42448979591848" board="2" pos="4">
+  <Alarm name="CUA GM" com="COM3" left="783" top="617.71836734693943" board="2" pos="4">
     <Camera Camera="7" Postion="27" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
@@ -24,11 +24,11 @@
     <Camera Camera="15" Postion="27" />
     <TimeOff from="2015-07-04T06:00:00+07:00" to="2015-07-04T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA GIS SAU" com="COM4" left="151" top="317.83265306122468" board="1" pos="1">
+  <Alarm name="CUA GIS SAU" com="COM4" left="143" top="322.01224489795948" board="1" pos="1">
     <Camera Camera="15" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA GIS" com="COM4" left="804" top="239.46530612244916" board="1" pos="2">
+  <Alarm name="CUA GIS" com="COM4" left="804" top="239.46530612244919" board="1" pos="2">
     <Camera Camera="9" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
@@ -36,11 +36,11 @@
     <Camera Camera="15" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA SO XCK" com="COM4" left="921" top="200.80408163265329" board="1" pos="5">
+  <Alarm name="CUA SO XCK" com="COM4" left="954" top="170.50204081632697" board="1" pos="5">
     <Camera Camera="9" Postion="27" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA CUON XCK" com="COM4" left="1057" top="189.31020408163272" board="1" pos="6">
+  <Alarm name="CUA CUON XCK" com="COM4" left="1090" top="198.71428571428595" board="1" pos="6">
     <Camera Camera="9" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
@@ -48,8 +48,9 @@
     <Camera Camera="13" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA CUON XCK" com="COM4" left="1201" top="245.73469387755114" board="1" pos="8">
+  <Alarm name="CUA XUONG DIEN" com="COM4" left="1186" top="265.58775510204111" board="1" pos="8">
     <Camera Camera="17" Postion="24" />
+    <Comment />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
 </Alarms>

@@ -368,5 +368,17 @@ namespace Camera_Final.UIView
                 }
             }
         }
+
+        private void DeleteCamera(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Bạn có muốn xóa kết nối này không?","Thông báo",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                App.DataAlarm.Children.RemoveAt(this.Alarm);
+                if (this.CloseEvent != null)
+                {
+                    this.CloseEvent(this, new EventArgs());
+                }
+            }
+        }
     }
 }

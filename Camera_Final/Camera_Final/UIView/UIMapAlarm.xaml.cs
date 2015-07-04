@@ -49,6 +49,14 @@ namespace Camera_Final.UIView
                     this.setLeft(value.Left);
                     this.setTop(value.Top);
                     this.ToolTip = value.Com;
+                    if (value.Cameras == null || value.Cameras.Count == 0)
+                    {
+                        UIM_Link.Header = "Kết nối Camera";
+                    }
+                    else
+                    {
+                        UIM_Link.Header = "Chỉnh sửa kết nối";
+                    }
                 }
             }
         }
@@ -183,8 +191,8 @@ namespace Camera_Final.UIView
             {
                 if (flag)
                 {
-
                     (this.Icon.Foreground as SolidColorBrush).Animation_Color_Repeat(from, Colors.Red);
+                    this._alarm.RunCommand(App.DefineCommand.ALARM_ON);
                     if (AlertEvent != null)
                     {
                         AlertEvent(this, new Tuple<Alarm,bool>(this._alarm,true));
@@ -205,7 +213,7 @@ namespace Camera_Final.UIView
 
         private void ConnectCamera(object sender, RoutedEventArgs e)
         {
-            if (this._alarm.Cameras == null || this._alarm.Cameras.Count > 0)
+            if (this._alarm.Cameras == null || this._alarm.Cameras.Count == 0)
             {
                 if (this.ConnectCameraEvent != null)
                 {
