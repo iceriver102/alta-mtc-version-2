@@ -90,13 +90,14 @@ namespace Camera_Final.Code
 
         internal void Disable()
         {
-            this.RunCommand(App.DefineCommand.DISABLE);
+            this.RunCommand(App.DefineCommand.OFF);
+            this.RunCommand(App.DefineCommand.ALARM_OFF);
             this.status = false;
         }
 
         internal void Enable()
         {
-            this.RunCommand(App.DefineCommand.ENABLE);
+            this.RunCommand(App.DefineCommand.ON);
             this.status = true;
         }
     }

@@ -12,6 +12,7 @@ using Alta.Class;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Text;
 namespace Camera_Final
 {
     /// <summary>
@@ -45,8 +46,10 @@ namespace Camera_Final
         public const string _FILE_Alarm_Data = @"Data\alarm.xml";
         public const string _FILE_PRESET_DATA = @"Data\preset.xml";
         public const string _FILE_DEFINE_COMMAND = @"Data\command.xml";
+        public const string _FILE_CSV_COMMAND = @"Data\log.csv";
         public static string curFolder;
         private Thread checkFile;
+        public static List<CsvRow> Rows;
 
         /*
         public static void initVLC()
@@ -116,7 +119,7 @@ namespace Camera_Final
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             bool login = true;
-         
+            Rows = new List<CsvRow>();
             Fonts = ExCss.ReadFile(@"Asset\Fonts\font-awesome.min.css");
             Timethread = new Thread(CheckTimeFunctionThread);
             Timethread.IsBackground = true;
@@ -128,9 +131,12 @@ namespace Camera_Final
                 MessageBox.Show("NET_DVR_Init error!");
                 return;
             }
+            if (!File.Exists(_FILE_CSV_COMMAND))
+            {
+                File.Create(_FILE_CSV_COMMAND);
+            }
           //  initVLC();
-            DefineCommand = CommandDefine.Read(_FILE_DEFINE_COMMAND);
-           
+            DefineCommand = CommandDefine.Read(_FILE_DEFINE_COMMAND);           
             setting = Config.Read(_FILE_Config);
             if (!Directory.Exists("Data"))
             {
@@ -295,6 +301,13 @@ namespace Camera_Final
             char[] charsToTrim = { '\n' };
             SerialPort s = sender as SerialPort;
             string tmp = s.ReadExisting().Trim(charsToTrim);
+          
+                CsvRow row = new CsvRow();
+                row.Add(DateTime.Now.format("dd-MM-yyy HH:mm:ss"));
+                row.Add(s.PortName);
+                row.Add(tmp);
+                Rows.Add(row);
+            
             if (tmp.IndexOf("#") >= 0)
             {
                 this.cmd = string.Empty;
@@ -342,6 +355,7 @@ namespace Camera_Final
                                 if (App.DataAlarm[i].board == id_board)
                                 {
                                     App.DataAlarm[i].Com = s.PortName;
+                                                                      
                                 }
                             }
                         }
@@ -363,6 +377,7 @@ namespace Camera_Final
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+
             if (Timethread != null)
             {
                 Timethread.Abort();
@@ -376,12 +391,19 @@ namespace Camera_Final
             Alarms.Write(_FILE_Alarm_Data, DataAlarm);
             Users.write(_FILE_User_Data, DataUser);
             Cameras.Write(_FILE_Camera_Data, DataCamera);
-            Map.Write(_FILE_Map_Data, Map);
+          //  Map.Write(_FILE_Map_Data, Map);
             Presets.Write(_FILE_PRESET_DATA, DataPreset);
            // Config.Write(_FILE_Config, setting);
             if (m_bInitSDK == true)
             {
                 CHCNetSDK.NET_DVR_Cleanup();
+            }
+            using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND, FileMode.Append),Encoding.UTF8))
+            {
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    LogCSV.WriteRow(Rows[i]);
+                }
             }
             //VlcContext.CloseAll();
         }
