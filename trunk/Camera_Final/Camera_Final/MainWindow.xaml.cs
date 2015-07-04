@@ -94,23 +94,30 @@ namespace Camera_Final
                     {
                         if ((element[1] == "A" || element[1] == "B") && (element[3] == "1") && element.Length < 5)
                         {
-                            int board = Convert.ToInt32(element[0]);
-                            int pos = Convert.ToInt32(element[2]);
-                            this.Dispatcher.Invoke(() =>
+                            try
                             {
-                                foreach (UIElement uiE in this.UIMapContent.Children)
+                                int board = Convert.ToInt32(element[0]);
+                                int pos = Convert.ToInt32(element[2]);
+                                this.Dispatcher.Invoke(() =>
                                 {
-                                    if (uiE is UIMapAlarm)
+                                    foreach (UIElement uiE in this.UIMapContent.Children)
                                     {
-                                        UIMapAlarm uiMap = uiE as UIMapAlarm;
-                                        if (uiMap.Alarm.board == board && uiMap.Alarm.pos == pos && !App.DataAlarm[uiMap.Postion].alert)
+                                        if (uiE is UIMapAlarm)
                                         {
-                                            uiMap.RunAlarm();
-                                            App.DataAlarm[uiMap.Postion].alert = true;
+                                            UIMapAlarm uiMap = uiE as UIMapAlarm;
+                                            if (uiMap.Alarm.board == board && uiMap.Alarm.pos == pos && !App.DataAlarm[uiMap.Postion].alert)
+                                            {
+                                                uiMap.RunAlarm();
+                                                App.DataAlarm[uiMap.Postion].alert = true;
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+                            }
+                            catch (Exception)
+                            {                                
+                               
+                            }
 
                         }
                     }
@@ -582,13 +589,7 @@ namespace Camera_Final
                                     {
                                         uiCamera.Alarm();
                                     }
-
-                                }
-                                else
-                                {
-                                    uiCamera.Alarm(false);
-                                    uiCamera.RunAround();
-                                }
+                                }                              
 
                             }
                         }
@@ -944,7 +945,7 @@ namespace Camera_Final
                             // await Task.Delay(500);
                             uiAlarm.Alarm.Auto = false;
                             uiAlarm.Disable();
-                            await Task.Delay(22);
+                            await Task.Delay(100);
 
                         }
                     }
@@ -976,7 +977,7 @@ namespace Camera_Final
                         {
                             uiAlarm.Alarm.Auto = false;
                             uiAlarm.Enable();
-                            await Task.Delay(22);
+                            await Task.Delay(100);
                         }
                     }
                 }
@@ -1003,14 +1004,25 @@ namespace Camera_Final
 
         private void UIWindow_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.F5)
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo(Application.ResourceAssembly.Location);
+                startInfo.Arguments = string.Format("-u {0} -mode {1}", App.User.Hash, (int)this.Mode);
+                System.Diagnostics.Process.Start(startInfo);
+                Application.Current.Shutdown();
+            }
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (e.Key == Key.R)
+                if (e.Key == Key.L)
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo(Application.ResourceAssembly.Location);
-                    startInfo.Arguments = string.Format("-u {0} -mode {1}", App.User.Hash,(int)this.Mode);
-                    System.Diagnostics.Process.Start(startInfo);
-                    Application.Current.Shutdown();
+                    using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND,FileMode.Append),Encoding.UTF8))
+                    {
+                        foreach (CsvRow r in App.Rows)
+                        {
+                            LogCSV.WriteRow(r);                         
+                        }
+                        App.Rows.Clear();
+                    }
                 }
             }
         }

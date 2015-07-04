@@ -25,13 +25,17 @@ namespace Alta.Class
             : base(stream)
         {
         }
-
         public CsvFileWriter(string filename)
             : base(filename)
         {
         }
         public CsvFileWriter(string filename, bool append, Encoding encoding)
             : base(filename, append, encoding)
+        {
+
+        }
+
+        public CsvFileWriter(Stream stream, Encoding encoding):base(stream, encoding)
         {
 
         }
