@@ -12,7 +12,7 @@
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Tắt cảnh báo" Click="AlarmOff"/>
-            <MenuItem Header="Kết nối Camera" Click="ConnectCamera"/>
+            <MenuItem x:Name="UIM_Link" Header="Kết nối Camera" Click="ConnectCamera"/>
             <MenuItem Header="Tắt đầu dò" Click="DisableAlarm"/>
             <MenuItem Header="Bật đầu dò" Click="EnableAlarm"/>
             <MenuItem Header="Xóa đầu dò" Click="DeleteAlarm"/>

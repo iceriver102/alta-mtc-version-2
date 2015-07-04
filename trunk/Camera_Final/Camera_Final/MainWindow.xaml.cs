@@ -115,8 +115,8 @@ namespace Camera_Final
                                 });
                             }
                             catch (Exception)
-                            {                                
-                               
+                            {
+
                             }
 
                         }
@@ -146,19 +146,19 @@ namespace Camera_Final
                                 UIMapAlarm uiAlarm = uiE as UIMapAlarm;
                                 if (uiAlarm.Alarm != null && uiAlarm.Alarm.TimeOffs.Count > 0 && uiAlarm.Alarm.Auto)
                                 {
-                                    
+
                                     if (DateTime.Now.TimeOfDay >= uiAlarm.Alarm.TimeOffs[0].beginTime.TimeOfDay && DateTime.Now.TimeOfDay < uiAlarm.Alarm.TimeOffs[0].EndTime.TimeOfDay)
                                     {
-                                        if (uiAlarm.Alarm.status )
+                                        if (uiAlarm.Alarm.status)
                                         {
-                                            uiAlarm.Disable();                                          
+                                            uiAlarm.Disable();
                                         }
                                     }
                                     else if ((DateTime.Now.TimeOfDay < uiAlarm.Alarm.TimeOffs[0].beginTime.TimeOfDay || DateTime.Now.TimeOfDay > uiAlarm.Alarm.TimeOffs[0].EndTime.TimeOfDay))
                                     {
                                         if (!uiAlarm.Alarm.status)
                                         {
-                                            uiAlarm.Enable();                                          
+                                            uiAlarm.Enable();
                                         }
                                     }
                                 }
@@ -589,7 +589,7 @@ namespace Camera_Final
                                     {
                                         uiCamera.Alarm();
                                     }
-                                }                              
+                                }
 
                             }
                         }
@@ -963,8 +963,8 @@ namespace Camera_Final
 
         private async void UnLockAllAlarm(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            btn.IsEnabled = false;
+
+            UIUnLock.IsEnabled = false;
             UILock.IsEnabled = false;
             try
             {
@@ -988,7 +988,7 @@ namespace Camera_Final
                 Console.WriteLine(ex.GetBaseException().ToString());
             }
             this.DrawMap();
-            btn.IsEnabled = true;
+            UIUnLock.IsEnabled = true;
             UILock.IsEnabled = true;
         }
 
@@ -1011,18 +1011,47 @@ namespace Camera_Final
                 System.Diagnostics.Process.Start(startInfo);
                 Application.Current.Shutdown();
             }
+            else if (e.Key == Key.F12)
+            {
+                using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND, FileMode.Append), Encoding.UTF8))
+                {
+                    foreach (CsvRow r in App.Rows)
+                    {
+                        LogCSV.WriteRow(r);
+                    }
+                    App.Rows.Clear();
+                }
+                using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_Send_COMMAND, FileMode.Append), Encoding.UTF8))
+                {
+                    foreach (CsvRow r in App.RowsSend)
+                    {
+                        LogCSV.WriteRow(r);
+                    }
+                    App.RowsSend.Clear();
+                }
+            }
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
                 if (e.Key == Key.L)
                 {
-                    using (CsvFileWriter LogCSV = new CsvFileWriter(File.Open(App._FILE_CSV_COMMAND,FileMode.Append),Encoding.UTF8))
-                    {
-                        foreach (CsvRow r in App.Rows)
-                        {
-                            LogCSV.WriteRow(r);                         
-                        }
-                        App.Rows.Clear();
-                    }
+                    this.LockAllAlarm(null, null);
+                }
+                else if (e.Key == Key.U)
+                {
+                    this.UnLockAllAlarm(null, null);
+                }
+            }
+        }
+
+        private async void UnRepeatCamera(object sender, RoutedEventArgs e)
+        {
+            foreach (UIElement uiE in this.UIMapContent.Children)
+            {
+                if (uiE is UIMapCamera)
+                {
+                    UIMapCamera uiCamera = uiE as UIMapCamera;
+                    uiCamera.RunAround();
+                    await Task.Delay(200);
                 }
             }
         }

@@ -21,12 +21,13 @@
                     <TextBlock TextAlignment="Center" Padding="0,3"  Canvas.Left="45" TextWrapping="Wrap" Text="&#xF063;" Height="40" Width="45" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="33" Foreground="White" Cursor="Hand" MouseLeftButtonUp="MoveDownEnd" MouseLeftButtonDown="MoveDownBegin" />
                     <TextBlock TextAlignment="Center" Padding="0,3"  Canvas.Left="90" TextWrapping="Wrap" Text="&#xF062;" Height="40" Width="45" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="33" Foreground="White" Cursor="Hand" MouseLeftButtonUp="MoveUpEnd" MouseLeftButtonDown="MoveUpBegin" />
                     <TextBlock TextAlignment="Center" Padding="0,3"  Canvas.Left="135" TextWrapping="Wrap" Text="&#xF061;" Height="40" Width="45" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="33" Foreground="White" Cursor="Hand" MouseLeftButtonUp="MoveRightEnd" MouseLeftButtonDown="MoveRightBegin" />
+                    <TextBlock TextAlignment="Center" Padding="0,3"  Canvas.Left="258" TextWrapping="Wrap" Text="&#xf127;" Height="40" Width="45" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="33" Foreground="White" Cursor="Hand" MouseLeftButtonUp="DeleteCamera" ToolTip="Xóa kết nối"/>
 
                 </Canvas>
                 <WindowsFormsHost Height="286" Width="328" Canvas.Top="50" Canvas.Left="10" Panel.ZIndex="10" Visibility="Visible" >
                     <wf:PictureBox x:Name="pictureBox1" />
                 </WindowsFormsHost>
-                <Plugin:AutoComplete SelectItemEvent="AutoComplete_SelectItemEvent" Height="32" Canvas.Left="10" Canvas.Top="341" Width="328" PaddingInside="3,3,5,3" SearchAction="SearchDevice"/>
+                <Plugin:AutoComplete Visibility="Hidden" SelectItemEvent="AutoComplete_SelectItemEvent" Height="32" Canvas.Left="10" Canvas.Top="341" Width="328" PaddingInside="3,3,5,3" SearchAction="SearchDevice"/>
             </Canvas>
         </Border>
 
