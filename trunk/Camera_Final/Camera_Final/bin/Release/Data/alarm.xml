@@ -1,56 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Alarms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Alarm name="NHA AN 3" com="COM3" left="1255" top="470.38775510204113" board="2" pos="1">
-    <Camera Camera="5" Postion="27" />
+  <Alarm name="NHA AN 3" com="COM3" left="1261" top="471.43265306122487" board="2" pos="1">
+    <Camera Camera="5" name="NHA XE" Postion="27" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="NHA AN 1" com="COM3" left="1258" top="566.51836734693916" board="2" pos="2">
-    <Camera Camera="5" Postion="28" />
+    <Camera Camera="5" name="NHA XE" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA CHINH" com="COM3" left="972" top="657.42448979591882" board="2" pos="3">
-    <Camera Camera="7" Postion="20" />
-    <Camera Camera="7" Postion="1" />
+    <Camera Camera="7"  name="CUA GM" Postion="20" />
+    <Camera Camera="7"  name="CUA GM" Postion="1" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA GM" com="COM3" left="692" top="657.42448979591848" board="2" pos="4">
-    <Camera Camera="7" Postion="27" />
+  <Alarm name="CUA GM"  com="COM3" left="692" top="657.42448979591848" board="2" pos="4">
+    <Camera Camera="7" name="CUA GM" Postion="27" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="NHA AN 2" com="COM3" left="1257" top="518.45306122449" board="2" pos="5">
-    <Camera Camera="5" Postion="26" />
+    <Camera Camera="5" name="NHA XE" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA KHO VT" com="COM3" left="148" top="448.44489795918383" board="2" pos="6">
-    <Camera Camera="15" Postion="27" />
-    <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
+    <Camera Camera="15" name="BON DAU" Postion="27" />
+    <TimeOff from="2015-07-04T06:00:00+07:00" to="2015-07-04T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA GIS SAU" com="COM4" left="151" top="317.83265306122468" board="1" pos="1">
-    <Camera Camera="15" Postion="26" />
+    <Camera Camera="15" name="BON DAU" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
-  <Alarm name="CUA GIS" com="COM4" left="799" top="191.40000000000015" board="1" pos="2">
-    <Camera Camera="9" Postion="28" />
+  <Alarm name="CUA GIS" com="COM4" left="804" top="239.46530612244916" board="1" pos="2">
+    <Camera Camera="9" name="CUA GIS" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA DIEZEL" com="COM4" left="147" top="556.06938775510218" board="1" pos="3">
-    <Camera Camera="15" Postion="28" />
+    <Camera Camera="15" name="BON DAU" Postion="28" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA SO XCK" com="COM4" left="921" top="200.80408163265329" board="1" pos="5">
-    <Camera Camera="9" Postion="27" />
+    <Camera Camera="9" name="CUA GIS" Postion="27" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA CUON XCK" com="COM4" left="1057" top="189.31020408163272" board="1" pos="6">
-    <Camera Camera="9" Postion="26" />
+    <Camera Camera="9" name="CUA GIS" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA PHU" com="COM4" left="884" top="389.93061224489821" board="1" pos="7">
-    <Camera Camera="13" Postion="26" />
+    <Camera Camera="13" name="TREN SAN GIS" Postion="26" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
   <Alarm name="CUA CUON XCK" com="COM4" left="1201" top="245.73469387755114" board="1" pos="8">
-    <Camera Camera="17" Postion="24" />
+    <Camera Camera="17" name="KHU 9T" Postion="24" />
     <TimeOff from="2015-05-31T06:00:00+07:00" to="2015-05-31T18:00:00+07:00" />
   </Alarm>
 </Alarms>
