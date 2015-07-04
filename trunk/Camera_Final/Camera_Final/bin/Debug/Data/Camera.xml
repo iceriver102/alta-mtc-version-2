@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Cameras xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Camera id="17" name="KHU 9T" ip="192.168.0.99" port="8000" admin="admin" pass="admin" time="2015-05-18T23:19:41.8517857+07:00" channel="1" port_rtsp="554" left="229" top="297.795918367347" icon="fa-video-camera" MaxPreset="255" />
+  <Camera id="16" name="CONG GAC" ip="10.139.5.224" port="8000" admin="admin" pass="admin" time="2015-05-18T23:19:41.8517857+07:00" channel="1" port_rtsp="554" left="722" top="408.55510204081634" icon="fa-video-camera" MaxPreset="255" />
+  <Camera id="5" name="NHA XE" ip="10.139.5.225" port="8000" admin="admin" pass="admin" time="2015-05-18T23:19:41.8517857+07:00" channel="1" port_rtsp="554" left="769" top="304.065306122449" icon="fa-video-camera" MaxPreset="255" />
+  <Camera id="7" name="CUA GM" ip="10.139.5.226" port="8000" admin="admin" pass="admin" time="2015-05-18T23:19:41.8517857+07:00" channel="1" port_rtsp="554" left="364" top="566.3346938775511" icon="fa-video-camera" MaxPreset="255" />
+</Cameras>

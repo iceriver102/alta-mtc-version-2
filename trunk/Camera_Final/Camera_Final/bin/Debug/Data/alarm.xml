@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Alarms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Alarm name="NHA AN 3" com="COM3" left="342" top="245.73469387755111" board="2" pos="1" Status="false">
+    <Camera Camera="5" Postion="27" />
+  </Alarm>
+  <Alarm name="NHA AN 1" com="COM3" left="608" top="309.47346938775536" board="2" pos="2" Status="false">
+    <Camera Camera="5" Postion="28" />
+  </Alarm>
+  <Alarm name="CUA CHINH" com="COM3" left="375" top="448.44489795918378" board="2" pos="3" Status="false">
+    <Camera Camera="7" Postion="20" />
+  </Alarm>
+  <Alarm name="CUA GM" com="COM3" left="263" top="343.95510204081643" board="2" pos="4" Status="false">
+    <Camera Camera="7" Postion="27" />
+  </Alarm>
+  <Alarm name="NHA AN 2" com="COM3" left="533" top="227.97142857142862" board="2" pos="5" Status="false">
+    <Camera Camera="5" Postion="26" />
+  </Alarm>
+  <Alarm name="CUA KHO VT" com="COM3" left="560" top="456.80408163265315" board="2" pos="6" Status="false">
+    <Camera Camera="15" Postion="27" />
+  </Alarm>
+  <Alarm name="CUA GIS SAU" com="COM4" left="187" top="465.16326530612258" board="1" pos="1" Status="false">
+    <Camera Camera="15" Postion="26" />
+  </Alarm>
+  <Alarm name="CUA GIS" com="COM4" left="413" top="532.03673469387763" board="1" pos="2" Status="false">
+    <Camera Camera="9" Postion="28" />
+  </Alarm>
+  <Alarm name="CUA DIEZEL" com="COM4" left="144" top="402.4693877551021" board="1" pos="3" Status="false">
+    <Camera Camera="15" Postion="28" />
+  </Alarm>
+  <Alarm name="CUA SO XCK" com="COM4" left="122" top="229.01632653061239" board="1" pos="5" Status="false">
+    <Camera Camera="9" Postion="27" />
+  </Alarm>
+  <Alarm name="CUA CUON XCK" com="COM4" left="437" top="97.359183673469445" board="1" pos="6" Status="false">
+    <Camera Camera="9" Postion="26" />
+  </Alarm>
+  <Alarm name="CUA PHU" com="COM4" left="953" top="524.722448979592" board="1" pos="7" Status="false">
+    <Camera Camera="13" Postion="26" />
+  </Alarm>
+  <Alarm name="CUA CUON XCK" com="COM4" left="236" top="96.314285714285788" board="1" pos="8" Status="false">
+    <Camera Camera="17" Postion="24" />
+  </Alarm>
+</Alarms>

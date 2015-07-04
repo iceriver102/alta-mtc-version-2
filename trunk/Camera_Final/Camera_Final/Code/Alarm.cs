@@ -12,9 +12,9 @@ namespace Camera_Final.Code
     public class TimeOff
     {
         [XmlAttribute("from")]
-        public TimeSpan beginTime;
+        public DateTime beginTime;
         [XmlAttribute("to")]
-        public TimeSpan EndTime;
+        public DateTime EndTime;
     }
 
     [Serializable]
@@ -51,30 +51,54 @@ namespace Camera_Final.Code
         public List<Camera_Preset> Cameras;
         [XmlElement("Comment")]
         public string Comment;
-        [XmlAttribute("Status")]
-        public bool status = false;
-        [XmlAttribute("alert")]
+        [XmlIgnore]
+        public bool status = true;
+        [XmlIgnore]
         public bool alert = false;
-
         [XmlElement("TimeOff")]
         public List<TimeOff> TimeOffs;
-
+        [XmlIgnore]
+        public bool isDisable;
+        [XmlIgnore]
+        public bool isEnable;
+        [XmlIgnore]
+        public bool Auto = true;
         public void RunCommand(string cmd)
         {
-            if(App.listSerialPort!=null)
+            try
             {
-                for (int i = 0; i < App.listSerialPort.Count; i++)
+                string msg = string.Format(cmd, this.board, this.pos);
+                if (App.listSerialPort != null)
                 {
-                    if (this.Com.ToLower() == App.listSerialPort[i].PortName.ToLower())
+                    for (int i = 0; i < App.listSerialPort.Count; i++)
                     {
-                        App.listSerialPort[i].sendCommand(string.Format(cmd, this.board, this.pos));
-                        break;
+                        if (this.Com.ToLower() == App.listSerialPort[i].PortName.ToLower())
+                        {
+                            App.listSerialPort[i].sendCommand(msg);
+                            break;
+                        }
                     }
                 }
             }
+            catch (Exception)
+            {
+               
+            }
         }
-        
-       
+
+
+
+        internal void Disable()
+        {
+            this.RunCommand(App.DefineCommand.DISABLE);
+            this.status = false;
+        }
+
+        internal void Enable()
+        {
+            this.RunCommand(App.DefineCommand.ENABLE);
+            this.status = true;
+        }
     }
     [Serializable]
     public class Alarms
@@ -100,7 +124,7 @@ namespace Camera_Final.Code
                 this.Children[index] = value;
             }
         }
-
+        [XmlIgnore]
         public int Count
         {
             get

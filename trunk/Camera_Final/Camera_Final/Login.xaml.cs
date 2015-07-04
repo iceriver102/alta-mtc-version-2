@@ -99,5 +99,13 @@ namespace Camera_Final
         {
             this.UIBtn.Background = new SolidColorBrush(new Color() { A = 100, B = 3, R = 6, G = 4 });
         }
+
+        private void UIPass_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                UIBtn_MouseLeftButtonUp(null, null);
+            }
+        }
     }
 }

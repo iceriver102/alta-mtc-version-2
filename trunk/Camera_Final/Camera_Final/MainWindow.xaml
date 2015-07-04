@@ -1,0 +1,87 @@
+﻿<Window x:Class="Camera_Final.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MTC bản đồ lắp đăt camera" Height="735" Width="1366" x:Name="UIWindow" WindowState="Maximized" WindowStyle="SingleBorderWindow"  Loaded="Window_Loaded" FontFamily="/Camera_Final;component/Asset/Fonts/#Myriad Pro" Closing="UIWindow_Closing" Icon="Pelfusion-Long-Shadow-Media-Camera.ico" KeyDown="UIWindow_KeyDown">
+    <Canvas x:Name="UIRoot">
+        <Canvas x:Name="UIContent" Canvas.Left="-264" Canvas.Top="0">
+            <Canvas x:Name="UICCTV" Width="1360" Height="{Binding ElementName=UIWindow,Path=Height}" Canvas.Left="264" Canvas.Top="-768" >
+                <Canvas x:Name="UICCTVContent" Width="1360" Height="708"/>
+                <Border Height="28" Width="1366" Canvas.Left="0" Canvas.Bottom="-1"  Cursor="Hand" Background="Transparent" >
+                    <Canvas Height="28" Width="1366"  ClipToBounds="True">
+                        <Canvas x:Name="UIBarContent" Height="35" Width="1366" Canvas.Left="0" Canvas.Top="0" Background="#FFFF6800">
+                            <TextBlock  Text="&#xf039;" TextAlignment="Center" Padding="0,5" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" Height="35" Width="43" FontSize="22.666" Cursor="Hand" MouseLeftButtonUp="UIMenuClick"/>
+                            <TextBlock x:Name="UIRecordBtn" Text="&#xf130;" TextAlignment="Center" Padding="0,5" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" Height="35" Width="50" Canvas.Left="48" FontSize="22.666" Cursor="Hand" MouseLeftButtonUp="RecordFile" Canvas.Top="-1"/>
+                        </Canvas>
+                    </Canvas>
+                </Border>
+            </Canvas>
+            <Canvas x:Name="UIMap" Width="1360" Height="{Binding ElementName=UIWindow,Path=Height}" Canvas.Left="264" Canvas.Top="0">
+                <Border BorderBrush="#FFFF6800" Width="1362" Height="{Binding ElementName=UIWindow,Path=Height}" BorderThickness="1.2">
+                    <Image x:Name="UIMapImage" Margin="0,0,0,0" />
+                </Border>
+                <Canvas x:Name="UIMapContent" Width="1360" Height="{Binding ElementName=UIWindow,Path=Height}" Canvas.Left="0" Canvas.Top="0">
+
+                </Canvas>
+                <StackPanel Height="95" Canvas.Left="1290" Canvas.Top="20" Width="60">
+                    <Button x:Name="UILock"  Height="40" Click="LockAllAlarm" BorderBrush="{x:Null}" Cursor="Hand" ToolTip="Khóa đầu dò">
+                        <Button.Content>
+                            <StackPanel Orientation="Vertical" Height="35" HorizontalAlignment="Center">
+                                <TextBlock TextWrapping="NoWrap" Text="&#xf023;" Padding="0,5,0,0"  TextAlignment="Center" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="30" Foreground="#FFFF0B0B" />
+
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="UIUnLock" Height="40" Margin="0,10" Click="UnLockAllAlarm" BorderBrush="{x:Null}" Cursor="Hand" ToolTip="Mở khóa đầu dò">
+                        <Button.Content>
+                            <StackPanel Orientation="Vertical" Height="35" HorizontalAlignment="Center" >
+                                <TextBlock TextWrapping="NoWrap" Text="&#xf09c;" Padding="0,5,0,0"  TextAlignment="Center" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="30" Foreground="#FFFF0B0B" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+
+            </Canvas>
+
+            <Canvas Height="{Binding ElementName=UIWindow,Path=Height}" Width="264" Canvas.Left="0" Background="#FFC1C1C1" ClipToBounds="True">
+                <!--<Border Background="Transparent" BorderBrush="Black" BorderThickness="1" Height="772" Width="268" Canvas.Left="-2" Canvas.Top="-2">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="10"/>
+                    </Border.Effect>
+                </Border>-->
+                <Ellipse Fill="#FFFF4600" Stroke="White" Height="50" Width="50" Canvas.Left="10" Canvas.Top="67">
+                    <Ellipse.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="4"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+                <TextBlock x:Name="Avartar" Canvas.Left="10" TextWrapping="Wrap" Text="P" Canvas.Top="67" Height="50" Width="50" Foreground="White"  TextAlignment="Center" FontWeight="SemiBold" FontSize="43"/>
+                <TextBlock x:Name="UIName" TextWrapping="NoWrap" Text="Phan Thanh Giang" Canvas.Left="80" Canvas.Top="80" Height="37" Width="169" FontSize="20" FontWeight="SemiBold" Foreground="#FFFF7400"/>
+                <Path Data="M0,50L50,50" Stretch="Fill" Width="240" Height="12" Stroke="#FF424242" StrokeThickness="0.4" Canvas.Left="14" Canvas.Top="119"></Path>
+                <StackPanel x:Name="UIMapBtn" Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="134" MouseEnter="StackPanel_MouseEnter" Background="#009B9898" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="ViewMap">
+                    <Image  Height="42" Width="42" Source="Asset/Images/Maps-Pin-Place-icon.png" Margin="4,3,0,3"></Image>
+                    <TextBlock VerticalAlignment="Center" Text="Bản đồ" Foreground="White" FontSize="16.888" Margin="20,10,0,8" FontWeight="Thin" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="182" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="ViewCCTV">
+                    <Image Height="42" Width="42" Source="Asset/Images/RSS-icon.png" Margin="4,3,0,3"/>
+                    <TextBlock VerticalAlignment="Center" Text="CCTV" Foreground="White" FontSize="16.888" Margin="20,10,0,8" FontWeight="Thin" />
+                </StackPanel>
+                <StackPanel x:Name="UIAddCameraBtn" Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="230" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="AddCamera">
+                    <Image Height="42" Width="42" Source="Asset/Images/Video-icon.png" Margin="4,3,0,3"/>
+                    <TextBlock VerticalAlignment="Center" Text="Thêm Camera" Foreground="White" FontSize="16.888" Margin="20,10,0,8" FontWeight="Thin" />
+                </StackPanel>
+                <StackPanel x:Name="UIAlarmBtn" Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="278" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="AddAlarm">
+                    <Image Height="42" Width="42" Source="Asset/Images/Microphone-icon.png" Margin="4,3,0,3"/>
+                    <TextBlock VerticalAlignment="Center" Text="Thêm Đầu Dò" Foreground="White" FontSize="16.888" Margin="20,10,0,8" FontWeight="Thin" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="374" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="Logout">
+                    <Image Height="42" Width="42" Source="Asset/Images/Airline-Mode-icon.png" Margin="4,3,0,3"/>
+                    <TextBlock VerticalAlignment="Center" Text="Thoát" Foreground="White" FontSize="16.888" Margin="20,10,0,8" FontWeight="Thin" />
+                </StackPanel>
+                <StackPanel x:Name="UIInfoBtn" Orientation="Horizontal" Height="48" Width="240" Canvas.Left="14" Canvas.Top="326" MouseEnter="StackPanel_MouseEnter" MouseLeave="StackPanel_MouseLeave" Cursor="Hand" MouseLeftButtonUp="UserInfo">
+                    <Image Height="42" Width="42" Source="Asset/Images/Cloud-icon.png" Margin="4,0,0,0"/>
+                    <TextBlock VerticalAlignment="Center" Text="Thông tin" Foreground="White" FontSize="16.888" Margin="20,0,0,0" FontWeight="Thin" />
+                </StackPanel>
+            </Canvas>
+        </Canvas>
+        <TextBlock x:Name="UIMenuBtn" Text="&#xf039;" Padding="0,18" TextAlignment="Center" Height="55" Width="58" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" LineHeight="48" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Fixed" FontSize="28" Foreground="Black" Cursor="Hand" MouseLeftButtonUp="UIMenuClick"/>
+    </Canvas>
+</Window>

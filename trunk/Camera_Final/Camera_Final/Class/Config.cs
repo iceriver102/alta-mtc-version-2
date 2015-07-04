@@ -16,6 +16,9 @@ namespace Alta.Class
         public Stretch @Stretch = Stretch.UniformToFill;
         public string Folder = "Record";
         public bool AutoRecord = true;
+        public int TimeCount = 330;
+        public int DateFile = 15;
+        public int resetTime = 3;
         public static Config Read(string file)
         {
             if (!File.Exists(file))

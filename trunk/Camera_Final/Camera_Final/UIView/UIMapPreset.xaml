@@ -11,6 +11,7 @@
     </Canvas>
     <UserControl.ContextMenu>
         <ContextMenu>
+           <!-- <MenuItem Header="Debug" Click="DebugPreset" /> -->
             <MenuItem Header="Quan sát" Click="GotoPreset" />           
             <MenuItem Header="Xóa Preset" Click="DeletePreset"/>           
         </ContextMenu>

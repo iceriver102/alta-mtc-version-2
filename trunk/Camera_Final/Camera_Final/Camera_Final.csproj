@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1598D73D-843B-4D23-BBA9-73E5766E32E4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Camera_Final</RootNamespace>
+    <AssemblyName>Camera_Final</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Pelfusion-Long-Shadow-Media-Camera.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="Vlc.DotNet.Core">
+      <HintPath>..\..\MTC_Server\MTC_Server\Plugin\Vlc.DotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops">
+      <HintPath>..\..\MTC_Server\MTC_Server\Plugin\Vlc.DotNet.Core.Interops.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Wpf">
+      <HintPath>..\..\MTC_Server\MTC_Server\Plugin\Vlc.DotNet.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AutoComplete.xaml.cs">
+      <DependentUpon>AutoComplete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Class\SerialPortExtension.cs" />
+    <Compile Include="Code\Alarm.cs" />
+    <Compile Include="Code\CommandDefine.cs" />
+    <Compile Include="Class\COMPortInfo.cs" />
+    <Compile Include="Demo.xaml.cs">
+      <DependentUpon>Demo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\AddPreset.xaml.cs">
+      <DependentUpon>AddPreset.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\AddUser.xaml.cs">
+      <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\Camera.xaml.cs">
+      <DependentUpon>Camera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\CameraCCTV.xaml.cs">
+      <DependentUpon>CameraCCTV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\ControlCamera.xaml.cs">
+      <DependentUpon>ControlCamera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\SmallControlCamera.xaml.cs">
+      <DependentUpon>SmallControlCamera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UIAddAlarm.xaml.cs">
+      <DependentUpon>UIAddAlarm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UIAddCamera.xaml.cs">
+      <DependentUpon>UIAddCamera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UIMapAlarm.xaml.cs">
+      <DependentUpon>UIMapAlarm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UIMapCamera.xaml.cs">
+      <DependentUpon>UIMapCamera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UIMapPreset.xaml.cs">
+      <DependentUpon>UIMapPreset.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIView\UITimeOff.xaml.cs">
+      <DependentUpon>UITimeOff.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AutoComplete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Demo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Class\AltaCache.cs" />
+    <Compile Include="Class\alta_class_ftp.cs" />
+    <Compile Include="Class\alta_client.cs" />
+    <Compile Include="Class\Config.cs" />
+    <Compile Include="Class\CsvFileWriter.cs" />
+    <Compile Include="Class\DateTimeExtensions.cs" />
+    <Compile Include="Class\EasyTimer.cs" />
+    <Compile Include="Class\EncryptString.cs" />
+    <Compile Include="Class\ExCss.cs" />
+    <Compile Include="Class\FileExtensions.cs" />
+    <Compile Include="Camera\HCNetSDK.cs" />
+    <Compile Include="Class\FunctionStatics.cs" />
+    <Compile Include="Class\MainModel .cs" />
+    <Compile Include="Camera\PlayCtrl.cs" />
+    <Compile Include="Class\RegexUtilities.cs" />
+    <Compile Include="Class\SimpleJSON.cs" />
+    <Compile Include="Class\StringExtensions.cs" />
+    <Compile Include="Class\TextBoxExtensions.cs" />
+    <Compile Include="Class\TimeExtensions.cs" />
+    <Compile Include="Class\UIElementExtensions.cs" />
+    <Compile Include="Code\Camera.cs" />
+    <Compile Include="Code\Map.cs" />
+    <Compile Include="Code\Users.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="UIView\AddPreset.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\AddUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\Camera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\CameraCCTV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\ControlCamera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\SmallControlCamera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UIAddAlarm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UIAddCamera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UIMapAlarm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UIMapCamera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UIMapPreset.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIView\UITimeOff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Asset\Fonts\fontawesome-webfont.eot" />
+    <Resource Include="Asset\Fonts\fontawesome-webfont.ttf" />
+    <None Include="Asset\Fonts\fontawesome-webfont.woff" />
+    <None Include="Asset\Fonts\fontawesome-webfont.woff2" />
+    <Resource Include="Asset\Fonts\FontAwesome.otf" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLD.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDCOND.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDCONDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-BOLDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-COND.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-CONDIT.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-REGULAR.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-SEMIBOLD.OTF" />
+    <Resource Include="Asset\Fonts\MYRIADPRO-SEMIBOLDIT.OTF" />
+    <Resource Include="Asset\Fonts\OpenSans-Bold.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-BoldItalic.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-ExtraBold.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-Italic.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-Light.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-LightItalic.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-Semibold.ttf" />
+    <Resource Include="Asset\Fonts\OpenSans-SemiboldItalic.ttf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Asset\Fonts\font-awesome.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Asset\Fonts\fontawesome-webfont.svg" />
+    <Resource Include="Pelfusion-Long-Shadow-Media-Camera.ico" />
+    <Resource Include="Asset\Images\Microphone-icon.png" />
+    <Resource Include="Asset\Images\Video-icon.png" />
+    <Resource Include="Asset\Images\Cloud-icon.png" />
+    <Resource Include="Asset\Images\Airline-Mode-icon.png" />
+    <Resource Include="Asset\Images\RSS-icon.png" />
+    <Resource Include="Asset\Images\Circle-icon.png" />
+    <Resource Include="Asset\Images\Maps-Pin-Place-icon.png" />
+    <Resource Include="Asset\Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

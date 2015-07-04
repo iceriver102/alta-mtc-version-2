@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alta.Plugin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,14 +30,45 @@ namespace Camera_Final.UIView
         public Code.Camera Camera;
         public Code.Camera_Preset preset;
         public int Alarm;
+        private bool isEdit = false;
 
         public SmallControlCamera()
         {
             InitializeComponent();
-        }
 
+        }
+        public List<DataAutoComplete> SearchDevice(string key)
+        {
+            List<DataAutoComplete> result = new List<DataAutoComplete>();
+            if (App.DataCamera.Count > 0)
+            {
+                List<Code.Camera> data = new List<Code.Camera>();
+               
+                for (int i = 0; i < App.DataCamera.Count; i++)
+                {
+                    if (App.DataCamera[i].name.Contains(key) || App.DataCamera[i].ip.Contains(key))
+                    {
+                        data.Add(App.DataCamera[i]);
+                    }
+                }
+                result = ConvertToDataComplete(data);
+            }
+            return result;
+        }
+        private List<DataAutoComplete> ConvertToDataComplete(List<Code.Camera> listDevice)
+        {
+            if (listDevice == null)
+                return null;
+            List<DataAutoComplete> result = new List<DataAutoComplete>();
+            foreach (Code.Camera d in listDevice)
+            {
+                result.Add(new DataAutoComplete() { key = d.id.ToString(), label = d.ip });
+            }
+            return result;
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+           
             if (this.Camera != null)
             {
                 if (this.Camera.m_lUserID == -1)
@@ -50,6 +82,28 @@ namespace Camera_Final.UIView
                     MessageBox.Show("Không thể đăng nhập camera");
                 }
             }
+            else if(preset!=null)
+            {
+                isEdit = true;
+                for (int i = 0; i < App.DataCamera.Count; i++)
+                {
+                    if (App.DataCamera[i].id == preset.camera_id)
+                    {
+                        this.Camera = App.DataCamera[i];
+                        if (this.Camera.m_lUserID == -1)
+                            this.Camera.Login();
+                        if (this.Camera.m_lUserID != -1)
+                        {
+                            this.Preview();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không thể đăng nhập camera");
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         public void Preview()
@@ -60,6 +114,7 @@ namespace Camera_Final.UIView
             lpClientInfo.sMultiCastIP = "";
             if (this.Camera.m_iPreviewType == 0) // use by callback
             {
+                
                 lpClientInfo.hPlayWnd = IntPtr.Zero; // todo!!! 这边应该做2中情况考虑去编写代码
                 m_ptrRealHandle = pictureBox1.Handle;
                 m_fRealData = new CHCNetSDK.REALDATACALLBACK(RealDataCallBack);
@@ -78,7 +133,7 @@ namespace Camera_Final.UIView
                 MessageBox.Show("Lỗi không thể truy cập camera");
                 return;
             }
-
+           
 
         }
 
@@ -199,7 +254,7 @@ namespace Camera_Final.UIView
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (this.Camera.m_lRealHandle > 0)
+            if (this.Camera !=null && this.Camera.m_lRealHandle > 0)
             {
                 CHCNetSDK.NET_DVR_StopRealPlay(this.Camera.m_lRealHandle);
             }
@@ -260,9 +315,24 @@ namespace Camera_Final.UIView
         private void SaveCamera(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("Đang kết nối đầu dò");
+
             if (CHCNetSDK.NET_DVR_PTZPreset(this.Camera.m_lRealHandle, CHCNetSDK.SET_PRESET, (uint)this.preset.Postion))
             {
-                App.DataAlarm[this.Alarm].Cameras.Add(this.preset);
+                if (!this.isEdit)
+                {
+                    App.DataAlarm[this.Alarm].Cameras.Add(this.preset);
+                }
+                else
+                {
+                    for (int i = 0; i < App.DataAlarm[this.Alarm].Cameras.Count; i++)
+                    {
+                        if (App.DataAlarm[this.Alarm].Cameras[i].camera_id == preset.camera_id)
+                        {
+                            App.DataAlarm[this.Alarm].Cameras[i] = preset;
+                            break;
+                        }
+                    }
+                }
                 if (this.CloseEvent != null)
                 {
                     this.CloseEvent(this, new EventArgs());
@@ -272,7 +342,31 @@ namespace Camera_Final.UIView
             {
                 MessageBox.Show("Không thể kết nối camera");
             }
-            
+
+        }
+
+        private void AutoComplete_SelectItemEvent(object sender, DataAutoComplete e)
+        {
+            preset = new Code.Camera_Preset();
+            preset.camera_id = int.Parse(e.key);
+            for (int i = 0; i < App.DataCamera.Count; i++)
+            {
+                if (App.DataCamera[i].id == preset.camera_id)
+                {
+                    this.Camera = App.DataCamera[i];
+                    if (this.Camera.m_lUserID == -1)
+                        this.Camera.Login();
+                    if (this.Camera.m_lUserID != -1)
+                    {
+                        this.Preview();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể đăng nhập camera");
+                    }
+                    break;
+                }
+            }
         }
     }
 }

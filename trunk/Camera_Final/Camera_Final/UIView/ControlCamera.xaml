@@ -9,22 +9,24 @@
              d:DesignHeight="768" d:DesignWidth="1366" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <Canvas x:Name="UIRoot" Background="#7f000000">
         <!-- <Wpf:VlcControl x:Name="myVlcControl"/>-->
-        <Border  Height="555" Width="907" Canvas.Left="225" Canvas.Top="72" BorderThickness="1" BorderBrush="#FFFF4601" Background="White">
+        <Border  Height="400" Width="700" Canvas.Left="341" Canvas.Top="178" BorderThickness="1" BorderBrush="#FFFF4601" Background="White">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="10"/>
             </Border.Effect>
             <Canvas  >
                 <!-- <Image x:Name="UIView" Height="503" Width="905"  Source="{Binding VideoSource, ElementName=myVlcControl}"/>-->
-                <WindowsFormsHost Height="503" Width="905">
+                <WindowsFormsHost Height="348" Width="698">
                     <wf:PictureBox x:Name="pictureBox1" />
                 </WindowsFormsHost>
-                <Canvas Height="50" Canvas.Top="503" Width="905" Background="#FFFF5100">
-                    <TextBlock TextAlignment="Center" Padding="0,5" Canvas.Left="586" TextWrapping="NoWrap" Text="&#xf061;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="42" MouseLeftButtonDown="MoveRightBegin" MouseLeftButtonUp="MoveRightEnd" Cursor="Hand"/>
-                    <TextBlock TextAlignment="Center" Padding="0,5" Canvas.Left="207" TextWrapping="NoWrap" Text="&#xF060;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="42" MouseLeftButtonDown="MoveLeftBegin" MouseLeftButtonUp="MoveLeftEnd" Cursor="Hand"/>
-                    <TextBlock TextAlignment="Center" Padding="0,5" Canvas.Left="522" TextWrapping="NoWrap" Text="&#xf063;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="42" MouseLeftButtonDown="MoveDownBegin" MouseLeftButtonUp="MoveDownEnd" Cursor="Hand"/>
-                    <TextBlock TextAlignment="Center" Padding="0,5" Canvas.Left="271" TextWrapping="NoWrap" Text="&#xf062;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="42" MouseLeftButtonDown="MoveUpBegin" MouseLeftButtonUp="MoveUpEnd" Cursor="Hand"/>
-                    <TextBlock TextAlignment="Center" Padding="0,5" Canvas.Left="399" TextWrapping="NoWrap" Text="&#xf01e;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="42" MouseLeftButtonUp="MoveAuto" Cursor="Hand"/>
-                    <TextBlock TextAlignment="Center" Padding="4" Canvas.Left="849" TextWrapping="Wrap" Text="&#xF00D;" Height="50" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="35" Width="56" Foreground="White" Cursor="Hand" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" />
+                <Canvas Height="50" Canvas.Top="348" Width="698" Background="#FFFF5100">
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="468" TextWrapping="NoWrap" Text="&#xf061;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonDown="MoveRightBegin" MouseLeftButtonUp="MoveRightEnd" Cursor="Hand"/>
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="162" TextWrapping="NoWrap" Text="&#xF060;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonDown="MoveLeftBegin" MouseLeftButtonUp="MoveLeftEnd" Cursor="Hand"/>
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="404" TextWrapping="NoWrap" Text="&#xf063;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonDown="MoveDownBegin" MouseLeftButtonUp="MoveDownEnd" Cursor="Hand"/>
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="226" TextWrapping="NoWrap" Text="&#xf062;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonDown="MoveUpBegin" MouseLeftButtonUp="MoveUpEnd" Cursor="Hand"/>
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="313" TextWrapping="NoWrap" Text="&#xf01e;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonUp="MoveAuto" Cursor="Hand"/>
+                    <TextBlock TextAlignment="Center" Padding="4" Canvas.Left="642" TextWrapping="Wrap" Text="&#xF00D;" Height="50" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="35" Width="56" Foreground="White" Cursor="Hand" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"  />
+                    <TextBlock TextAlignment="Center" Padding="0,10" TextWrapping="NoWrap" Text="&#xf00e;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32"  Cursor="Hand"  MouseLeftButtonDown="ZoomInBegin" MouseLeftButtonUp="ZoomInEnd" />
+                    <TextBlock TextAlignment="Center" Padding="0,10" Canvas.Left="64" TextWrapping="NoWrap" Text="&#xf010;" Height="50" Width="59" Foreground="White" FontFamily="/Camera_Final;component/Asset/Fonts/#FontAwesome" FontSize="32" MouseLeftButtonDown="ZoomOutBegin" MouseLeftButtonUp="ZoomOutEnd" Cursor="Hand"/>
                 </Canvas>
             </Canvas>
         </Border>

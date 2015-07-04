@@ -47,7 +47,7 @@ namespace Alta.Class
            
         }
 
-        public static void Animation_Color(this SolidColorBrush E,Color from,Color to ,double time=500,Action CompleteAction=null)
+        public static void Animation_Color(this SolidColorBrush E, Color from, Color to, double time = 500, Action CompleteAction = null)
         {
             if (from == null)
             {
@@ -64,6 +64,20 @@ namespace Alta.Class
                     CompleteAction();
                 }
             };
+            animation.EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 };
+            E.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+        }
+        public static void Animation_Color_Repeat(this SolidColorBrush E, Color from, Color to, double time = 500)
+        {
+            if (from == null)
+            {
+                from = E.GetColor();
+            }
+            ColorAnimation animation = new ColorAnimation();
+            animation.From = from;
+            animation.To = to;
+            animation.Duration = TimeSpan.FromMilliseconds(time);
+            animation.RepeatBehavior = RepeatBehavior.Forever;
             animation.EasingFunction = new PowerEase() { EasingMode = EasingMode.EaseInOut, Power = 3 };
             E.BeginAnimation(SolidColorBrush.ColorProperty, animation);
         }

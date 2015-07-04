@@ -95,7 +95,7 @@ namespace Camera_Final.UIView
                                 }
                                 if(App.DataCamera[i].m_lUserID!=-1)
                                 {
-                                    CHCNetSDK.NET_DVR_PTZPreset_Other(App.DataCamera[i].m_lUserID, 1, CHCNetSDK.GOTO_PRESET,(uint) this.preset.Camera[j].Postion);
+                                    CHCNetSDK.NET_DVR_PTZPreset_Other(App.DataCamera[i].m_lUserID, App.DataCamera[i].channel, CHCNetSDK.GOTO_PRESET,(uint) this.preset.Camera[j].Postion);
                                   
                                 }
                                
@@ -116,6 +116,14 @@ namespace Camera_Final.UIView
             if (this.DeletePresetEvent != null)
             {
                 this.DeletePresetEvent(this, this.preset);
+            }
+        }
+        public event EventHandler DebugEvent;
+        private void DebugPreset(object sender, RoutedEventArgs e)
+        {
+            if (DebugEvent != null)
+            {
+                DebugEvent(this, new EventArgs());
             }
         }
 
