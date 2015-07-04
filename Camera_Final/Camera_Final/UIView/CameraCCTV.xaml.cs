@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Vlc.DotNet.Core.Interops.Signatures.LibVlc.MediaListPlayer;
+using Alta.Class;
+using Vlc.DotNet.Core.Medias;
+using System.Threading;
 
 namespace Camera_Final.UIView
 {
@@ -26,19 +30,32 @@ namespace Camera_Final.UIView
 
         private bool m_bJpegCapture = false;
         public Code.Camera Camera;
+        public int Postion;
 
         public CameraCCTV()
         {
             InitializeComponent();
+           // myVlcControl.Playing += myVlcControl_Playing;
+           // myVlcControl.Stopped += myVlcControl_Stopped;
+           // myVlcControl.PlaybackMode = PlaybackModes.Loop;
+           // this.UIView.Stretch = App.setting.Stretch;
+        }
+        private void myVlcControl_Stopped(Vlc.DotNet.Wpf.VlcControl sender, Vlc.DotNet.Core.VlcEventArgs<EventArgs> e)
+        {
+
+        }
+
+        private void myVlcControl_Playing(Vlc.DotNet.Wpf.VlcControl sender, Vlc.DotNet.Core.VlcEventArgs<EventArgs> e)
+        {
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.Camera != null)
+            if (App.DataCamera[this.Postion] != null)
             {
-                if (this.Camera.m_lUserID == -1)
-                    this.Camera.Login();
-                if (this.Camera.m_lUserID != -1)
+                App.DataCamera[this.Postion].Login();
+                if (App.DataCamera[this.Postion].m_lUserID != -1)
                 {
                     this.Preview();
                     Border.BorderBrush = Brushes.DarkGreen;
@@ -46,32 +63,31 @@ namespace Camera_Final.UIView
                 else
                 {
                     Border.BorderBrush = Brushes.Orange;
-                    // MessageBox.Show("Không thể đăng nhập camera");
                 }
             }
 
         }
-        public void Preview()
+        public async void Preview()
         {
+           // if (App.DataCamera[this.Postion].m_lRealHandle > 0)
+            
+                CHCNetSDK.NET_DVR_StopRealPlay(App.DataCamera[this.Postion].m_lRealHandle);
+                await Task.Delay(50);
+            
+            //LocationMedia media = new LocationMedia(App.DataCamera[this.Postion].rtsp);
+           // media.ParsedChanged += media_ParsedChanged;
+           // this.myVlcControl.Media = media;
             CHCNetSDK.NET_DVR_CLIENTINFO lpClientInfo = new CHCNetSDK.NET_DVR_CLIENTINFO();
-            lpClientInfo.lChannel = this.Camera.channel;
+            lpClientInfo.lChannel = App.DataCamera[this.Postion].channel;
             lpClientInfo.lLinkMode = 0x0000;
             lpClientInfo.sMultiCastIP = "";
-            if (this.Camera.m_iPreviewType == 0) // use by callback
-            {
-                lpClientInfo.hPlayWnd = IntPtr.Zero; // todo!!! 这边应该做2中情况考虑去编写代码
-                m_ptrRealHandle = pictureBox1.Handle;
-                m_fRealData = new CHCNetSDK.REALDATACALLBACK(RealDataCallBack);
-                IntPtr pUser = new IntPtr();
-                this.Camera.m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(this.Camera.m_lUserID, ref lpClientInfo, m_fRealData, pUser, 1);
-            }
-            else if (1 == this.Camera.m_iPreviewType)
-            {
-                m_ptrRealHandle = pictureBox1.Handle;
-                IntPtr pUser = new IntPtr();
-                this.Camera.m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(this.Camera.m_lUserID, ref lpClientInfo, null, pUser, 1);
-            }
-            if (this.Camera.m_lRealHandle == -1)
+            lpClientInfo.hPlayWnd = IntPtr.Zero; // todo!!! 这边应该做2中情况考虑去编写代码
+            m_ptrRealHandle = pictureBox1.Handle;
+            m_fRealData = new CHCNetSDK.REALDATACALLBACK(RealDataCallBack);
+            IntPtr pUser = new IntPtr();
+            App.DataCamera[this.Postion].m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(App.DataCamera[this.Postion].m_lUserID, ref lpClientInfo, m_fRealData, pUser, 1);
+
+            if (App.DataCamera[this.Postion].m_lRealHandle == -1)
             {
                 uint nError = CHCNetSDK.NET_DVR_GetLastError();
                 MessageBox.Show("Lỗi không thể truy cập camera");
@@ -79,6 +95,11 @@ namespace Camera_Final.UIView
             }
 
 
+        }
+
+        private void media_ParsedChanged(MediaBase sender, Vlc.DotNet.Core.VlcEventArgs<int> e)
+        {
+            //throw new NotImplementedException();
         }
 
 
@@ -96,10 +117,9 @@ namespace Camera_Final.UIView
                 if (!PlayCtrl.PlayM4_ConvertToJpegFile(pBuf, nSize, nWidth, nHeight, nType, "D:/Capture.jpg"))
                 {
                     //Debug.WriteLine("PlayM4_ConvertToJpegFile fail");
-                    nLastErr = PlayCtrl.PlayM4_GetLastError(this.Camera.m_lPort);
+                    nLastErr = PlayCtrl.PlayM4_GetLastError(App.DataCamera[this.Postion].m_lPort);
                     //this.BeginInvoke(AlarmInfo, "Jpeg Capture fail");
                 }
-
             }
 
             m_bJpegCapture = false;
@@ -111,7 +131,7 @@ namespace Camera_Final.UIView
             switch (dwDataType)
             {
                 case CHCNetSDK.NET_DVR_SYSHEAD:     // sys head
-                    if (!PlayCtrl.PlayM4_GetPort(ref this.Camera.m_lPort))
+                    if (!PlayCtrl.PlayM4_GetPort(ref App.DataCamera[this.Postion].m_lPort))
                     {
                         MessageBox.Show("Get Port Fail");
                     }
@@ -119,43 +139,43 @@ namespace Camera_Final.UIView
                     if (dwBufSize > 0)
                     {
                         //set as stream mode, real-time stream under preview
-                        if (!PlayCtrl.PlayM4_SetStreamOpenMode(this.Camera.m_lPort, PlayCtrl.STREAME_REALTIME))
+                        if (!PlayCtrl.PlayM4_SetStreamOpenMode(App.DataCamera[this.Postion].m_lPort, PlayCtrl.STREAME_REALTIME))
                         {
                             //this.BeginInvoke(AlarmInfo, "PlayM4_SetStreamOpenMode fail");
                         }
                         //start player
-                        if (!PlayCtrl.PlayM4_OpenStream(this.Camera.m_lPort, ref pBuffer, dwBufSize, 1024 * 1024))
+                        if (!PlayCtrl.PlayM4_OpenStream(App.DataCamera[this.Postion].m_lPort, ref pBuffer, dwBufSize, 1024 * 1024))
                         {
-                            this.Camera.m_lPort = -1;
+                            App.DataCamera[this.Postion].m_lPort = -1;
                             // this.BeginInvoke(AlarmInfo, "PlayM4_OpenStream fail");
                             break;
                         }
                         //set soft decode display callback function to capture
                         this.m_fDisplayFun = new PlayCtrl.DISPLAYCBFUN(RemoteDisplayCBFun);
-                        if (!PlayCtrl.PlayM4_SetDisplayCallBack(this.Camera.m_lPort, m_fDisplayFun))
+                        if (!PlayCtrl.PlayM4_SetDisplayCallBack(App.DataCamera[this.Postion].m_lPort, m_fDisplayFun))
                         {
                             //this.BeginInvoke(AlarmInfo, "PlayM4_SetDisplayCallBack fail");
                         }
 
                         //start play, set play window
                         // this.BeginInvoke(AlarmInfo, "About to call PlayM4_Play");
-
-                        if (!PlayCtrl.PlayM4_Play(this.Camera.m_lPort, m_ptrRealHandle))
+                        
+                        if (!PlayCtrl.PlayM4_Play(App.DataCamera[this.Postion].m_lPort, m_ptrRealHandle))
                         {
-                            this.Camera.m_lPort = -1;
+                            App.DataCamera[this.Postion].m_lPort = -1;
                             //this.BeginInvoke(AlarmInfo, "PlayM4_Play fail");
                             break;
                         }
-
+                        
                         //set frame buffer number
 
-                        if (!PlayCtrl.PlayM4_SetDisplayBuf(this.Camera.m_lPort, 15))
+                        if (!PlayCtrl.PlayM4_SetDisplayBuf(App.DataCamera[this.Postion].m_lPort, 15))
                         {
                             //this.BeginInvoke(AlarmInfo, "PlayM4_SetDisplayBuf fail");
                         }
 
                         //set display mode
-                        if (!PlayCtrl.PlayM4_SetOverlayMode(this.Camera.m_lPort, 0, 0/* COLORREF(0)*/))//play off screen // todo!!!
+                        if (!PlayCtrl.PlayM4_SetOverlayMode(App.DataCamera[this.Postion].m_lPort, 0, 0/* COLORREF(0)*/))//play off screen // todo!!!
                         {
                             //this.BeginInvoke(AlarmInfo, " PlayM4_SetOverlayMode fail");
                         }
@@ -163,9 +183,9 @@ namespace Camera_Final.UIView
 
                     break;
                 case CHCNetSDK.NET_DVR_STREAMDATA:     // video stream data
-                    if (dwBufSize > 0 && this.Camera.m_lPort != -1)
+                    if (dwBufSize > 0 && App.DataCamera[this.Postion].m_lPort != -1)
                     {
-                        if (!PlayCtrl.PlayM4_InputData(this.Camera.m_lPort, ref pBuffer, dwBufSize))
+                        if (!PlayCtrl.PlayM4_InputData(App.DataCamera[this.Postion].m_lPort, ref pBuffer, dwBufSize))
                         {
                             // this.BeginInvoke(AlarmInfo, " PlayM4_InputData fail");
                         }
@@ -173,9 +193,9 @@ namespace Camera_Final.UIView
                     break;
 
                 case CHCNetSDK.NET_DVR_AUDIOSTREAMDATA:     //  Audio Stream Data
-                    if (dwBufSize > 0 && this.Camera.m_lPort != -1)
+                    if (dwBufSize > 0 && App.DataCamera[this.Postion].m_lPort != -1)
                     {
-                        if (!PlayCtrl.PlayM4_InputVideoData(this.Camera.m_lPort, ref pBuffer, dwBufSize))
+                        if (!PlayCtrl.PlayM4_InputVideoData(App.DataCamera[this.Postion].m_lPort, ref pBuffer, dwBufSize))
                         {
                             // this.BeginInvoke(AlarmInfo, "PlayM4_InputVideoData Fail");
                         }
@@ -190,6 +210,11 @@ namespace Camera_Final.UIView
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+           
+        }
+
+        public void Stop()
+        {
             if (this.Camera.m_lRealHandle > 0)
             {
                 CHCNetSDK.NET_DVR_StopRealPlay(this.Camera.m_lRealHandle);
@@ -200,7 +225,6 @@ namespace Camera_Final.UIView
         {
             string fileName = string.Format("{0}_{1}.mp4", this.Camera.ip, DateTime.Now.Ticks);
             CHCNetSDK.NET_DVR_SaveRealData(this.Camera.m_lRealHandle, System.IO.Path.Combine(App.curFolder, fileName));
-
         }
 
         public void StopRecord()
@@ -208,6 +232,70 @@ namespace Camera_Final.UIView
 
             CHCNetSDK.NET_DVR_StopSaveRealData(this.Camera.m_lRealHandle);
 
+        }
+        bool full = false;
+        double w;
+        double h;
+        double t, l;
+        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!this.full)
+            {
+                w = this.Width;
+                h = this.Height;
+                l = this.getLeft();
+                t = this.getTop();
+                this.Width = 1366;
+                this.Height = 768;
+                this.UIRoot.RenderTransform = new ScaleTransform(this.Width / 1366, this.Height / 768);
+                this.setLeft(0);
+                this.setTop(0);
+                this.setZIndex(999);
+                full = true;
+                this.UIFull.Text = App.Fonts["fa-compress"].Code;
+            }
+            else
+            {
+                this.full = false;
+                this.Width = w;
+                this.Height = h;
+                this.UIRoot.RenderTransform = new ScaleTransform(this.Width / 1366, this.Height / 768);
+                this.setLeft(l);
+                this.setTop(t);
+                this.setZIndex(1);
+                this.UIFull.Text = App.Fonts["fa-expand"].Code;
+            }
+            
+        }
+
+        private void UIRootView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!this.full)
+            {
+                w = this.Width;
+                h = this.Height;
+                l = this.getLeft();
+                t = this.getTop();
+                this.Width = 1366;
+                this.Height = 768;
+                this.UIRoot.RenderTransform = new ScaleTransform(this.Width / 1366, this.Height / 768);
+                this.setLeft(0);
+                this.setTop(0);
+                this.setZIndex(999);
+                full = true;
+                this.UIFull.Text = App.Fonts["fa-compress"].Code;
+            }
+            else
+            {
+                this.full = false;
+                this.Width = w;
+                this.Height = h;
+                this.UIRoot.RenderTransform = new ScaleTransform(this.Width / 1366, this.Height / 768);
+                this.setLeft(l);
+                this.setTop(t);
+                this.setZIndex(1);
+                this.UIFull.Text = App.Fonts["fa-expand"].Code;
+            }
         }
     }
 }

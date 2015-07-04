@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <suffix_rtsp>/ISAPI/streaming/channels/101</suffix_rtsp>
+  <Stretch>UniformToFill</Stretch>
+  <Folder>Record</Folder>
+  <AutoRecord>false</AutoRecord>
+  <TimeCount>330</TimeCount>
+</Config>

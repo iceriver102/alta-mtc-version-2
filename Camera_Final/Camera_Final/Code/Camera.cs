@@ -66,19 +66,23 @@ namespace Camera_Final.Code
                 {
                    tmp= App.DataPreset.getPresetOfCamera(this.id);
                 }
+               
                 if (App.DataAlarm != null)
                 {
+                    if (tmp == null)
+                        tmp = new List<int>();
                     for (int i = 0; i< App.DataAlarm.Count; i++)
                     {
                         if(App.DataAlarm[i].Cameras!=null)
                         {
                             for (int j = 0; j < App.DataAlarm[i].Cameras.Count;j++ )
                             {
-                                if (App.DataAlarm[i].Cameras[j].camera_id == this.id)
-                                {
-                                    tmp.Add(App.DataAlarm[i].Cameras[j].Postion);
-                                    break;
-                                }
+                                    if (App.DataAlarm[i].Cameras[j].camera_id == this.id)
+                                    {
+                                        tmp.Add(App.DataAlarm[i].Cameras[j].Postion);
+                                        break;
+                                    }
+                                
                             }
                         }
                     }

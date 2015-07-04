@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Presets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Preset name="demo" postion="1" left="508" top="623.80408163265315" icon="fa-anchor">
+    <Camera Camera="7" Postion="20" />
+  </Preset>
+</Presets>

@@ -53,14 +53,14 @@ namespace Camera_Final.UIView
 
         private void media_ParsedChanged(MediaBase sender, Vlc.DotNet.Core.VlcEventArgs<int> e)
         {
-            
+
         }
-       
+
         public ControlCamera()
         {
             InitializeComponent();
-           // myVlcControl.PlaybackMode = PlaybackModes.Loop;
-           // this.UIView.Stretch = App.setting.Stretch;
+            // myVlcControl.PlaybackMode = PlaybackModes.Loop;
+            // this.UIView.Stretch = App.setting.Stretch;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -69,29 +69,26 @@ namespace Camera_Final.UIView
             {
                 this.Preview();
             }
-            
-           // this.myVlcControl.Play();
+
+            // this.myVlcControl.Play();
         }
         public void Preview()
         {
+            if (App.DataCamera[this.postion].m_lRealHandle >= 0)
+            {
+                CHCNetSDK.NET_DVR_StopRealPlay(App.DataCamera[this.postion].m_lRealHandle);
+            }
             CHCNetSDK.NET_DVR_CLIENTINFO lpClientInfo = new CHCNetSDK.NET_DVR_CLIENTINFO();
             lpClientInfo.lChannel = App.DataCamera[this.postion].channel;
             lpClientInfo.lLinkMode = 0x0000;
             lpClientInfo.sMultiCastIP = "";
-            if (App.DataCamera[this.postion].m_iPreviewType == 0) // use by callback
-            {
-                lpClientInfo.hPlayWnd = IntPtr.Zero; // todo!!! 这边应该做2中情况考虑去编写代码
-                m_ptrRealHandle = pictureBox1.Handle;
-                m_fRealData = new CHCNetSDK.REALDATACALLBACK(RealDataCallBack);
-                IntPtr pUser = new IntPtr();
-                App.DataCamera[this.postion].m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(App.DataCamera[this.postion].m_lUserID, ref lpClientInfo, m_fRealData, pUser, 1);
-            }
-            else if (1 == App.DataCamera[this.postion].m_iPreviewType)
-            {
-                m_ptrRealHandle = pictureBox1.Handle;
-                IntPtr pUser = new IntPtr();
-                App.DataCamera[this.postion].m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(App.DataCamera[this.postion].m_lUserID, ref lpClientInfo, null, pUser, 1);
-            }
+            // App.DataCamera[this.postion].m_iPreviewType = 1;
+            lpClientInfo.hPlayWnd = IntPtr.Zero; // todo!!! 这边应该做2中情况考虑去编写代码
+            m_ptrRealHandle = pictureBox1.Handle;
+            m_fRealData = new CHCNetSDK.REALDATACALLBACK(RealDataCallBack);
+            IntPtr pUser = new IntPtr();
+            App.DataCamera[this.postion].m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V30(App.DataCamera[this.postion].m_lUserID, ref lpClientInfo, m_fRealData, pUser, 1);
+
             if (App.DataCamera[this.postion].m_lRealHandle == -1)
             {
                 uint nError = CHCNetSDK.NET_DVR_GetLastError();
@@ -99,9 +96,9 @@ namespace Camera_Final.UIView
                 return;
             }
 
-           
+
         }
-     
+
 
         public void RemoteDisplayCBFun(int nPort, IntPtr pBuf, int nSize, int nWidth, int nHeight, int nStamp, int nType, int nReserved)
         {
@@ -120,7 +117,7 @@ namespace Camera_Final.UIView
                     nLastErr = PlayCtrl.PlayM4_GetLastError(App.DataCamera[this.postion].m_lPort);
                     //this.BeginInvoke(AlarmInfo, "Jpeg Capture fail");
                 }
-               
+
             }
 
             m_bJpegCapture = false;
@@ -238,7 +235,7 @@ namespace Camera_Final.UIView
 
         private void MoveRightEnd(object sender, MouseButtonEventArgs e)
         {
-            PtzControl(CHCNetSDK.PAN_RIGHT,1);
+            PtzControl(CHCNetSDK.PAN_RIGHT, 1);
         }
 
         private void MoveLeftEnd(object sender, MouseButtonEventArgs e)
@@ -285,7 +282,27 @@ namespace Camera_Final.UIView
                     CHCNetSDK.NET_DVR_StopRealPlay(App.DataCamera[this.postion].m_lRealHandle);
                 }
             }
-           
+
+        }
+
+        private void ZoomOutEnd(object sender, MouseButtonEventArgs e)
+        {
+            PtzControl(CHCNetSDK.ZOOM_OUT, 1);
+        }
+
+        private void ZoomInBegin(object sender, MouseButtonEventArgs e)
+        {
+            PtzControl(CHCNetSDK.ZOOM_IN, 0);
+        }
+
+        private void ZoomInEnd(object sender, MouseButtonEventArgs e)
+        {
+            PtzControl(CHCNetSDK.ZOOM_IN, 1);
+        }
+
+        private void ZoomOutBegin(object sender, MouseButtonEventArgs e)
+        {
+            PtzControl(CHCNetSDK.ZOOM_OUT, 0);
         }
     }
 }

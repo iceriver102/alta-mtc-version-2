@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandDefine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <OFF>#{0} C {1} 0$</OFF>
+  <ON>#{0} C {1} 1$</ON>
+  <DISABLE>#{0} F {1} 0$</DISABLE>
+  <ENABLE>#{0} F {1} 1$</ENABLE>
+  <ALARM_OFF>#{0} H {1} 0$</ALARM_OFF>
+  <ALARM_ON>#{0} H {1} 1$</ALARM_ON>
+  <LED_OFF>#{0} G {1} 0$</LED_OFF>
+  <LED_ON>#{0} G {1} 1$</LED_ON>
+</CommandDefine>

@@ -20,6 +20,13 @@ namespace Camera_Final.Code
         public string Pass;
         public DateTime time;
         public int type = 0;
+        public string Hash
+        {
+            get
+            {
+                return (this.user_name + FunctionStatics.getCPUID() + this.Pass).toMD5();
+            }
+        }
         public bool Login(string hash)
         {
             string _hash = (this.user_name + FunctionStatics.getCPUID() + this.Pass).toMD5();
@@ -45,7 +52,7 @@ namespace Camera_Final.Code
     [Serializable]
     public class Users : IEnumerable
     {
-        private List<User> Datas;
+        public List<User> Datas;
         public int maxId
         {
             get
